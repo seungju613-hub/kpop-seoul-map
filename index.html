@@ -482,7 +482,7 @@ const COURSES = [
 
 function renderCourses() {
   const cv = document.getElementById('course-view');
-  cv.innerHTML = '<div class="area-label">RECOMMENDED COURSES</div>' + COURSES.map(course => {
+  cv.innerHTML = '<div class="area-label">RECOMMENDED COURSES</div>' + COURSES.map((course, ci) => {
     const stopsHtml = course.stops.map((s, i) => {
       const p = places.find(x=>x.id===s.id);
       if (!p) return '';
@@ -490,11 +490,11 @@ function renderCourses() {
       return `
         <div class="course-stop">
           <div class="course-line">
-            <div class="course-dot ${i===0?'first':''}"></div>
-            ${!isLast?'<div class="course-connector"></div>':''}
+            <div class="course-dot ${i===0?'first':''}" style="border-color:${course.color}${i===0?';background:'+course.color:''}"></div>
+            ${!isLast?`<div class="course-connector" style="background:${course.bgColor}"></div>`:''}
           </div>
           <div class="course-stop-info">
-            <div class="course-stop-name" onclick="openDetail(${p.id})">${p.name_en} <span style="color:var(--text3);font-weight:400">${p.name_kr}</span></div>
+            <div class="course-stop-name" onclick="openDetail(${p.id})"><span style="color:${course.color};font-weight:800;margin-right:4px">${i+1}</span> ${p.name_en} <span style="color:var(--text3);font-weight:400">${p.name_kr}</span></div>
             <div class="course-stop-desc">${s.note}</div>
           </div>
         </div>`;
@@ -505,8 +505,50 @@ function renderCourses() {
         <div class="course-title">${course.title}</div>
         <div class="course-meta">${course.title_kr}</div>
         <div class="course-stops">${stopsHtml}</div>
+        <button onclick="showCourseOnMap(${ci})" style="width:100%;margin-top:14px;padding:12px;background:${course.bgColor};color:${course.color};border:1.5px solid ${course.color}33;border-radius:12px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity .2s">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="${course.color}" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          View on Map
+        </button>
       </div>`;
   }).join('');
+}
+
+let coursePolyline = null;
+function showCourseOnMap(courseIdx) {
+  const course = COURSES[courseIdx];
+  if (!course) return;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelector('[data-tab="map"]').classList.add('active');
+  document.getElementById('map-view').classList.add('show');
+  document.getElementById('place-list').style.display = 'none';
+  document.getElementById('course-view').style.display = 'none';
+  initMap();
+  setTimeout(()=>map.invalidateSize(),100);
+  markers.forEach(m=>map.removeLayer(m));
+  markers = [];
+  if (coursePolyline) { map.removeLayer(coursePolyline); coursePolyline = null; }
+  const latlngs = [];
+  course.stops.forEach((s, i) => {
+    const p = places.find(x=>x.id===s.id);
+    if (!p || !p.lat || !p.lng) return;
+    latlngs.push([p.lat, p.lng]);
+    const icon = L.divIcon({
+      className:'',
+      html:`<div style="width:32px;height:32px;background:${course.color};border-radius:50%;border:3px solid #fff;box-shadow:0 2px 8px ${course.color}55;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:800;font-family:Nunito,sans-serif">${i+1}</div>`,
+      iconSize:[32,32],iconAnchor:[16,16]
+    });
+    const m = L.marker([p.lat,p.lng],{icon}).addTo(map);
+    m.bindPopup(`<b>${i+1}. ${p.name_en}</b><br><span style="color:#666">${p.name_kr}</span><br><small>${s.note}</small>`);
+    m.on('click',()=>m.openPopup());
+    markers.push(m);
+  });
+  if (latlngs.length > 1) {
+    coursePolyline = L.polyline(latlngs, {color:course.color, weight:3, opacity:0.7, dashArray:'8,8'}).addTo(map);
+  }
+  if (markers.length > 0) {
+    const g = L.featureGroup(markers);
+    map.fitBounds(g.getBounds().pad(.15));
+  }
 }
 
 loadData();
