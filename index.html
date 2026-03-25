@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>K-pop Seoul Map | BTS & HYBE Spots</title>
+<meta name="description" content="Discover BTS and HYBE artist spots across Seoul. Fan cafes, restaurants, filming locations and more.">
+<meta property="og:title" content="K-pop Seoul Map">
+<meta property="og:description" content="Discover BTS & HYBE artist spots across Seoul!">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+:root{
+  --bg:#FAF7F2;--bg2:#F3EDE4;--card:#FFFFFF;
+  --purple:#A855F7;--purple-dark:#7C3AED;--purple-light:#E9D5FF;--purple-pale:#F3E8FF;
+  --pink:#EC4899;--pink-light:#FBCFE8;
+  --amber:#F59E0B;--amber-light:#FEF3C7;--amber-dark:#92400E;
+  --green:#10B981;--green-light:#D1FAE5;
+  --warm:#E8DFD1;--warm-light:#F5F0E8;
+  --text:#2C2036;--text2:#6B5E80;--text3:#9F93B0;
+  --border:#E8DFD1;--radius:14px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Nunito','Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased}
+
+.header{padding:22px 16px 16px;background:linear-gradient(135deg,#7C3AED,#A855F7,#C084FC);position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;top:-20px;right:-20px;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,.08)}
+.header::after{content:'';position:absolute;bottom:-15px;left:20px;width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,.06)}
+.korean-motif{position:absolute;top:8px;right:12px;width:50px;height:50px;opacity:.08;z-index:0}
+.sparkle{position:absolute;border-radius:50%;background:rgba(255,255,255,.4)}
+.header-title{display:flex;align-items:center;gap:10px;margin-bottom:4px;position:relative;z-index:1}
+.header-title .kr-label{font-size:11px;color:rgba(255,255,255,.6);letter-spacing:2px;display:block;margin-bottom:2px}
+.header-title h1{font-size:22px;font-weight:800;color:#fff;letter-spacing:-.5px}
+.header-title .badge{font-size:10px;padding:4px 12px;background:rgba(255,255,255,.2);color:#fff;border-radius:14px;font-weight:700}
+.header-sub{font-size:13px;color:rgba(255,255,255,.8);margin-bottom:14px;position:relative;z-index:1}
+.filters{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;position:relative;z-index:1;-webkit-overflow-scrolling:touch}
+.filters::-webkit-scrollbar{display:none}
+.chip{flex-shrink:0;font-size:12px;padding:7px 16px;border-radius:20px;border:none;cursor:pointer;font-family:inherit;font-weight:600;transition:all .2s}
+.chip.active{background:#fff;color:var(--purple-dark)}
+.chip:not(.active){background:rgba(255,255,255,.18);color:#fff}
+.chip:not(.active):hover{background:rgba(255,255,255,.28)}
+
+.member-filters{display:flex;gap:6px;padding:12px 16px;overflow-x:auto;-webkit-overflow-scrolling:touch;background:var(--warm-light)}
+.member-filters::-webkit-scrollbar{display:none}
+.mchip{flex-shrink:0;font-size:11px;padding:6px 14px;border-radius:16px;border:1.5px solid var(--warm);background:var(--card);color:var(--text2);cursor:pointer;font-family:inherit;font-weight:600;transition:all .2s}
+.mchip.active{border-color:var(--purple);background:var(--purple-pale);color:var(--purple-dark)}
+
+.tabs{display:flex;background:var(--card);border-bottom:2px solid var(--warm);position:sticky;top:0;z-index:50}
+.tab{flex:1;padding:12px;text-align:center;font-size:12px;font-weight:700;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s}
+.tab.active{color:var(--purple-dark);border-bottom-color:var(--purple)}
+.tab svg{display:block;margin:0 auto 4px;width:20px;height:20px}
+
+#map-view{height:45vh;min-height:280px;display:none}
+#map-view.show{display:block}
+.leaflet-tile-pane{filter:saturate(.7) brightness(1.05) sepia(.1)}
+
+.list{padding:12px;display:flex;flex-direction:column;gap:8px}
+.area-label{font-size:11px;font-weight:700;color:var(--text2);letter-spacing:1.5px;text-transform:uppercase;padding:18px 4px 8px;border-left:3px solid var(--purple);margin-left:4px;padding-left:10px}
+
+.place-card{background:var(--card);border-radius:var(--radius);padding:14px;border:1px solid var(--border);display:flex;align-items:center;gap:12px;cursor:pointer;transition:all .2s}
+.place-card:hover{border-color:var(--purple-light);transform:translateY(-1px)}
+.place-card.featured{background:linear-gradient(135deg,#EDE5FF,#F8E8F0);border:1.5px solid #D8B4FE}
+.icon-box{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.icon-box.kpop,.icon-box.heritage{background:var(--purple-pale)}
+.icon-box.food{background:var(--amber-light)}
+.icon-box.cafe{background:var(--purple-pale)}
+.icon-box.culture{background:#EDE5FF}
+.icon-box.filming,.icon-box.sightseeing{background:var(--green-light)}
+.icon-box.shopping{background:#E0F2FE}
+.icon-box.featured-icon{background:linear-gradient(135deg,var(--purple),var(--pink))}
+.place-info{flex:1;min-width:0}
+.place-name{font-size:14px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.place-name .signed-badge{font-size:8px;padding:2px 7px;background:linear-gradient(135deg,#FBBF24,#F59E0B);color:#fff;border-radius:8px;font-weight:700}
+.place-name .featured-badge{font-size:9px;padding:2px 8px;background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;border-radius:10px;font-weight:700}
+.place-name .heritage-badge{font-size:8px;padding:2px 7px;background:var(--pink-light);color:#BE185D;border-radius:8px;font-weight:700}
+.place-sub{font-size:11px;color:var(--text2);margin-top:2px}
+.place-tag{font-size:10px;padding:4px 10px;border-radius:10px;font-weight:600;flex-shrink:0}
+
+.detail-overlay{position:fixed;inset:0;background:rgba(30,16,51,.5);z-index:100;display:none;align-items:flex-end;justify-content:center;backdrop-filter:blur(2px)}
+.detail-overlay.show{display:flex}
+.detail-sheet{background:var(--bg);border-radius:20px 20px 0 0;width:100%;max-width:500px;max-height:85vh;overflow-y:auto;padding:0;animation:slideUp .3s ease}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.detail-handle{width:40px;height:4px;background:var(--warm);border-radius:2px;margin:12px auto}
+.detail-header{padding:0 20px 16px;border-bottom:2px solid var(--warm)}
+.detail-body{padding:20px}
+.detail-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:.5px solid var(--warm);font-size:13px}
+.detail-row:last-child{border-bottom:none}
+.detail-label{color:var(--text3)}
+.detail-value{color:var(--text);font-weight:600;text-align:right;max-width:60%}
+.detail-desc{font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:16px}
+.btn-naver{display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;border-radius:12px;font-size:14px;font-weight:700;text-decoration:none;margin-top:16px;border:none;cursor:pointer;width:100%;font-family:inherit;transition:opacity .2s}
+.btn-naver:hover{opacity:.9}
+.btn-share{display:flex;align-items:center;justify-content:center;gap:6px;padding:12px;border:1.5px solid var(--border);border-radius:12px;font-size:13px;color:var(--text2);background:var(--card);cursor:pointer;font-family:inherit;margin-top:8px;width:100%;font-weight:600;transition:all .2s}
+.btn-share:hover{border-color:var(--purple-light)}
+
+.footer{text-align:center;padding:24px 16px 40px;font-size:12px;color:var(--text3);line-height:1.8}
+.footer a{color:var(--purple);text-decoration:none;font-weight:600}
+
+.count-badge{font-size:12px;padding:2px 8px;background:rgba(255,255,255,.25);border-radius:10px;color:#fff;font-weight:700;margin-left:4px}
+
+@media(min-width:600px){
+  .list{max-width:500px;margin:0 auto}
+  .header,.member-filters,.tabs,.footer{max-width:500px;margin-left:auto;margin-right:auto}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <!-- Korean taegeuk-inspired motif -->
+  <svg class="korean-motif" viewBox="0 0 60 60" fill="white"><circle cx="30" cy="30" r="28" stroke="white" stroke-width="1.5" fill="none"/><path d="M30 2 A14 14 0 0 1 30 30 A14 14 0 0 0 30 58 A28 28 0 0 1 30 2Z" fill="white"/></svg>
+  <div class="sparkle" style="width:5px;height:5px;top:14px;right:70px"></div>
+  <div class="sparkle" style="width:4px;height:4px;top:8px;right:100px;opacity:.6"></div>
+  <div class="sparkle" style="width:3px;height:3px;top:22px;right:85px;opacity:.4"></div>
+  <div class="sparkle" style="width:4px;height:4px;bottom:25px;right:25px;opacity:.3"></div>
+  <div class="sparkle" style="width:3px;height:3px;top:40px;left:70%;opacity:.5"></div>
+  <div class="header-title">
+    <div>
+      <span class="kr-label">서울</span>
+      <h1>K-pop Seoul</h1>
+    </div>
+    <span class="badge">MAP</span>
+  </div>
+  <div class="header-sub">Discover BTS & HYBE spots in Seoul!</div>
+  <div class="filters" id="area-filters">
+    <button class="chip active" data-area="all">All <span class="count-badge" id="count-all">34</span></button>
+    <button class="chip" data-area="yongsan">Yongsan</button>
+    <button class="chip" data-area="gangnam">Gangnam</button>
+    <button class="chip" data-area="jongno">Jongno</button>
+    <button class="chip" data-area="other">Other</button>
+  </div>
+</div>
+
+<div class="member-filters" id="member-filters">
+  <button class="mchip active" data-member="all">All</button>
+  <button class="mchip" data-member="BTS">BTS</button>
+  <button class="mchip" data-member="RM">RM</button>
+  <button class="mchip" data-member="Jungkook">JK</button>
+  <button class="mchip" data-member="Jin">Jin</button>
+  <button class="mchip" data-member="Suga">Suga</button>
+  <button class="mchip" data-member="Jimin">Jimin</button>
+  <button class="mchip" data-member="J-Hope">J-Hope</button>
+  <button class="mchip" data-member="V">V</button>
+</div>
+
+<div class="tabs">
+  <div class="tab active" data-tab="list">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+    List
+  </div>
+  <div class="tab" data-tab="map">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+    Map
+  </div>
+</div>
+
+<div id="map-view"></div>
+<div class="list" id="place-list"></div>
+
+<div class="footer">
+  Made with 💜 by <a href="https://x.com/bomnalcafe" target="_blank">@bomnalcafe</a><br>
+  Fan-made site. Not affiliated with BIGHIT MUSIC or HYBE.
+</div>
+
+<div class="detail-overlay" id="detail-overlay" onclick="if(event.target===this)closeDetail()">
+  <div class="detail-sheet" id="detail-sheet"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+const ICONS = {
+  building: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="STR" stroke-width="1.8"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="9" y1="6" x2="9" y2="6.01"/><line x1="15" y1="6" x2="15" y2="6.01"/><line x1="9" y1="10" x2="9" y2="10.01"/><line x1="15" y1="10" x2="15" y2="10.01"/><path d="M9 22v-4h6v4"/></svg>`,
+  coffee: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="STR" stroke-width="1.8"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></svg>`,
+  chopsticks: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="STR" stroke-width="1.8"><line x1="8" y1="2" x2="8" y2="22"/><line x1="16" y1="2" x2="16" y2="12"/><path d="M16 12c0 2-2 4-4 4"/></svg>`,
+  bowl: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="STR" stroke-width="1.8"><path d="M3 11h18"/><path d="M5 11c0 4.4 3.6 8 7 8s7-3.6 7-8"/><path d="M7 5s1-1 2-1 2.5 1.5 3 1.5S14 4 15 4s2 1 2 1"/></svg>`,
+  gallery: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="STR" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>`,
+  camera: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="STR" stroke-width="1.8"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>`,
+  star: `<svg width="20" height="20" viewBox="0 0 24 24" fill="STR" stroke="STR" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
+  shopping: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="STR" stroke-width="1.8"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>`
+};
+
+const COLORS = {
+  kpop: {stroke:'#A855F7',bg:'var(--purple-pale)',tag:'#F3E8FF',tagText:'#9333EA'},
+  heritage: {stroke:'#EC4899',bg:'var(--purple-pale)',tag:'#FCE7F3',tagText:'#BE185D'},
+  food: {stroke:'#D97706',bg:'var(--amber-light)',tag:'#FEF3C7',tagText:'#92400E'},
+  cafe: {stroke:'#A855F7',bg:'var(--purple-pale)',tag:'#F3E8FF',tagText:'#7C3AED'},
+  culture: {stroke:'#7C3AED',bg:'#EDE5FF',tag:'#EDE5FF',tagText:'#6D28D9'},
+  filming: {stroke:'#047857',bg:'var(--green-light)',tag:'#D1FAE5',tagText:'#047857'},
+  sightseeing: {stroke:'#047857',bg:'var(--green-light)',tag:'#D1FAE5',tagText:'#047857'},
+  shopping: {stroke:'#0284C7',bg:'#E0F2FE',tag:'#E0F2FE',tagText:'#0369A1'}
+};
+
+const AREA_NAMES = {yongsan:'Yongsan',gangnam:'Gangnam',jongno:'Jongno / Jung-gu',other:'Other Seoul'};
+const CAT_LABELS = {kpop:'K-pop',heritage:'Heritage',food:'Food',cafe:'Cafe',culture:'Culture',filming:'Filming',sightseeing:'Spot',shopping:'Shopping'};
+
+let places = [];
+let map = null, markers = [];
+let currentArea = 'all', currentMember = 'all';
+
+async function loadData() {
+  try {
+    const r = await fetch('data/places.json');
+    const d = await r.json();
+    places = d.places;
+    document.getElementById('count-all').textContent = places.length;
+    render();
+  } catch(e) {
+    document.getElementById('place-list').innerHTML = '<div style="text-align:center;padding:40px;color:var(--text3)">Loading place data...</div>';
+  }
+}
+
+function getIcon(iconName, cat, featured) {
+  if (featured) return (ICONS[iconName]||ICONS.coffee).replace(/STR/g, '#fff');
+  const c = COLORS[cat] || COLORS.kpop;
+  return (ICONS[iconName]||ICONS.star).replace(/STR/g, c.stroke);
+}
+
+function filtered() {
+  return places.filter(p => {
+    if (currentArea !== 'all' && p.area !== currentArea) return false;
+    if (currentMember !== 'all') {
+      const m = (p.member||'').toLowerCase();
+      if (currentMember === 'BTS') { if (!m.includes('bts')) return false; }
+      else if (!m.toLowerCase().includes(currentMember.toLowerCase())) return false;
+    }
+    return true;
+  });
+}
+
+function render() {
+  const list = document.getElementById('place-list');
+  const fp = filtered();
+  if (fp.length === 0) {
+    list.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text3)">No places found for this filter.</div>';
+    return;
+  }
+
+  const grouped = {};
+  fp.forEach(p => {
+    if (!grouped[p.area]) grouped[p.area] = [];
+    grouped[p.area].push(p);
+  });
+
+  const order = ['yongsan','gangnam','jongno','other'];
+  let html = '';
+  order.forEach(area => {
+    if (!grouped[area]) return;
+    html += `<div class="area-label">${AREA_NAMES[area]||area}</div>`;
+    grouped[area].forEach(p => {
+      const c = COLORS[p.category]||COLORS.kpop;
+      const isFeatured = p.featured;
+      html += `
+        <div class="place-card ${isFeatured?'featured':''}" onclick="openDetail(${p.id})">
+          <div class="icon-box ${isFeatured?'featured-icon':p.category}">
+            ${getIcon(p.icon, p.category, isFeatured)}
+          </div>
+          <div class="place-info">
+            <div class="place-name">
+              ${p.name_en}
+              ${p.signed?'<span class="signed-badge">SIGNED</span>':''}
+              ${isFeatured?'<span class="featured-badge">Featured</span>':''}
+              ${p.category==='heritage'?'<span class="heritage-badge">Heritage</span>':''}
+            </div>
+            <div class="place-sub">${p.name_kr}${p.member?' · '+p.member:''}</div>
+          </div>
+          ${!isFeatured?`<span class="place-tag" style="background:${c.tag};color:${c.tagText}">${CAT_LABELS[p.category]||''}</span>`:''}
+        </div>`;
+    });
+  });
+  list.innerHTML = html;
+  updateMarkers(fp);
+}
+
+function openDetail(id) {
+  const p = places.find(x=>x.id===id);
+  if (!p) return;
+  const c = COLORS[p.category]||COLORS.kpop;
+  document.getElementById('detail-sheet').innerHTML = `
+    <div class="detail-handle"></div>
+    <div class="detail-header">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+        <div class="icon-box ${p.category}" style="width:48px;height:48px;border-radius:14px">
+          ${getIcon(p.icon,p.category,false)}
+        </div>
+        <div>
+          <div style="font-size:18px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:6px">
+            ${p.name_en}
+            ${p.signed?'<span class="signed-badge">SIGNED</span>':''}
+          </div>
+          <div style="font-size:13px;color:var(--text2)">${p.name_kr}</div>
+        </div>
+      </div>
+    </div>
+    <div class="detail-body">
+      <div class="detail-desc">${p.desc_en}</div>
+      <div class="detail-row"><span class="detail-label">Member</span><span class="detail-value">${p.member||'General'}</span></div>
+      <div class="detail-row"><span class="detail-label">Area</span><span class="detail-value">${AREA_NAMES[p.area]||p.area}</span></div>
+      <div class="detail-row"><span class="detail-label">Category</span><span class="detail-value" style="color:${c.tagText}">${CAT_LABELS[p.category]||p.category}</span></div>
+      <div class="detail-row"><span class="detail-label">Address</span><span class="detail-value" style="font-size:12px">${p.address_en}</span></div>
+      <div class="detail-row"><span class="detail-label">주소</span><span class="detail-value" style="font-size:12px">${p.address_kr}</span></div>
+      <a class="btn-naver" href="https://map.naver.com/v5/search/${encodeURIComponent(p.name_kr)}" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Open in Naver Map
+      </a>
+      <button class="btn-share" onclick="navigator.clipboard.writeText(location.origin);this.textContent='Link copied!'">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+        Share
+      </button>
+    </div>`;
+  document.getElementById('detail-overlay').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function closeDetail() {
+  document.getElementById('detail-overlay').classList.remove('show');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e=>{if(e.key==='Escape')closeDetail()});
+
+function initMap() {
+  if (map) return;
+  map = L.map('map-view',{zoomControl:false}).setView([37.545,126.98],12);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{
+    attribution:'&copy; OpenStreetMap &copy; CARTO', maxZoom:19
+  }).addTo(map);
+  L.control.zoom({position:'bottomright'}).addTo(map);
+  updateMarkers(filtered());
+}
+
+function updateMarkers(fp) {
+  if (!map) return;
+  markers.forEach(m=>map.removeLayer(m));
+  markers = [];
+  fp.forEach(p => {
+    if (!p.lat||!p.lng) return;
+    const c = COLORS[p.category]||COLORS.kpop;
+    const icon = L.divIcon({
+      className:'',
+      html:`<div style="width:28px;height:28px;background:linear-gradient(135deg,${c.stroke},${c.stroke}dd);border-radius:50%;border:3px solid #fff;box-shadow:0 2px 8px ${c.stroke}55;cursor:pointer"></div>`,
+      iconSize:[28,28],iconAnchor:[14,14]
+    });
+    const m = L.marker([p.lat,p.lng],{icon}).addTo(map);
+    m.on('click',()=>openDetail(p.id));
+    markers.push(m);
+  });
+  if (markers.length > 0) {
+    const g = L.featureGroup(markers);
+    map.fitBounds(g.getBounds().pad(.1));
+  }
+}
+
+document.querySelectorAll('.chip').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.chip').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    currentArea = btn.dataset.area;
+    render();
+  });
+});
+document.querySelectorAll('.mchip').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.mchip').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    currentMember = btn.dataset.member;
+    render();
+  });
+});
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+    const v = tab.dataset.tab;
+    if (v === 'map') {
+      document.getElementById('map-view').classList.add('show');
+      document.getElementById('place-list').style.display = 'none';
+      initMap();
+      setTimeout(()=>map.invalidateSize(),100);
+      updateMarkers(filtered());
+    } else {
+      document.getElementById('map-view').classList.remove('show');
+      document.getElementById('place-list').style.display = 'flex';
+    }
+  });
+});
+
+loadData();
+</script>
+</body>
+</html>
