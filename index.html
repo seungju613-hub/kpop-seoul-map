@@ -148,6 +148,30 @@ body{font-family:'Nunito','Noto Sans KR',sans-serif;background:var(--bg);color:v
 
 .count-badge{font-size:12px;padding:2px 8px;background:rgba(255,255,255,.25);border-radius:10px;color:#fff;font-weight:700;margin-left:4px}
 
+.fun-card{background:var(--card);border-radius:var(--radius);padding:20px;border:1px solid var(--border);margin-bottom:14px;cursor:pointer;transition:all .2s;text-align:center}
+.fun-card:hover{border-color:var(--purple-light);transform:translateY(-1px)}
+.fun-card .fun-emoji{font-size:40px;margin-bottom:8px}
+.fun-card .fun-title{font-size:16px;font-weight:700;color:var(--text)}
+.fun-card .fun-desc{font-size:12px;color:var(--text3);margin-top:4px}
+.quiz-box{background:var(--card);border-radius:var(--radius);padding:20px;border:1px solid var(--border)}
+.quiz-q{font-size:15px;font-weight:700;color:var(--text);margin-bottom:14px;line-height:1.5}
+.quiz-progress{font-size:11px;color:var(--text3);margin-bottom:6px}
+.quiz-opt{display:block;width:100%;padding:14px;margin-bottom:8px;background:var(--warm-light);border:1.5px solid var(--warm);border-radius:12px;font-size:13px;font-weight:600;color:var(--text);cursor:pointer;font-family:inherit;text-align:left;transition:all .15s}
+.quiz-opt:hover{border-color:var(--purple-light);background:var(--purple-pale)}
+.quiz-opt.correct{border-color:#10B981;background:#D1FAE5;color:#047857}
+.quiz-opt.wrong{border-color:#EF4444;background:#FEE2E2;color:#B91C1C}
+.quiz-opt.disabled{pointer-events:none;opacity:.7}
+.quiz-result{text-align:center;padding:20px}
+.quiz-score{font-size:48px;font-weight:800;color:var(--purple)}
+.quiz-grade{font-size:18px;font-weight:700;margin:8px 0;color:var(--text)}
+.quiz-share-btn{display:inline-flex;align-items:center;gap:6px;padding:12px 24px;border-radius:12px;border:none;cursor:pointer;font-family:inherit;font-size:13px;font-weight:700;transition:all .2s;margin:4px}
+.match-opt{display:block;width:100%;padding:14px;margin-bottom:8px;background:var(--warm-light);border:1.5px solid var(--warm);border-radius:12px;font-size:13px;font-weight:600;color:var(--text);cursor:pointer;font-family:inherit;text-align:left;transition:all .15s}
+.match-opt:hover{border-color:var(--purple-light);background:var(--purple-pale)}
+.match-result-card{text-align:center;padding:24px;background:linear-gradient(135deg,var(--purple-pale),#FCE7F3);border-radius:var(--radius);border:1.5px solid var(--purple-light)}
+.match-member{font-size:56px;margin-bottom:8px}
+.match-name{font-size:24px;font-weight:800;color:var(--purple-dark)}
+.match-reason{font-size:13px;color:var(--text2);margin-top:8px;line-height:1.6}
+
 @media(min-width:600px){
   .list{max-width:500px;margin:0 auto}
   .header,.member-filters,.tabs,.footer{max-width:500px;margin-left:auto;margin-right:auto}
@@ -206,11 +230,16 @@ body{font-family:'Nunito','Noto Sans KR',sans-serif;background:var(--bg);color:v
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
     Course
   </div>
+  <div class="tab" data-tab="fun">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+    Fun
+  </div>
 </div>
 
 <div id="map-view"></div>
 <div class="list" id="place-list"></div>
 <div class="list" id="course-view" style="display:none"></div>
+<div class="list" id="fun-view" style="display:none;padding:16px 12px"></div>
 
 <div class="list" id="trip-section" style="padding:16px 12px">
 <div class="area-label">PLAN YOUR TRIP</div>
@@ -274,6 +303,50 @@ body{font-family:'Nunito','Noto Sans KR',sans-serif;background:var(--bg);color:v
 <div class="place-info">
 <div class="place-name" style="color:var(--text)">Seoul Day Tours</div>
 <div class="place-sub">Guided tours, K-pop experiences & day trips from Seoul.</div>
+</div>
+</a>
+
+<div class="area-label" style="margin-top:20px">BTS SHOP</div>
+<div style="font-size:13px;color:var(--text2);margin-bottom:14px;line-height:1.6;padding:0 4px">Get your BTS albums & merch before your trip!</div>
+
+<a href="https://www.amazon.com/Album-ARIRANG-Living-Legend-Ver/dp/B0GGSMCJQ4?tag=kpopseoulmap-20" target="_blank" rel="noopener" class="place-card" style="text-decoration:none;border:1.5px solid var(--purple-light)">
+<div class="icon-box" style="background:var(--purple-pale)">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A855F7" stroke-width="1.8"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+</div>
+<div class="place-info">
+<div class="place-name" style="color:var(--text)">BTS ARIRANG Album</div>
+<div class="place-sub">The 5th album — newest release! CD, photobook & cards included.</div>
+</div>
+<span class="place-tag" style="background:var(--purple-pale);color:#9333EA">NEW</span>
+</a>
+
+<a href="https://www.amazon.com/s?k=BTS+album&tag=kpopseoulmap-20" target="_blank" rel="noopener" class="place-card" style="text-decoration:none">
+<div class="icon-box" style="background:var(--amber-light)">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="1.8"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+</div>
+<div class="place-info">
+<div class="place-name" style="color:var(--text)">BTS Albums Collection</div>
+<div class="place-sub">All BTS albums — ARIRANG, Proof, BE, MOTS:7 & more.</div>
+</div>
+</a>
+
+<a href="https://www.amazon.com/s?k=BTS+official+lightstick+army+bomb&tag=kpopseoulmap-20" target="_blank" rel="noopener" class="place-card" style="text-decoration:none">
+<div class="icon-box" style="background:#FCE7F3">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EC4899" stroke-width="1.8"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+</div>
+<div class="place-info">
+<div class="place-name" style="color:var(--text)">ARMY Bomb & Lightstick</div>
+<div class="place-sub">Official BTS lightstick — essential for concerts & events!</div>
+</div>
+</a>
+
+<a href="https://www.amazon.com/s?k=BTS+photocard+merch+official&tag=kpopseoulmap-20" target="_blank" rel="noopener" class="place-card" style="text-decoration:none">
+<div class="icon-box" style="background:var(--green-light)">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#047857" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+</div>
+<div class="place-info">
+<div class="place-name" style="color:var(--text)">BTS Photocards & Merch</div>
+<div class="place-sub">Official photocards, posters, merch and collectibles.</div>
 </div>
 </a>
 
@@ -549,6 +622,7 @@ document.querySelectorAll('.tab').forEach(tab => {
     document.getElementById('map-view').classList.remove('show');
     document.getElementById('place-list').style.display = 'none';
     document.getElementById('course-view').style.display = 'none';
+    document.getElementById('fun-view').style.display = 'none';
     if (v === 'map') {
       document.getElementById('map-view').classList.add('show');
       initMap();
@@ -557,6 +631,9 @@ document.querySelectorAll('.tab').forEach(tab => {
     } else if (v === 'course') {
       document.getElementById('course-view').style.display = 'flex';
       renderCourses();
+    } else if (v === 'fun') {
+      document.getElementById('fun-view').style.display = 'block';
+      renderFunMenu();
     } else {
       document.getElementById('place-list').style.display = 'flex';
     }
@@ -700,6 +777,188 @@ function showCourseOnMap(courseIdx) {
     const g = L.featureGroup(markers);
     map.fitBounds(g.getBounds().pad(.15));
   }
+}
+
+// ── Fun Section ──
+function renderFunMenu() {
+  document.getElementById('fun-view').innerHTML = `
+    <div class="area-label">BTS FUN ZONE 💜</div>
+    <div class="fun-card" onclick="startQuiz()">
+      <div class="fun-emoji">🧠</div>
+      <div class="fun-title">BTS ARMY Quiz</div>
+      <div class="fun-desc">How well do you know BTS? Test yourself & share your score!</div>
+    </div>
+    <div class="fun-card" onclick="startMatch()">
+      <div class="fun-emoji">💜</div>
+      <div class="fun-title">Which BTS Member Are You?</div>
+      <div class="fun-desc">Find your BTS travel buddy based on your Seoul travel style!</div>
+    </div>`;
+}
+
+// ── BTS Quiz ──
+const QUIZ = [
+  {q:"What year did BTS debut?", opts:["2012","2013","2014","2015"], ans:1},
+  {q:"What is BTS's fan club name?", opts:["BLINK","ARMY","ONCE","MOA"], ans:1},
+  {q:"Which member is known as the 'Golden Maknae'?", opts:["Jimin","V","Jungkook","J-Hope"], ans:2},
+  {q:"What is RM's real name?", opts:["Kim Namjoon","Kim Seokjin","Min Yoongi","Kim Taehyung"], ans:0},
+  {q:"Which BTS album was released in March 2026?", opts:["BE","Butter","Proof","ARIRANG"], ans:3},
+  {q:"What is the title track of ARIRANG?", opts:["Body to Body","SWIM","Into the Sun","Hooligan"], ans:1},
+  {q:"Where was BTS's comeback concert held in March 2026?", opts:["Jamsil Stadium","COEX","Gwanghwamun Square","Olympic Park"], ans:2},
+  {q:"Which member's older brother runs Chompi restaurant?", opts:["Jin","RM","Suga","J-Hope"], ans:2},
+  {q:"What was BTS's agency name before HYBE?", opts:["SM Entertainment","Big Hit Entertainment","JYP Entertainment","YG Entertainment"], ans:1},
+  {q:"Which BTS member is known for his love of art museums?", opts:["Suga","V","RM","Jin"], ans:2}
+];
+let quizIdx=0, quizScore=0;
+
+function startQuiz() {
+  quizIdx=0; quizScore=0;
+  renderQuizQ();
+}
+function renderQuizQ() {
+  const fv = document.getElementById('fun-view');
+  if (quizIdx >= QUIZ.length) {
+    const pct = Math.round(quizScore/QUIZ.length*100);
+    let grade='', emoji='';
+    if (pct>=90){grade='Ultimate ARMY 💜';emoji='🏆';}
+    else if(pct>=70){grade='True ARMY!';emoji='💜';}
+    else if(pct>=50){grade='Casual Fan';emoji='✨';}
+    else{grade='Baby ARMY';emoji='🌱';}
+    const shareText = `I scored ${quizScore}/${QUIZ.length} (${pct}%) on the BTS ARMY Quiz! ${emoji} ${grade} — Test yourself at kpopseoulmap.com 💜`;
+    fv.innerHTML = `
+      <div class="quiz-box">
+        <div class="quiz-result">
+          <div style="font-size:48px;margin-bottom:8px">${emoji}</div>
+          <div class="quiz-score">${quizScore}/${QUIZ.length}</div>
+          <div class="quiz-grade">${grade}</div>
+          <div style="font-size:13px;color:var(--text3);margin:12px 0">You got ${pct}% correct!</div>
+          <div style="margin-top:16px">
+            <button class="quiz-share-btn" style="background:#0F0F0F;color:#fff" onclick="window.open('https://x.com/intent/tweet?text='+encodeURIComponent('${shareText}'),'_blank')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              Share on X
+            </button>
+            <button class="quiz-share-btn" style="background:var(--purple);color:#fff" onclick="navigator.clipboard.writeText('${shareText}');this.textContent='Copied!'">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+              Copy Result
+            </button>
+          </div>
+          <button onclick="startQuiz()" style="margin-top:12px;padding:10px 24px;background:var(--warm-light);border:1.5px solid var(--warm);border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;color:var(--text2)">Try Again</button>
+          <button onclick="renderFunMenu()" style="margin-top:8px;padding:10px 24px;background:none;border:none;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;color:var(--text3)">← Back to Fun Zone</button>
+        </div>
+      </div>`;
+    return;
+  }
+  const q = QUIZ[quizIdx];
+  fv.innerHTML = `
+    <div class="quiz-box">
+      <div class="quiz-progress">Question ${quizIdx+1} of ${QUIZ.length}</div>
+      <div style="height:4px;background:var(--warm);border-radius:2px;margin-bottom:16px"><div style="height:4px;background:var(--purple);border-radius:2px;width:${(quizIdx/QUIZ.length)*100}%;transition:width .3s"></div></div>
+      <div class="quiz-q">${q.q}</div>
+      ${q.opts.map((o,i)=>`<button class="quiz-opt" onclick="answerQuiz(${i})">${o}</button>`).join('')}
+    </div>`;
+}
+function answerQuiz(i) {
+  const q = QUIZ[quizIdx];
+  const btns = document.querySelectorAll('.quiz-opt');
+  btns.forEach((b,idx)=>{
+    b.classList.add('disabled');
+    if(idx===q.ans) b.classList.add('correct');
+    if(idx===i && i!==q.ans) b.classList.add('wrong');
+  });
+  if(i===q.ans) quizScore++;
+  setTimeout(()=>{quizIdx++;renderQuizQ();},800);
+}
+
+// ── BTS Member Match ──
+const MATCH_QS = [
+  {q:"You have a free day in Seoul. What do you do first?", opts:[
+    {text:"Visit an art museum or gallery",scores:{RM:3,V:1}},
+    {text:"Find the best local restaurant",scores:{Jungkook:3,Jin:1}},
+    {text:"Hit a trendy cafe and people-watch",scores:{Suga:2,"J-Hope":1}},
+    {text:"Explore every street and take photos",scores:{Jimin:2,V:2}}
+  ]},
+  {q:"What's your ideal Seoul meal?", opts:[
+    {text:"Premium Korean BBQ 🥩",scores:{Jungkook:3,Jin:1}},
+    {text:"Street food at a market 🍢",scores:{Jimin:2,"J-Hope":1}},
+    {text:"A cozy bowl of ramyeon 🍜",scores:{Suga:3}},
+    {text:"Something new I've never tried 🍽️",scores:{V:2,RM:1}}
+  ]},
+  {q:"Pick a Seoul neighborhood:", opts:[
+    {text:"Hongdae — creative & young energy",scores:{"J-Hope":3,Jimin:1}},
+    {text:"Hannam-dong — sophisticated & chill",scores:{Suga:2,RM:1}},
+    {text:"Gangnam — trendy restaurants & nightlife",scores:{Jungkook:2,V:1}},
+    {text:"Jongno — traditional & historic",scores:{RM:3,Jin:1}}
+  ]},
+  {q:"How do you travel?", opts:[
+    {text:"Detailed plan, every minute scheduled",scores:{RM:2,Jimin:1}},
+    {text:"Rough plan, go with the flow",scores:{V:2,"J-Hope":1}},
+    {text:"No plan at all, just wander",scores:{Suga:2,V:1}},
+    {text:"Follow food recommendations only",scores:{Jungkook:3,Jin:1}}
+  ]},
+  {q:"Your travel must-have?", opts:[
+    {text:"Camera — gotta capture everything 📸",scores:{V:3,Jungkook:1}},
+    {text:"Music & headphones 🎧",scores:{Suga:3}},
+    {text:"Comfy shoes for walking all day 👟",scores:{"J-Hope":2,Jimin:2}},
+    {text:"A good book or journal 📖",scores:{RM:3,Jin:1}}
+  ]}
+];
+const MEMBER_INFO = {
+  RM:{emoji:"🐨",color:"#6D28D9",name:"RM (Namjoon)",desc:"You're the intellectual traveler! You love art, culture, and meaningful experiences. You'd spend hours at museums and find hidden gems in every neighborhood. Your Seoul picks: MMCA, Kukje Gallery, Samcheongdong."},
+  Jin:{emoji:"🐹",color:"#EC4899",name:"Jin (Seokjin)",desc:"You're the foodie traveler! You believe the best way to experience a city is through its food. You'd eat your way through Seoul with joy. Your Seoul picks: Yoojung Sikdang, Hannam-dong Gamjatang."},
+  Suga:{emoji:"🐱",color:"#1E1B4B",name:"Suga (Yoongi)",desc:"You're the chill traveler! You prefer cozy spots, great coffee, and taking things at your own pace. No rushing, just vibes. Your Seoul picks: Chompi, Seoul Forest, Yasunoya."},
+  "J-Hope":{emoji:"🐿️",color:"#F59E0B",name:"J-Hope (Hoseok)",desc:"You're the energy traveler! You light up every place you visit and love discovering vibrant neighborhoods. Your Seoul picks: Singsing Hoejip, F Lounge, Hongdae area."},
+  Jimin:{emoji:"🐥",color:"#F472B6",name:"Jimin",desc:"You're the aesthetic traveler! You love beautiful places, great photos, and sharing every moment with friends. Your Seoul picks: Ganggane Bindaetteok, Yeongdong Market."},
+  V:{emoji:"🐻",color:"#047857",name:"V (Taehyung)",desc:"You're the free-spirit traveler! You follow your heart, love unique experiences, and find beauty in unexpected places. Your Seoul picks: Uhyangwoo, DDP, hidden cafes."},
+  Jungkook:{emoji:"🐰",color:"#D97706",name:"Jungkook",desc:"You're the foodie adventurer! You want to try EVERYTHING — every BBQ spot, every street food stall, every hidden gem. Your Seoul picks: Gil-mok, Itaewon Hwaro, Choshim Hanwoo."}
+};
+let matchIdx=0, matchScores={};
+
+function startMatch() {
+  matchIdx=0;
+  matchScores={RM:0,Jin:0,Suga:0,"J-Hope":0,Jimin:0,V:0,Jungkook:0};
+  renderMatchQ();
+}
+function renderMatchQ() {
+  const fv = document.getElementById('fun-view');
+  if (matchIdx >= MATCH_QS.length) {
+    const winner = Object.entries(matchScores).sort((a,b)=>b[1]-a[1])[0][0];
+    const m = MEMBER_INFO[winner];
+    const shareText = `My BTS Seoul travel buddy is ${m.name}! ${m.emoji} Find yours at kpopseoulmap.com 💜`;
+    fv.innerHTML = `
+      <div class="quiz-box">
+        <div class="match-result-card" style="border-color:${m.color}22">
+          <div class="match-member">${m.emoji}</div>
+          <div style="font-size:12px;color:var(--text3);margin-bottom:4px">Your BTS Seoul travel buddy is...</div>
+          <div class="match-name" style="color:${m.color}">${m.name}</div>
+          <div class="match-reason">${m.desc}</div>
+        </div>
+        <div style="text-align:center;margin-top:18px">
+          <button class="quiz-share-btn" style="background:#0F0F0F;color:#fff" onclick="window.open('https://x.com/intent/tweet?text='+encodeURIComponent('${shareText}'),'_blank')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            Share on X
+          </button>
+          <button class="quiz-share-btn" style="background:var(--purple);color:#fff" onclick="navigator.clipboard.writeText('${shareText}');this.textContent='Copied!'">Copy Result</button>
+        </div>
+        <div style="text-align:center;margin-top:12px">
+          <button onclick="startMatch()" style="padding:10px 24px;background:var(--warm-light);border:1.5px solid var(--warm);border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;color:var(--text2)">Try Again</button>
+          <button onclick="renderFunMenu()" style="padding:10px 24px;background:none;border:none;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;color:var(--text3)">← Back</button>
+        </div>
+      </div>`;
+    return;
+  }
+  const q = MATCH_QS[matchIdx];
+  fv.innerHTML = `
+    <div class="quiz-box">
+      <div class="quiz-progress">Question ${matchIdx+1} of ${MATCH_QS.length}</div>
+      <div style="height:4px;background:var(--warm);border-radius:2px;margin-bottom:16px"><div style="height:4px;background:var(--pink);border-radius:2px;width:${(matchIdx/MATCH_QS.length)*100}%;transition:width .3s"></div></div>
+      <div class="quiz-q">${q.q}</div>
+      ${q.opts.map((o,i)=>`<button class="match-opt" onclick="answerMatch(${i})">${o.text}</button>`).join('')}
+    </div>`;
+}
+function answerMatch(i) {
+  const scores = MATCH_QS[matchIdx].opts[i].scores;
+  for(const[k,v] of Object.entries(scores)) matchScores[k]=(matchScores[k]||0)+v;
+  matchIdx++;
+  renderMatchQ();
 }
 
 function openShareModal() {
