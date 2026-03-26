@@ -1654,9 +1654,9 @@ function renderSmQ() {
           <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px">${L.must}</div>
           <div style="font-size:11px;color:var(--text3);margin-bottom:12px">${L.mustSub}</div>
           <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
-            ${isKr ? `
+            ${smLang==='kr' ? `
               <a href="https://link.coupang.com/a/ebO7c6" target="_blank" rel="noopener" style="flex:1;min-width:100px;text-decoration:none;background:linear-gradient(135deg,#7C3AED,#A855F7);color:#fff;padding:12px 8px;border-radius:12px;font-size:12px;font-weight:700;display:block">💿 ARIRANG 앨범</a>
-            ` : isJp ? `
+            ` : smLang==='jp' ? `
               <a href="https://www.amazon.co.jp/s?k=BTS+ARIRANG+album&tag=kpopseoulmap-22" target="_blank" rel="noopener" style="flex:1;min-width:100px;text-decoration:none;background:linear-gradient(135deg,#7C3AED,#A855F7);color:#fff;padding:12px 8px;border-radius:12px;font-size:12px;font-weight:700;display:block">💿 ARIRANG アルバム</a>
               <a href="https://www.amazon.co.jp/s?k=BTS+Beyond+the+Story&tag=kpopseoulmap-22" target="_blank" rel="noopener" style="flex:1;min-width:100px;text-decoration:none;background:var(--warm-light);color:var(--text);border:1.5px solid var(--warm);padding:12px 8px;border-radius:12px;font-size:12px;font-weight:700;display:block">📖 Beyond the Story</a>
             ` : `
