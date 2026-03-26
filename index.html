@@ -792,8 +792,13 @@ function renderFunMenu() {
     </div>
     <div class="fun-card" onclick="startMatch()">
       <div class="fun-emoji">💜</div>
-      <div class="fun-title">Which BTS Member Are You?</div>
-      <div class="fun-desc">Find your BTS travel buddy based on your Seoul travel style!</div>
+      <div class="fun-title">Who's Your Perfect BTS Travel Mate?</div>
+      <div class="fun-desc">BTS 멤버 중 나와 최적의 여행메이트는 누구인가요?</div>
+    </div>
+    <div class="fun-card" onclick="startSoulmate()">
+      <div class="fun-emoji">💘</div>
+      <div class="fun-title">Who's Your BTS Soulmate?</div>
+      <div class="fun-desc">BTS 멤버 중 나의 소울메이트는 누구일까요?</div>
     </div>`;
 }
 
@@ -820,31 +825,38 @@ function renderQuizQ() {
   const fv = document.getElementById('fun-view');
   if (quizIdx >= QUIZ.length) {
     const pct = Math.round(quizScore/QUIZ.length*100);
-    let grade='', emoji='';
-    if (pct>=90){grade='Ultimate ARMY 💜';emoji='🏆';}
-    else if(pct>=70){grade='True ARMY!';emoji='💜';}
-    else if(pct>=50){grade='Casual Fan';emoji='✨';}
-    else{grade='Baby ARMY';emoji='🌱';}
+    let grade='', emoji='', grad='', lightGrad='', gradeColor='';
+    if (pct>=90){grade='Ultimate ARMY';emoji='🏆';grad='linear-gradient(135deg,#7C3AED,#A855F7)';lightGrad='linear-gradient(135deg,#F3E8FF,#EDE9FE)';gradeColor='#7C3AED';}
+    else if(pct>=70){grade='True ARMY';emoji='💜';grad='linear-gradient(135deg,#EC4899,#F472B6)';lightGrad='linear-gradient(135deg,#FCE7F3,#FDF2F8)';gradeColor='#EC4899';}
+    else if(pct>=50){grade='Casual Fan';emoji='✨';grad='linear-gradient(135deg,#F59E0B,#FBBF24)';lightGrad='linear-gradient(135deg,#FEF3C7,#FFFBEB)';gradeColor='#D97706';}
+    else{grade='Baby ARMY';emoji='🌱';grad='linear-gradient(135deg,#10B981,#34D399)';lightGrad='linear-gradient(135deg,#D1FAE5,#ECFDF5)';gradeColor='#047857';}
     const shareText = `I scored ${quizScore}/${QUIZ.length} (${pct}%) on the BTS ARMY Quiz! ${emoji} ${grade} — Test yourself at https://kpopseoulmap.com 💜`;
     fv.innerHTML = `
-      <div class="quiz-box">
-        <div class="quiz-result">
-          <div style="font-size:48px;margin-bottom:8px">${emoji}</div>
-          <div class="quiz-score">${quizScore}/${QUIZ.length}</div>
-          <div class="quiz-grade">${grade}</div>
-          <div style="font-size:13px;color:var(--text3);margin:12px 0">You got ${pct}% correct!</div>
-          <div style="margin-top:16px">
-            <button class="quiz-share-btn" style="background:#0F0F0F;color:#fff" onclick="window.open('https://x.com/intent/tweet?text='+encodeURIComponent('${shareText}'),'_blank')">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-              Share on X
-            </button>
-            <button class="quiz-share-btn" style="background:var(--purple);color:#fff" onclick="navigator.clipboard.writeText('${shareText}');this.textContent='Copied!'">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-              Copy Result
-            </button>
+      <div style="max-width:400px;margin:0 auto">
+        <div style="border-radius:20px;overflow:hidden;box-shadow:0 8px 32px ${gradeColor}22">
+          <div style="background:${grad};padding:32px 24px 24px;text-align:center;position:relative;overflow:hidden">
+            <div style="position:absolute;top:-20px;right:-20px;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,.08)"></div>
+            <div style="font-size:12px;color:rgba(255,255,255,.7);letter-spacing:2px;margin-bottom:8px">BTS ARMY QUIZ RESULT</div>
+            <div style="font-size:64px;margin:8px 0">${emoji}</div>
+            <div style="font-size:56px;font-weight:800;color:#fff">${quizScore}/${QUIZ.length}</div>
+            <div style="font-size:20px;font-weight:700;color:rgba(255,255,255,.9);margin-top:4px">${grade}</div>
+            <div style="font-size:13px;color:rgba(255,255,255,.6);margin-top:4px">${pct}% correct</div>
           </div>
-          <button onclick="startQuiz()" style="margin-top:12px;padding:10px 24px;background:var(--warm-light);border:1.5px solid var(--warm);border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;color:var(--text2)">Try Again</button>
-          <button onclick="renderFunMenu()" style="margin-top:8px;padding:10px 24px;background:none;border:none;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;color:var(--text3)">← Back to Fun Zone</button>
+          <div style="background:var(--card);padding:16px 24px 20px;text-align:center">
+            <div style="font-size:10px;color:var(--text3)">kpopseoulmap.com 💜</div>
+          </div>
+        </div>
+        <div style="text-align:center;margin-top:18px">
+          <button class="quiz-share-btn" style="background:#0F0F0F;color:#fff" onclick="window.open('https://x.com/intent/tweet?text='+encodeURIComponent('${shareText}'),'_blank')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            Share on X
+          </button>
+          <button class="quiz-share-btn" style="background:linear-gradient(135deg,#F58529,#DD2A7B,#8134AF);color:#fff" onclick="navigator.clipboard.writeText('${shareText}');alert('Copied! Paste it on Instagram!')">Instagram</button>
+          <button class="quiz-share-btn" style="background:var(--purple);color:#fff" onclick="navigator.clipboard.writeText('${shareText}');this.textContent='Copied!'">Copy</button>
+        </div>
+        <div style="text-align:center;margin-top:12px">
+          <button onclick="startQuiz()" style="padding:10px 24px;background:var(--warm-light);border:1.5px solid var(--warm);border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;color:var(--text2)">Try Again</button>
+          <button onclick="renderFunMenu()" style="padding:10px 24px;background:none;border:none;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;color:var(--text3)">← Back</button>
         </div>
       </div>`;
     return;
@@ -904,13 +916,13 @@ const MATCH_QS = [
   ]}
 ];
 const MEMBER_INFO = {
-  RM:{emoji:"🐨",color:"#6D28D9",name:"RM (Namjoon)",desc:"You're the intellectual traveler! You love art, culture, and meaningful experiences. You'd spend hours at museums and find hidden gems in every neighborhood. Your Seoul picks: MMCA, Kukje Gallery, Samcheongdong."},
-  Jin:{emoji:"🐹",color:"#EC4899",name:"Jin (Seokjin)",desc:"You're the foodie traveler! You believe the best way to experience a city is through its food. You'd eat your way through Seoul with joy. Your Seoul picks: Yoojung Sikdang, Hannam-dong Gamjatang."},
-  Suga:{emoji:"🐱",color:"#1E1B4B",name:"Suga (Yoongi)",desc:"You're the chill traveler! You prefer cozy spots, great coffee, and taking things at your own pace. No rushing, just vibes. Your Seoul picks: Chompi, Seoul Forest, Yasunoya."},
-  "J-Hope":{emoji:"🐿️",color:"#F59E0B",name:"J-Hope (Hoseok)",desc:"You're the energy traveler! You light up every place you visit and love discovering vibrant neighborhoods. Your Seoul picks: Singsing Hoejip, F Lounge, Hongdae area."},
-  Jimin:{emoji:"🐥",color:"#F472B6",name:"Jimin",desc:"You're the aesthetic traveler! You love beautiful places, great photos, and sharing every moment with friends. Your Seoul picks: Ganggane Bindaetteok, Yeongdong Market."},
-  V:{emoji:"🐻",color:"#047857",name:"V (Taehyung)",desc:"You're the free-spirit traveler! You follow your heart, love unique experiences, and find beauty in unexpected places. Your Seoul picks: Uhyangwoo, DDP, hidden cafes."},
-  Jungkook:{emoji:"🐰",color:"#D97706",name:"Jungkook",desc:"You're the foodie adventurer! You want to try EVERYTHING — every BBQ spot, every street food stall, every hidden gem. Your Seoul picks: Gil-mok, Itaewon Hwaro, Choshim Hanwoo."}
+  RM:{emoji:"🐨",color:"#6D28D9",grad:"linear-gradient(135deg,#7C3AED,#4F46E5)",lightGrad:"linear-gradient(135deg,#EDE9FE,#E0E7FF)",name:"RM",fullName:"Kim Namjoon",desc:"You're the intellectual traveler! You love art, culture, and meaningful experiences. You'd spend hours at museums and find hidden gems in every neighborhood.",spots:"MMCA, Kukje Gallery, Samcheongdong"},
+  Jin:{emoji:"🐹",color:"#EC4899",grad:"linear-gradient(135deg,#EC4899,#F472B6)",lightGrad:"linear-gradient(135deg,#FCE7F3,#FDF2F8)",name:"Jin",fullName:"Kim Seokjin",desc:"You're the foodie traveler! You believe the best way to experience a city is through its food. You'd eat your way through Seoul with joy.",spots:"Yoojung Sikdang, Hannam-dong Gamjatang"},
+  Suga:{emoji:"🐱",color:"#1E1B4B",grad:"linear-gradient(135deg,#312E81,#1E1B4B)",lightGrad:"linear-gradient(135deg,#E8E8F0,#DDDDE8)",name:"Suga",fullName:"Min Yoongi",desc:"You're the chill traveler! You prefer cozy spots, great coffee, and taking things at your own pace. No rushing, just vibes.",spots:"Chompi, Seoul Forest, Yasunoya"},
+  "J-Hope":{emoji:"🐿️",color:"#EA580C",grad:"linear-gradient(135deg,#F59E0B,#EA580C)",lightGrad:"linear-gradient(135deg,#FEF3C7,#FFEDD5)",name:"J-Hope",fullName:"Jung Hoseok",desc:"You're the energy traveler! You light up every place you visit and love discovering vibrant neighborhoods.",spots:"Singsing Hoejip, F Lounge, Hongdae area"},
+  Jimin:{emoji:"🐥",color:"#DB2777",grad:"linear-gradient(135deg,#F472B6,#DB2777)",lightGrad:"linear-gradient(135deg,#FCE7F3,#FBE4F1)",name:"Jimin",fullName:"Park Jimin",desc:"You're the aesthetic traveler! You love beautiful places, great photos, and sharing every moment with friends.",spots:"Ganggane Bindaetteok, Yeongdong Market"},
+  V:{emoji:"🐻",color:"#047857",grad:"linear-gradient(135deg,#10B981,#047857)",lightGrad:"linear-gradient(135deg,#D1FAE5,#ECFDF5)",name:"V",fullName:"Kim Taehyung",desc:"You're the free-spirit traveler! You follow your heart, love unique experiences, and find beauty in unexpected places.",spots:"Uhyangwoo, DDP, hidden cafes"},
+  Jungkook:{emoji:"🐰",color:"#7C3AED",grad:"linear-gradient(135deg,#A855F7,#7C3AED)",lightGrad:"linear-gradient(135deg,#F3E8FF,#EDE9FE)",name:"Jungkook",fullName:"Jeon Jungkook",desc:"You're the foodie adventurer! You want to try EVERYTHING — every BBQ spot, every street food stall, every hidden gem.",spots:"Gil-mok, Itaewon Hwaro, Choshim Hanwoo"}
 };
 let matchIdx=0, matchScores={};
 
@@ -924,21 +936,42 @@ function renderMatchQ() {
   if (matchIdx >= MATCH_QS.length) {
     const winner = Object.entries(matchScores).sort((a,b)=>b[1]-a[1])[0][0];
     const m = MEMBER_INFO[winner];
-    const shareText = `My BTS Seoul travel buddy is ${m.name}! ${m.emoji} Find yours at https://kpopseoulmap.com 💜`;
+    const shareText = `My BTS Seoul Travel Mate is ${m.name}! ${m.emoji} Find yours at https://kpopseoulmap.com 💜`;
     fv.innerHTML = `
-      <div class="quiz-box">
-        <div class="match-result-card" style="border-color:${m.color}22">
-          <div class="match-member">${m.emoji}</div>
-          <div style="font-size:12px;color:var(--text3);margin-bottom:4px">Your BTS Seoul travel buddy is...</div>
-          <div class="match-name" style="color:${m.color}">${m.name}</div>
-          <div class="match-reason">${m.desc}</div>
+      <div style="max-width:400px;margin:0 auto">
+        <div style="border-radius:20px;overflow:hidden;box-shadow:0 8px 32px ${m.color}22">
+          <!-- Top color banner -->
+          <div style="background:${m.grad};padding:32px 24px 24px;text-align:center;position:relative;overflow:hidden">
+            <div style="position:absolute;top:-20px;right:-20px;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,.08)"></div>
+            <div style="position:absolute;bottom:-15px;left:-15px;width:70px;height:70px;border-radius:50%;background:rgba(255,255,255,.06)"></div>
+            <div style="font-size:12px;color:rgba(255,255,255,.7);letter-spacing:2px;margin-bottom:8px">YOUR BTS SEOUL TRAVEL MATE</div>
+            <div style="font-size:72px;margin:8px 0">${m.emoji}</div>
+            <div style="font-size:32px;font-weight:800;color:#fff;letter-spacing:1px">${m.name}</div>
+            <div style="font-size:13px;color:rgba(255,255,255,.7);margin-top:4px">${m.fullName}</div>
+          </div>
+          <!-- Bottom info section -->
+          <div style="background:var(--card);padding:20px 24px 24px">
+            <div style="font-size:14px;color:var(--text);line-height:1.7;margin-bottom:16px">${m.desc}</div>
+            <div style="background:${m.lightGrad};border-radius:12px;padding:14px 16px">
+              <div style="font-size:11px;font-weight:700;color:${m.color};letter-spacing:1px;margin-bottom:6px">📍 SEOUL SPOTS FOR YOU</div>
+              <div style="font-size:13px;color:var(--text2)">${m.spots}</div>
+            </div>
+            <div style="font-size:10px;color:var(--text3);text-align:center;margin-top:12px">kpopseoulmap.com 💜</div>
+          </div>
         </div>
+        <!-- Share buttons -->
         <div style="text-align:center;margin-top:18px">
+          <button class="quiz-share-btn" style="background:${m.color};color:#fff;width:80%;padding:14px" onclick="saveMatchCard('${winner}')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Save Image &amp; Share on X / Instagram!
+          </button>
+        </div>
+        <div style="text-align:center;margin-top:8px">
           <button class="quiz-share-btn" style="background:#0F0F0F;color:#fff" onclick="window.open('https://x.com/intent/tweet?text='+encodeURIComponent('${shareText}'),'_blank')">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-            Share on X
+            Text only on X
           </button>
-          <button class="quiz-share-btn" style="background:var(--purple);color:#fff" onclick="navigator.clipboard.writeText('${shareText}');this.textContent='Copied!'">Copy Result</button>
+          <button class="quiz-share-btn" style="background:var(--purple);color:#fff" onclick="navigator.clipboard.writeText('${shareText}');this.textContent='Copied!'">Copy</button>
         </div>
         <div style="text-align:center;margin-top:12px">
           <button onclick="startMatch()" style="padding:10px 24px;background:var(--warm-light);border:1.5px solid var(--warm);border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;color:var(--text2)">Try Again</button>
@@ -961,6 +994,511 @@ function answerMatch(i) {
   for(const[k,v] of Object.entries(scores)) matchScores[k]=(matchScores[k]||0)+v;
   matchIdx++;
   renderMatchQ();
+}
+
+function saveMatchCard(memberKey) {
+  const m = MEMBER_INFO[memberKey];
+  const canvas = document.createElement('canvas');
+  canvas.width = 720;
+  canvas.height = 960;
+  const ctx = canvas.getContext('2d');
+
+  // Parse gradient colors
+  const gradColors = {
+    RM:['#7C3AED','#4F46E5'], Jin:['#EC4899','#F472B6'], Suga:['#312E81','#1E1B4B'],
+    'J-Hope':['#F59E0B','#EA580C'], Jimin:['#F472B6','#DB2777'], V:['#10B981','#047857'],
+    Jungkook:['#A855F7','#7C3AED']
+  };
+  const gc = gradColors[memberKey] || ['#7C3AED','#4F46E5'];
+
+  // Top gradient section
+  const topH = 480;
+  const grd = ctx.createLinearGradient(0, 0, canvas.width, topH);
+  grd.addColorStop(0, gc[0]);
+  grd.addColorStop(1, gc[1]);
+  ctx.fillStyle = grd;
+  ctx.fillRect(0, 0, canvas.width, topH);
+
+  // Decorative circles
+  ctx.beginPath();
+  ctx.arc(canvas.width - 40, 40, 80, 0, Math.PI*2);
+  ctx.fillStyle = 'rgba(255,255,255,0.06)';
+  ctx.fill();
+  ctx.beginPath();
+  ctx.arc(40, topH - 40, 60, 0, Math.PI*2);
+  ctx.fillStyle = 'rgba(255,255,255,0.04)';
+  ctx.fill();
+
+  // "YOUR BTS SEOUL TRAVEL MATE" text
+  ctx.fillStyle = 'rgba(255,255,255,0.6)';
+  ctx.font = '500 16px Nunito, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.letterSpacing = '3px';
+  ctx.fillText('YOUR BTS SEOUL TRAVEL MATE', canvas.width/2, 60);
+
+  // Big emoji
+  ctx.font = '120px serif';
+  ctx.fillText(m.emoji, canvas.width/2, 230);
+
+  // Member name
+  ctx.fillStyle = '#FFFFFF';
+  ctx.font = '800 56px Nunito, sans-serif';
+  ctx.fillText(m.name, canvas.width/2, 320);
+
+  // Full name
+  ctx.fillStyle = 'rgba(255,255,255,0.6)';
+  ctx.font = '400 20px Nunito, sans-serif';
+  ctx.fillText(m.fullName, canvas.width/2, 360);
+
+  // Description - wrap text
+  ctx.fillStyle = 'rgba(255,255,255,0.85)';
+  ctx.font = '400 18px Nunito, sans-serif';
+  const words = m.desc.split(' ');
+  let line = '';
+  let y = 410;
+  words.forEach(word => {
+    const test = line + word + ' ';
+    if (ctx.measureText(test).width > 580) {
+      ctx.fillText(line.trim(), canvas.width/2, y);
+      line = word + ' ';
+      y += 26;
+    } else { line = test; }
+  });
+  ctx.fillText(line.trim(), canvas.width/2, y);
+
+  // Bottom white section
+  ctx.fillStyle = '#FAF7F2';
+  ctx.fillRect(0, topH, canvas.width, canvas.height - topH);
+
+  // Seoul spots box
+  const boxY = topH + 30;
+  const lightColors = {
+    RM:'#EDE9FE', Jin:'#FCE7F3', Suga:'#E8E8F0',
+    'J-Hope':'#FEF3C7', Jimin:'#FCE7F3', V:'#D1FAE5', Jungkook:'#F3E8FF'
+  };
+  ctx.fillStyle = lightColors[memberKey] || '#F3E8FF';
+  roundRect(ctx, 40, boxY, canvas.width-80, 100, 16);
+  ctx.fill();
+
+  ctx.fillStyle = m.color;
+  ctx.font = '700 14px Nunito, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('📍 SEOUL SPOTS FOR YOU', canvas.width/2, boxY+35);
+  ctx.fillStyle = '#6B5E80';
+  ctx.font = '400 18px Nunito, sans-serif';
+  ctx.fillText(m.spots, canvas.width/2, boxY+70);
+
+  // Watermark
+  ctx.fillStyle = '#9F93B0';
+  ctx.font = '400 16px Nunito, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('kpopseoulmap.com 💜', canvas.width/2, canvas.height - 40);
+
+  // Divider line
+  ctx.strokeStyle = m.color + '33';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(canvas.width/2 - 60, canvas.height - 60);
+  ctx.lineTo(canvas.width/2 + 60, canvas.height - 60);
+  ctx.stroke();
+
+  // Download
+  const link = document.createElement('a');
+  link.download = `my-bts-travel-mate-${m.name.toLowerCase()}.png`;
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x+r, y);
+  ctx.lineTo(x+w-r, y);
+  ctx.quadraticCurveTo(x+w, y, x+w, y+r);
+  ctx.lineTo(x+w, y+h-r);
+  ctx.quadraticCurveTo(x+w, y+h, x+w-r, y+h);
+  ctx.lineTo(x+r, y+h);
+  ctx.quadraticCurveTo(x, y+h, x, y+h-r);
+  ctx.lineTo(x, y+r);
+  ctx.quadraticCurveTo(x, y, x+r, y);
+  ctx.closePath();
+}
+
+// ── BTS Soulmate Quiz ──
+let smLang = 'en';
+const SM_QS_EN = [
+  {q:"Which BTS group song is your favorite?",opts:[
+    {text:"Spring Day 🌸",scores:{RM:3}},
+    {text:"IDOL 🎭",scores:{Jin:3}},
+    {text:"Black Swan 🦢",scores:{Suga:3}},
+    {text:"Dynamite 💥",scores:{"J-Hope":3}},
+    {text:"ON 🔥",scores:{Jimin:3}},
+    {text:"Mikrokosmos ✨",scores:{V:3}},
+    {text:"FIRE 🔥",scores:{Jungkook:3}}
+  ]},
+  {q:"How would you describe your personality?",opts:[
+    {text:"Logical & analytical 🧠",scores:{Jimin:3,Jin:1}},
+    {text:"Emotional & sensitive 💧",scores:{Suga:3,RM:1}},
+    {text:"Outgoing & energetic ⚡",scores:{V:3,Suga:1}},
+    {text:"Quiet & introverted 🌙",scores:{"J-Hope":3,Jungkook:1}}
+  ]},
+  {q:"What matters most to you in life?",opts:[
+    {text:"Personal growth & wisdom",scores:{RM:3}},
+    {text:"Family & warmth",scores:{Jin:3}},
+    {text:"Honesty & freedom",scores:{Suga:3}},
+    {text:"Joy & passion",scores:{"J-Hope":3}},
+    {text:"Love & friendship",scores:{Jimin:3}},
+    {text:"Creativity & dreams",scores:{V:3}},
+    {text:"Challenge & adventure",scores:{Jungkook:3}}
+  ]},
+  {q:"What does your ideal weekend look like?",opts:[
+    {text:"Museum or bookstore 📚",scores:{RM:3,V:1}},
+    {text:"Cooking a big meal for friends 🍳",scores:{Jin:3,Jimin:1}},
+    {text:"Staying home making music/art 🎨",scores:{Suga:3,V:1}},
+    {text:"Dancing or working out 💪",scores:{"J-Hope":3,Jungkook:1}},
+    {text:"Cafe-hopping with a close friend ☕",scores:{Jimin:2,V:2}},
+    {text:"Trying something new & extreme 🏄",scores:{Jungkook:3,"J-Hope":1}}
+  ]},
+  {q:"In a conflict, you usually...",opts:[
+    {text:"Say it directly, no sugarcoating 💬",scores:{Jimin:3}},
+    {text:"Stay quiet and process alone 🤫",scores:{"J-Hope":3}},
+    {text:"Try to understand both sides 🤝",scores:{Suga:3}},
+    {text:"Use humor to lighten the mood 😄",scores:{V:3}}
+  ]},
+  {q:"What attracts you most in a person?",opts:[
+    {text:"Deep conversations about life 🌌",scores:{RM:3}},
+    {text:"Making me laugh nonstop 😂",scores:{Jin:3}},
+    {text:"Quiet understanding without words 🤫",scores:{Suga:3}},
+    {text:"Positive energy that lifts me up ☀️",scores:{"J-Hope":3}},
+    {text:"Sincere warmth and loyalty 🫶",scores:{Jimin:3}},
+    {text:"A unique worldview that inspires me 🎨",scores:{V:3}},
+    {text:"Passion and determination 🔥",scores:{Jungkook:3}}
+  ]},
+  {q:"Pick a color that speaks to you:",opts:[
+    {text:"Deep blue 🔵",scores:{RM:2,Suga:1}},
+    {text:"Warm pink 🩷",scores:{Jin:2,Jimin:1}},
+    {text:"Black 🖤",scores:{Suga:2,Jungkook:1}},
+    {text:"Bright yellow/orange 🟡",scores:{"J-Hope":3}},
+    {text:"Soft purple 💜",scores:{Jimin:2,V:1}},
+    {text:"Forest green 🌿",scores:{V:2,RM:1}},
+    {text:"Bold red ❤️",scores:{Jungkook:2,"J-Hope":1}}
+  ]},
+  {q:"What's your love language?",opts:[
+    {text:"Words of affirmation 💌",scores:{RM:2,Jimin:2}},
+    {text:"Quality time ⏰",scores:{Suga:2,V:2}},
+    {text:"Acts of service 🤲",scores:{Jin:3,"J-Hope":1}},
+    {text:"Physical touch 🤗",scores:{Jimin:2,Jungkook:2}},
+    {text:"Gift giving 🎁",scores:{Jin:2,V:1}}
+  ]},
+  {q:"When you're stressed, you...",opts:[
+    {text:"Write or journal my thoughts ✍️",scores:{Suga:2,RM:1}},
+    {text:"Talk it out with someone 🗣️",scores:{V:2,Jin:1}},
+    {text:"Exercise or move my body 🏃",scores:{Jimin:2,Jungkook:2}},
+    {text:"Listen to music alone 🎧",scores:{"J-Hope":2,Suga:1}},
+    {text:"Eat comfort food 🍜",scores:{Jin:2,Jungkook:1}}
+  ]},
+  {q:"Describe your dream life in one word:",opts:[
+    {text:"Meaningful 📖",scores:{RM:3}},
+    {text:"Peaceful 🕊️",scores:{Jin:2,Suga:2}},
+    {text:"Creative 🎭",scores:{V:3}},
+    {text:"Exciting 🎢",scores:{Jungkook:2,"J-Hope":2}},
+    {text:"Loving 💗",scores:{Jimin:3}},
+    {text:"Free 🦋",scores:{Suga:2,V:2}}
+  ]}
+];
+const SM_QS_KR = [
+  {q:"가장 좋아하는 BTS 단체곡은?",opts:[
+    {text:"봄날 (Spring Day) 🌸",scores:{RM:3}},
+    {text:"IDOL 🎭",scores:{Jin:3}},
+    {text:"Black Swan 🦢",scores:{Suga:3}},
+    {text:"Dynamite 💥",scores:{"J-Hope":3}},
+    {text:"ON 🔥",scores:{Jimin:3}},
+    {text:"소우주 (Mikrokosmos) ✨",scores:{V:3}},
+    {text:"FIRE (불타오르네) 🔥",scores:{Jungkook:3}}
+  ]},
+  {q:"당신의 성격을 가장 잘 표현하는 말은?",opts:[
+    {text:"이성적이고 분석적이다 🧠",scores:{Jimin:3,Jin:1}},
+    {text:"감성적이고 섬세하다 💧",scores:{Suga:3,RM:1}},
+    {text:"외향적이고 에너지가 넘친다 ⚡",scores:{V:3,Suga:1}},
+    {text:"조용하고 내성적이다 🌙",scores:{"J-Hope":3,Jungkook:1}}
+  ]},
+  {q:"인생에서 가장 중요한 것은?",opts:[
+    {text:"성장과 지혜",scores:{RM:3}},
+    {text:"가족과 따뜻함",scores:{Jin:3}},
+    {text:"솔직함과 자유",scores:{Suga:3}},
+    {text:"기쁨과 열정",scores:{"J-Hope":3}},
+    {text:"사랑과 우정",scores:{Jimin:3}},
+    {text:"창의성과 꿈",scores:{V:3}},
+    {text:"도전과 모험",scores:{Jungkook:3}}
+  ]},
+  {q:"이상적인 주말은?",opts:[
+    {text:"미술관이나 서점 가기 📚",scores:{RM:3,V:1}},
+    {text:"친구들에게 요리 해주기 🍳",scores:{Jin:3,Jimin:1}},
+    {text:"집에서 음악/그림 작업하기 🎨",scores:{Suga:3,V:1}},
+    {text:"춤추거나 운동하기 💪",scores:{"J-Hope":3,Jungkook:1}},
+    {text:"친한 친구랑 카페 투어 ☕",scores:{Jimin:2,V:2}},
+    {text:"새롭고 짜릿한 경험 도전 🏄",scores:{Jungkook:3,"J-Hope":1}}
+  ]},
+  {q:"갈등 상황에서 당신은?",opts:[
+    {text:"직접적으로 솔직하게 말한다 💬",scores:{Jimin:3}},
+    {text:"혼자 조용히 생각을 정리한다 🤫",scores:{"J-Hope":3}},
+    {text:"양쪽 입장을 모두 이해하려 한다 🤝",scores:{Suga:3}},
+    {text:"유머로 분위기를 풀려고 한다 😄",scores:{V:3}}
+  ]},
+  {q:"어떤 사람에게 가장 끌리나요?",opts:[
+    {text:"깊은 대화를 나눌 수 있는 사람 🌌",scores:{RM:3}},
+    {text:"나를 계속 웃게 만드는 사람 😂",scores:{Jin:3}},
+    {text:"말없이도 통하는 사람 🤫",scores:{Suga:3}},
+    {text:"긍정 에너지로 나를 끌어올려주는 사람 ☀️",scores:{"J-Hope":3}},
+    {text:"진심으로 따뜻하고 충직한 사람 🫶",scores:{Jimin:3}},
+    {text:"독특한 세계관으로 영감을 주는 사람 🎨",scores:{V:3}},
+    {text:"열정적이고 결단력 있는 사람 🔥",scores:{Jungkook:3}}
+  ]},
+  {q:"당신에게 끌리는 색은?",opts:[
+    {text:"깊은 파랑 🔵",scores:{RM:2,Suga:1}},
+    {text:"따뜻한 분홍 🩷",scores:{Jin:2,Jimin:1}},
+    {text:"블랙 🖤",scores:{Suga:2,Jungkook:1}},
+    {text:"밝은 노랑/주황 🟡",scores:{"J-Hope":3}},
+    {text:"부드러운 보라 💜",scores:{Jimin:2,V:1}},
+    {text:"숲의 초록 🌿",scores:{V:2,RM:1}},
+    {text:"강렬한 빨강 ❤️",scores:{Jungkook:2,"J-Hope":1}}
+  ]},
+  {q:"당신의 사랑의 언어는?",opts:[
+    {text:"칭찬과 인정의 말 💌",scores:{RM:2,Jimin:2}},
+    {text:"함께하는 시간 ⏰",scores:{Suga:2,V:2}},
+    {text:"행동으로 보여주는 배려 🤲",scores:{Jin:3,"J-Hope":1}},
+    {text:"스킨십 🤗",scores:{Jimin:2,Jungkook:2}},
+    {text:"선물 🎁",scores:{Jin:2,V:1}}
+  ]},
+  {q:"스트레스를 받으면?",opts:[
+    {text:"글을 쓰거나 일기를 적는다 ✍️",scores:{Suga:2,RM:1}},
+    {text:"누군가에게 이야기한다 🗣️",scores:{V:2,Jin:1}},
+    {text:"운동하거나 몸을 움직인다 🏃",scores:{Jimin:2,Jungkook:2}},
+    {text:"혼자 음악을 듣는다 🎧",scores:{"J-Hope":2,Suga:1}},
+    {text:"맛있는 것을 먹는다 🍜",scores:{Jin:2,Jungkook:1}}
+  ]},
+  {q:"꿈꾸는 삶을 한 단어로?",opts:[
+    {text:"의미있는 📖",scores:{RM:3}},
+    {text:"평화로운 🕊️",scores:{Jin:2,Suga:2}},
+    {text:"창의적인 🎭",scores:{V:3}},
+    {text:"짜릿한 🎢",scores:{Jungkook:2,"J-Hope":2}},
+    {text:"사랑이 넘치는 💗",scores:{Jimin:3}},
+    {text:"자유로운 🦋",scores:{Suga:2,V:2}}
+  ]}
+];
+const SM_INFO = {
+  RM:{emoji:"🐨",color:"#6D28D9",grad:"linear-gradient(135deg,#7C3AED,#4F46E5)",lightGrad:"linear-gradient(135deg,#EDE9FE,#E0E7FF)",name:"RM",fullName:"Kim Namjoon",
+    desc_en:"Your soulmate is RM — the thinker, the dreamer, the one who finds poetry in everyday life. Together, you'd have conversations that last until sunrise, visit every museum in the city, and inspire each other to see the world differently.",
+    desc_kr:"당신의 소울메이트는 RM — 생각이 깊고, 일상에서 시를 찾는 사람. 함께라면 해가 뜰 때까지 대화하고, 도시의 모든 미술관을 돌아다니며, 서로에게 세상을 다르게 보는 영감을 줄 거예요.",
+    why_en:"You balance each other — your energy grounds his wandering mind, and his depth pulls you into worlds you never knew existed.",
+    why_kr:"서로를 보완해요 — 당신의 에너지가 그의 방황하는 마음을 잡아주고, 그의 깊이가 당신을 몰랐던 세계로 이끌어요.",
+    date_en:"Walk through MMCA together, grab Samcheongdong hotteok, then sit by the Han River talking about life.",
+    date_kr:"국립현대미술관을 함께 걷고, 삼청동 호떡을 먹고, 한강에 앉아 인생 이야기를 나눠요."},
+  Jin:{emoji:"🐹",color:"#EC4899",grad:"linear-gradient(135deg,#EC4899,#F472B6)",lightGrad:"linear-gradient(135deg,#FCE7F3,#FDF2F8)",name:"Jin",fullName:"Kim Seokjin",
+    desc_en:"Your soulmate is Jin — the one who turns ordinary moments into the happiest memories. He'll cook you the best meal, make you laugh until you cry, and always make sure you feel loved and safe.",
+    desc_kr:"당신의 소울메이트는 진 — 평범한 순간을 가장 행복한 기억으로 만드는 사람. 최고의 요리를 해주고, 울 때까지 웃기고, 항상 사랑받고 안전하다고 느끼게 해줄 거예요.",
+    why_en:"He needs someone who appreciates his warmth beyond the jokes, and you see right through to his caring heart.",
+    why_kr:"그는 유머 너머의 따뜻함을 알아주는 사람이 필요하고, 당신은 그의 따뜻한 마음을 꿰뚫어 봐요.",
+    date_en:"Eat your way through Hannam-dong gamjatang, try cooking together, then compete at a game cafe.",
+    date_kr:"한남동 감자탕을 함께 먹고, 요리를 같이 하고, 보드게임 카페에서 대결해요."},
+  Suga:{emoji:"🐱",color:"#1E1B4B",grad:"linear-gradient(135deg,#312E81,#1E1B4B)",lightGrad:"linear-gradient(135deg,#E8E8F0,#DDDDE8)",name:"Suga",fullName:"Min Yoongi",
+    desc_en:"Your soulmate is Suga — the quiet flame that burns steady. He won't say much, but every word carries weight. Together, you'd share comfortable silences, create music at 3am, and understand each other without needing to explain.",
+    desc_kr:"당신의 소울메이트는 슈가 — 조용하지만 꾸준히 타오르는 불꽃. 말은 많지 않지만 한마디 한마디에 무게가 있어요. 함께라면 편안한 침묵을 나누고, 새벽 3시에 음악을 만들고, 설명 없이도 서로를 이해해요.",
+    why_en:"Your warmth breaks through his walls, and his honesty gives you the realness you've been craving.",
+    why_kr:"당신의 따뜻함이 그의 벽을 허물고, 그의 솔직함이 당신이 갈망하던 진실됨을 줘요.",
+    date_en:"Visit Chompi for a quiet meal, walk through Seoul Forest, then find a hidden vinyl shop together.",
+    date_kr:"촘피에서 조용히 식사하고, 서울숲을 산책하고, 숨겨진 바이닐 가게를 함께 찾아요."},
+  "J-Hope":{emoji:"🐿️",color:"#EA580C",grad:"linear-gradient(135deg,#F59E0B,#EA580C)",lightGrad:"linear-gradient(135deg,#FEF3C7,#FFEDD5)",name:"J-Hope",fullName:"Jung Hoseok",
+    desc_en:"Your soulmate is J-Hope — pure sunshine in human form. He'll turn your worst day into your best, dance with you in the rain, and remind you that life is meant to be celebrated.",
+    desc_kr:"당신의 소울메이트는 제이홉 — 인간 형태의 순수한 햇살. 최악의 날을 최고의 날로 바꿔주고, 빗속에서 함께 춤추고, 인생은 축하하기 위한 것이라고 일깨워줘요.",
+    why_en:"Your calm steadiness is the anchor his bright energy needs, and his optimism lifts you when you're overthinking.",
+    why_kr:"당신의 차분한 안정감이 그의 밝은 에너지에 닻이 되고, 그의 긍정이 당신이 과하게 생각할 때 들어올려줘요.",
+    date_en:"Start at Singsing for fresh sashimi, then F Lounge rooftop at sunset, ending with street food in Hongdae.",
+    date_kr:"싱싱횟집에서 회로 시작, 에프라운지 루프탑에서 석양, 홍대 거리 음식으로 마무리."},
+  Jimin:{emoji:"🐥",color:"#DB2777",grad:"linear-gradient(135deg,#F472B6,#DB2777)",lightGrad:"linear-gradient(135deg,#FCE7F3,#FBE4F1)",name:"Jimin",fullName:"Park Jimin",
+    desc_en:"Your soulmate is Jimin — the person who loves with every fiber of their being. He'll remember the little things, hold your hand without being asked, and make you feel like the most important person in the world.",
+    desc_kr:"당신의 소울메이트는 지민 — 온 존재로 사랑하는 사람. 작은 것들을 기억하고, 말하지 않아도 손을 잡아주고, 세상에서 가장 소중한 사람이라고 느끼게 해줘요.",
+    why_en:"Your strength gives him confidence, and his tenderness softens the parts of you that you keep guarded.",
+    why_kr:"당신의 강함이 그에게 자신감을 주고, 그의 다정함이 당신이 숨기던 부분을 부드럽게 해줘요.",
+    date_en:"Hanbok photos at Gyeongbokgung, bindaetteok at Ganggane, then a quiet evening walk along Cheonggyecheon.",
+    date_kr:"경복궁에서 한복 사진, 강가네에서 빈대떡, 청계천을 따라 조용한 저녁 산책."},
+  V:{emoji:"🐻",color:"#047857",grad:"linear-gradient(135deg,#10B981,#047857)",lightGrad:"linear-gradient(135deg,#D1FAE5,#ECFDF5)",name:"V",fullName:"Kim Taehyung",
+    desc_en:"Your soulmate is V — a soul from another era who sees beauty where others don't look. He'll take you to places you'd never find alone, play you songs at midnight, and love you in a way that feels like a vintage film.",
+    desc_kr:"당신의 소울메이트는 뷔 — 다른 시대에서 온 영혼, 남들이 보지 않는 곳에서 아름다움을 찾는 사람. 혼자서는 절대 못 찾을 곳으로 데려가고, 자정에 노래를 들려주고, 빈티지 영화 같은 사랑을 해줘요.",
+    why_en:"Your practicality keeps his dreams from floating away, and his imagination fills your world with color and wonder.",
+    why_kr:"당신의 현실감이 그의 꿈이 날아가지 않게 잡아주고, 그의 상상력이 당신의 세계를 색과 경이로 채워요.",
+    date_en:"Get lost in DDP's architecture, discover a hidden cafe in Ikseon-dong, then stargaze from Namsan Tower.",
+    date_kr:"DDP 건축물에 빠져들고, 익선동 숨겨진 카페를 발견하고, 남산타워에서 별을 봐요."},
+  Jungkook:{emoji:"🐰",color:"#7C3AED",grad:"linear-gradient(135deg,#A855F7,#7C3AED)",lightGrad:"linear-gradient(135deg,#F3E8FF,#EDE9FE)",name:"Jungkook",fullName:"Jeon Jungkook",
+    desc_en:"Your soulmate is Jungkook — the one who's shy at first but becomes your whole universe once he opens up. He'll challenge you to be better, surprise you with random acts of sweetness, and love you fiercely and quietly.",
+    desc_kr:"당신의 소울메이트는 정국 — 처음엔 수줍지만 마음을 열면 당신의 온 우주가 되는 사람. 더 나은 사람이 되도록 자극하고, 갑작스러운 다정함으로 놀라게 하고, 격렬하면서도 조용하게 사랑해요.",
+    why_en:"Your openness draws out his shy side, and his competitive fire pushes both of you to grow together.",
+    why_kr:"당신의 개방성이 그의 수줍은 면을 끌어내고, 그의 승부욕이 둘 다 함께 성장하게 해요.",
+    date_en:"BBQ at Gil-mok, then Itaewon Hwaro for dessert, and an evening at a noraebang singing your hearts out.",
+    date_kr:"길목에서 고기 먹고, 이태원화로에서 디저트, 그리고 노래방에서 마음껏 노래해요."}
+};
+let smIdx=0, smScores={};
+
+function startSoulmate(lang) {
+  if(!lang) {
+    document.getElementById('fun-view').innerHTML = `
+      <div class="quiz-box" style="text-align:center">
+        <div style="font-size:48px;margin-bottom:12px">💘</div>
+        <div style="font-size:18px;font-weight:700;color:var(--text);margin-bottom:6px">Who's Your BTS Soulmate?</div>
+        <div style="font-size:14px;color:var(--text2);margin-bottom:4px">BTS 멤버 중 나의 소울메이트는 누구일까요?</div>
+        <div style="font-size:12px;color:var(--text3);margin-bottom:24px">Choose your language / 언어를 선택하세요</div>
+        <button onclick="startSoulmate('en')" style="display:block;width:100%;padding:16px;margin-bottom:10px;background:linear-gradient(135deg,#7C3AED,#A855F7);color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit">🇬🇧 English</button>
+        <button onclick="startSoulmate('kr')" style="display:block;width:100%;padding:16px;background:linear-gradient(135deg,#EC4899,#F472B6);color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit">🇰🇷 한국어</button>
+        <button onclick="renderFunMenu()" style="margin-top:16px;padding:10px 24px;background:none;border:none;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;color:var(--text3)">← Back</button>
+      </div>`;
+    return;
+  }
+  smLang = lang;
+  smIdx=0;
+  smScores={RM:0,Jin:0,Suga:0,"J-Hope":0,Jimin:0,V:0,Jungkook:0};
+  renderSmQ();
+}
+function renderSmQ() {
+  const qs = smLang==='kr' ? SM_QS_KR : SM_QS_EN;
+  const fv = document.getElementById('fun-view');
+  if (smIdx >= qs.length) {
+    // Find winner; tiebreaker = Q6 (index 5)
+    const sorted = Object.entries(smScores).sort((a,b)=>b[1]-a[1]);
+    const winner = sorted[0][0];
+    const m = SM_INFO[winner];
+    const isKr = smLang==='kr';
+    const desc = isKr ? m.desc_kr : m.desc_en;
+    const why = isKr ? m.why_kr : m.why_en;
+    const date = isKr ? m.date_kr : m.date_en;
+    const label = isKr ? '나의 BTS 소울메이트' : 'YOUR BTS SOULMATE';
+    const whyLabel = isKr ? '💜 우리가 맞는 이유' : '💜 WHY YOU MATCH';
+    const dateLabel = isKr ? '📍 서울 데이트 코스' : '📍 YOUR SEOUL DATE';
+    const shareText = isKr
+      ? `나의 BTS 소울메이트는 ${m.name}! ${m.emoji} 너의 소울메이트는? https://kpopseoulmap.com 💜`
+      : `My BTS Soulmate is ${m.name}! ${m.emoji} Find yours at https://kpopseoulmap.com 💜`;
+    fv.innerHTML = `
+      <div style="max-width:400px;margin:0 auto">
+        <div style="border-radius:20px;overflow:hidden;box-shadow:0 8px 32px ${m.color}22">
+          <div style="background:${m.grad};padding:32px 24px 24px;text-align:center;position:relative;overflow:hidden">
+            <div style="position:absolute;top:-20px;right:-20px;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,.08)"></div>
+            <div style="position:absolute;bottom:-15px;left:-15px;width:70px;height:70px;border-radius:50%;background:rgba(255,255,255,.06)"></div>
+            <div style="font-size:12px;color:rgba(255,255,255,.7);letter-spacing:2px;margin-bottom:8px">${label}</div>
+            <div style="font-size:72px;margin:8px 0">${m.emoji}</div>
+            <div style="font-size:32px;font-weight:800;color:#fff;letter-spacing:1px">${m.name}</div>
+            <div style="font-size:13px;color:rgba(255,255,255,.7);margin-top:4px">${m.fullName}</div>
+          </div>
+          <div style="background:var(--card);padding:20px 24px 24px">
+            <div style="font-size:14px;color:var(--text);line-height:1.7;margin-bottom:16px">${desc}</div>
+            <div style="background:${m.lightGrad};border-radius:12px;padding:14px 16px;margin-bottom:12px">
+              <div style="font-size:11px;font-weight:700;color:${m.color};letter-spacing:1px;margin-bottom:6px">${whyLabel}</div>
+              <div style="font-size:13px;color:var(--text2)">${why}</div>
+            </div>
+            <div style="background:#FAF7F2;border:1px solid #E8DFD1;border-radius:12px;padding:14px 16px">
+              <div style="font-size:11px;font-weight:700;color:var(--text2);letter-spacing:1px;margin-bottom:6px">${dateLabel}</div>
+              <div style="font-size:13px;color:var(--text2)">${date}</div>
+            </div>
+            <div style="font-size:10px;color:var(--text3);text-align:center;margin-top:12px">kpopseoulmap.com 💜</div>
+          </div>
+        </div>
+        <div style="text-align:center;margin-top:18px">
+          <button class="quiz-share-btn" style="background:${m.color};color:#fff;width:80%;padding:14px" onclick="saveSoulmateCard('${winner}')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            ${isKr?'이미지 저장 & 공유하기!':'Save Image & Share!'}
+          </button>
+        </div>
+        <div style="text-align:center;margin-top:8px">
+          <button class="quiz-share-btn" style="background:#0F0F0F;color:#fff" onclick="window.open('https://x.com/intent/tweet?text='+encodeURIComponent('${shareText}'),'_blank')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            X
+          </button>
+          <button class="quiz-share-btn" style="background:linear-gradient(135deg,#F58529,#DD2A7B,#8134AF);color:#fff" onclick="navigator.clipboard.writeText('${shareText}');alert('${isKr?"복사 완료! 인스타그램에 붙여넣기 하세요!":"Copied! Paste it on Instagram!"}')">Instagram</button>
+          <button class="quiz-share-btn" style="background:var(--purple);color:#fff" onclick="navigator.clipboard.writeText('${shareText}');this.textContent='${isKr?"복사됨!":"Copied!"}'">Copy</button>
+        </div>
+        <div style="text-align:center;margin-top:12px">
+          <button onclick="startSoulmate('${smLang}')" style="padding:10px 24px;background:var(--warm-light);border:1.5px solid var(--warm);border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;color:var(--text2)">${isKr?'다시하기':'Try Again'}</button>
+          <button onclick="renderFunMenu()" style="padding:10px 24px;background:none;border:none;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;color:var(--text3)">← Back</button>
+        </div>
+      </div>`;
+    return;
+  }
+  const q = qs[smIdx];
+  const isKr = smLang==='kr';
+  fv.innerHTML = `
+    <div class="quiz-box">
+      <div class="quiz-progress">${isKr?'질문':'Question'} ${smIdx+1} / ${qs.length}</div>
+      <div style="height:4px;background:var(--warm);border-radius:2px;margin-bottom:16px"><div style="height:4px;background:#EC4899;border-radius:2px;width:${(smIdx/qs.length)*100}%;transition:width .3s"></div></div>
+      <div class="quiz-q">${q.q}</div>
+      ${q.opts.map((o,i)=>`<button class="match-opt" onclick="answerSm(${i})">${o.text}</button>`).join('')}
+    </div>`;
+}
+function answerSm(i) {
+  const qs = smLang==='kr' ? SM_QS_KR : SM_QS_EN;
+  const scores = qs[smIdx].opts[i].scores;
+  for(const[k,v] of Object.entries(scores)) smScores[k]=(smScores[k]||0)+v;
+  smIdx++;
+  renderSmQ();
+}
+
+function saveSoulmateCard(memberKey) {
+  const m = SM_INFO[memberKey];
+  const isKr = smLang==='kr';
+  const canvas = document.createElement('canvas');
+  canvas.width = 720;
+  canvas.height = 1080;
+  const ctx = canvas.getContext('2d');
+  const gc = {RM:['#7C3AED','#4F46E5'],Jin:['#EC4899','#F472B6'],Suga:['#312E81','#1E1B4B'],'J-Hope':['#F59E0B','#EA580C'],Jimin:['#F472B6','#DB2777'],V:['#10B981','#047857'],Jungkook:['#A855F7','#7C3AED']};
+  const c = gc[memberKey]||['#7C3AED','#4F46E5'];
+  // Top gradient
+  const topH = 420;
+  const grd = ctx.createLinearGradient(0,0,canvas.width,topH);
+  grd.addColorStop(0,c[0]); grd.addColorStop(1,c[1]);
+  ctx.fillStyle = grd;
+  ctx.fillRect(0,0,canvas.width,topH);
+  // Decorative circles
+  ctx.beginPath(); ctx.arc(canvas.width-40,40,80,0,Math.PI*2); ctx.fillStyle='rgba(255,255,255,0.06)'; ctx.fill();
+  ctx.beginPath(); ctx.arc(40,topH-40,60,0,Math.PI*2); ctx.fillStyle='rgba(255,255,255,0.04)'; ctx.fill();
+  // Label
+  ctx.fillStyle='rgba(255,255,255,0.6)'; ctx.font='500 16px Nunito,sans-serif'; ctx.textAlign='center';
+  ctx.fillText(isKr?'나의 BTS 소울메이트':'YOUR BTS SOULMATE',canvas.width/2,50);
+  // Emoji
+  ctx.font='100px serif'; ctx.fillText(m.emoji,canvas.width/2,190);
+  // Name
+  ctx.fillStyle='#FFF'; ctx.font='800 52px Nunito,sans-serif'; ctx.fillText(m.name,canvas.width/2,280);
+  ctx.fillStyle='rgba(255,255,255,0.6)'; ctx.font='400 20px Nunito,sans-serif'; ctx.fillText(m.fullName,canvas.width/2,315);
+  // Description - wrap
+  const desc = isKr ? m.desc_kr : m.desc_en;
+  ctx.fillStyle='rgba(255,255,255,0.85)'; ctx.font='400 17px Nunito,sans-serif';
+  let words=desc.split(' '), line='', y=360;
+  words.forEach(w=>{const t=line+w+' ';if(ctx.measureText(t).width>580){ctx.fillText(line.trim(),canvas.width/2,y);line=w+' ';y+=24;}else{line=t;}});
+  ctx.fillText(line.trim(),canvas.width/2,y);
+  // Bottom section
+  ctx.fillStyle='#FAF7F2'; ctx.fillRect(0,topH,canvas.width,canvas.height-topH);
+  // WHY box
+  const lightC={RM:'#EDE9FE',Jin:'#FCE7F3',Suga:'#E8E8F0','J-Hope':'#FEF3C7',Jimin:'#FCE7F3',V:'#D1FAE5',Jungkook:'#F3E8FF'};
+  ctx.fillStyle=lightC[memberKey]||'#F3E8FF'; roundRect(ctx,40,topH+25,canvas.width-80,110,16); ctx.fill();
+  ctx.fillStyle=m.color; ctx.font='700 14px Nunito,sans-serif'; ctx.textAlign='center';
+  ctx.fillText(isKr?'💜 우리가 맞는 이유':'💜 WHY YOU MATCH',canvas.width/2,topH+55);
+  ctx.fillStyle='#6B5E80'; ctx.font='400 16px Nunito,sans-serif';
+  const why=isKr?m.why_kr:m.why_en; let wLine='',wY=topH+80;
+  why.split(' ').forEach(w=>{const t=wLine+w+' ';if(ctx.measureText(t).width>560){ctx.fillText(wLine.trim(),canvas.width/2,wY);wLine=w+' ';wY+=22;}else{wLine=t;}});
+  ctx.fillText(wLine.trim(),canvas.width/2,wY);
+  // Date box
+  ctx.fillStyle='#F5F0E8'; roundRect(ctx,40,topH+155,canvas.width-80,100,16); ctx.fill();
+  ctx.fillStyle='#6B5E80'; ctx.font='700 14px Nunito,sans-serif';
+  ctx.fillText(isKr?'📍 서울 데이트 코스':'📍 YOUR SEOUL DATE',canvas.width/2,topH+185);
+  ctx.font='400 16px Nunito,sans-serif';
+  const date=isKr?m.date_kr:m.date_en; let dLine='',dY=topH+210;
+  date.split(' ').forEach(w=>{const t=dLine+w+' ';if(ctx.measureText(t).width>560){ctx.fillText(dLine.trim(),canvas.width/2,dY);dLine=w+' ';dY+=22;}else{dLine=t;}});
+  ctx.fillText(dLine.trim(),canvas.width/2,dY);
+  // Watermark
+  ctx.fillStyle='#9F93B0'; ctx.font='400 16px Nunito,sans-serif';
+  ctx.fillText('kpopseoulmap.com 💜',canvas.width/2,canvas.height-40);
+  ctx.strokeStyle=m.color+'33'; ctx.lineWidth=2; ctx.beginPath();
+  ctx.moveTo(canvas.width/2-60,canvas.height-60); ctx.lineTo(canvas.width/2+60,canvas.height-60); ctx.stroke();
+  // Download
+  const link=document.createElement('a');
+  link.download=`my-bts-soulmate-${m.name.toLowerCase()}.png`;
+  link.href=canvas.toDataURL('image/png');
+  link.click();
 }
 
 function openShareModal() {
