@@ -823,7 +823,7 @@ function renderQuizQ() {
     else if(pct>=70){grade='True ARMY!';emoji='💜';}
     else if(pct>=50){grade='Casual Fan';emoji='✨';}
     else{grade='Baby ARMY';emoji='🌱';}
-    const shareText = `I scored ${quizScore}/${QUIZ.length} (${pct}%) on the BTS ARMY Quiz! ${emoji} ${grade} — Test yourself at kpopseoulmap.com 💜`;
+    const shareText = `I scored ${quizScore}/${QUIZ.length} (${pct}%) on the BTS ARMY Quiz! ${emoji} ${grade} — Test yourself at https://kpopseoulmap.com 💜`;
     fv.innerHTML = `
       <div class="quiz-box">
         <div class="quiz-result">
@@ -922,7 +922,7 @@ function renderMatchQ() {
   if (matchIdx >= MATCH_QS.length) {
     const winner = Object.entries(matchScores).sort((a,b)=>b[1]-a[1])[0][0];
     const m = MEMBER_INFO[winner];
-    const shareText = `My BTS Seoul travel buddy is ${m.name}! ${m.emoji} Find yours at kpopseoulmap.com 💜`;
+    const shareText = `My BTS Seoul travel buddy is ${m.name}! ${m.emoji} Find yours at https://kpopseoulmap.com 💜`;
     fv.innerHTML = `
       <div class="quiz-box">
         <div class="match-result-card" style="border-color:${m.color}22">
