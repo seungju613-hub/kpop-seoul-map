@@ -65,7 +65,7 @@ body{font-family:'Nunito','Noto Sans KR',sans-serif;background:var(--bg);color:v
 .mchip.active{border-color:var(--purple);background:var(--purple-pale);color:var(--purple-dark)}
 
 .tabs{display:flex;background:var(--card);border-bottom:2px solid var(--warm);position:sticky;top:0;z-index:50}
-.tab{flex:1;padding:12px;text-align:center;font-size:12px;font-weight:700;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s}
+.tab{flex:1;padding:10px 4px;text-align:center;font-size:11px;font-weight:700;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s}
 .tab.active{color:var(--purple-dark);border-bottom-color:var(--purple)}
 .tab svg{display:block;margin:0 auto 4px;width:20px;height:20px}
 
@@ -99,6 +99,7 @@ body{font-family:'Nunito','Noto Sans KR',sans-serif;background:var(--bg);color:v
 .detail-overlay.show{display:flex}
 .detail-sheet{background:var(--bg);border-radius:20px 20px 0 0;width:100%;max-width:500px;max-height:85vh;overflow-y:auto;padding:0;animation:slideUp .3s ease}
 @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+@keyframes slideDown{from{transform:translate(-50%,-100%);opacity:0}to{transform:translate(-50%,0);opacity:1}}
 .detail-handle{width:40px;height:4px;background:var(--warm);border-radius:2px;margin:12px auto}
 .detail-header{padding:0 20px 16px;border-bottom:2px solid var(--warm)}
 .detail-body{padding:20px}
@@ -177,6 +178,51 @@ body{font-family:'Nunito','Noto Sans KR',sans-serif;background:var(--bg);color:v
 .match-name{font-size:24px;font-weight:800;color:var(--purple-dark)}
 .match-reason{font-size:13px;color:var(--text2);margin-top:8px;line-height:1.6}
 
+/* Concert Buddy */
+.cb-header{background:linear-gradient(135deg,#1E1B4B,#4C1D95,#7C3AED);border-radius:var(--radius);padding:24px 20px;margin-bottom:16px;text-align:center;position:relative;overflow:hidden}
+.cb-header::before{content:'';position:absolute;top:-30px;right:-30px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.05)}
+.cb-header::after{content:'';position:absolute;bottom:-20px;left:10px;width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,.03)}
+.cb-header h2{font-size:16px;font-weight:800;color:#fff;letter-spacing:.5px;position:relative;z-index:1}
+.cb-header .cb-sub{font-size:12px;color:rgba(255,255,255,.65);margin-top:4px;position:relative;z-index:1}
+.cb-safety{font-size:11px;color:var(--text3);text-align:center;padding:8px 12px;line-height:1.5;margin-bottom:12px}
+.cb-filters{display:flex;gap:6px;margin-bottom:14px;overflow-x:auto;padding-bottom:4px}
+.cb-filters::-webkit-scrollbar{display:none}
+.cb-fchip{flex-shrink:0;font-size:12px;padding:7px 16px;border-radius:20px;border:1.5px solid var(--warm);background:var(--card);color:var(--text2);cursor:pointer;font-family:inherit;font-weight:600;transition:all .2s}
+.cb-fchip.active{background:var(--purple);color:#fff;border-color:var(--purple)}
+.cb-card{background:var(--card);border-radius:var(--radius);padding:16px;border:1px solid var(--border);margin-bottom:10px;position:relative;transition:all .2s}
+.cb-card:hover{border-color:var(--purple-light);transform:translateY(-1px)}
+.cb-card-top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.cb-card-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--pink));display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.cb-card-name{font-size:15px;font-weight:700;color:var(--text)}
+.cb-card-handle{font-size:11px;color:var(--purple);font-weight:600;word-break:break-all}
+.cb-card-badges{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.cb-badge{font-size:10px;padding:4px 10px;border-radius:10px;font-weight:700}
+.cb-badge.day{background:var(--purple-pale);color:var(--purple-dark)}
+.cb-badge.country{background:var(--warm-light);color:var(--text)}
+.cb-badge.member{background:var(--pink-light);color:#BE185D}
+.cb-card-msg{font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:10px}
+.cb-card-actions{display:flex;gap:8px}
+.cb-card-actions button{flex:1;padding:10px;border-radius:10px;border:none;cursor:pointer;font-family:inherit;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:4px;transition:all .2s}
+.cb-form-group{margin-bottom:14px}
+.cb-form-group label{display:block;font-size:12px;font-weight:700;color:var(--text);margin-bottom:6px}
+.cb-form-group .cb-label-sub{font-size:10px;color:var(--text3);font-weight:400}
+.cb-input{width:100%;padding:12px 14px;border:1.5px solid var(--warm);border-radius:12px;font-family:inherit;font-size:13px;color:var(--text);background:var(--card);outline:none;transition:border-color .2s}
+.cb-input:focus{border-color:var(--purple)}
+.cb-input::placeholder{color:var(--text3)}
+.cb-checks{display:flex;flex-wrap:wrap;gap:8px}
+.cb-check{padding:10px 16px;border:1.5px solid var(--warm);border-radius:12px;font-size:12px;font-weight:600;color:var(--text2);cursor:pointer;font-family:inherit;background:var(--card);transition:all .2s;text-align:center}
+.cb-check.selected{border-color:var(--purple);background:var(--purple-pale);color:var(--purple-dark)}
+.cb-check:hover{border-color:var(--purple-light)}
+.cb-member-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.cb-member-btn{padding:10px 6px;border:1.5px solid var(--warm);border-radius:12px;font-size:11px;font-weight:600;color:var(--text2);cursor:pointer;font-family:inherit;background:var(--card);transition:all .2s;text-align:center;line-height:1.4}
+.cb-member-btn.selected{border-color:var(--purple);background:var(--purple-pale);color:var(--purple-dark)}
+.cb-member-btn:hover{border-color:var(--purple-light)}
+.cb-submit{width:100%;padding:14px;background:linear-gradient(135deg,#7C3AED,#A855F7);color:#fff;border:none;border-radius:14px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s;margin-top:4px}
+.cb-submit:hover{opacity:.9}
+.cb-submit:disabled{opacity:.5;cursor:not-allowed}
+.cb-empty{text-align:center;padding:40px 20px;color:var(--text3);font-size:13px}
+.cb-count{font-size:11px;color:var(--text3);text-align:center;margin-bottom:12px}
+
 @media(min-width:600px){
   .list{max-width:500px;margin:0 auto}
   .header,.member-filters,.tabs,.footer{max-width:500px;margin-left:auto;margin-right:auto}
@@ -245,12 +291,18 @@ body{font-family:'Nunito','Noto Sans KR',sans-serif;background:var(--bg);color:v
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
     Fun
   </div>
+  <div class="tab" data-tab="buddy" style="position:relative">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    Buddy
+    <span style="position:absolute;top:6px;right:calc(50% - 24px);width:7px;height:7px;background:#EF4444;border-radius:50%;border:1.5px solid var(--card)"></span>
+  </div>
 </div>
 
 <div id="map-view"></div>
 <div class="list" id="place-list"></div>
 <div class="list" id="course-view" style="display:none"></div>
 <div class="list" id="fun-view" style="display:none;padding:16px 12px"></div>
+<div class="list" id="buddy-view" style="display:none;padding:16px 12px"></div>
 
 <div class="list" id="trip-section" style="padding:16px 12px">
 <div class="area-label">PLAN YOUR TRIP</div>
@@ -400,36 +452,12 @@ body{font-family:'Nunito','Noto Sans KR',sans-serif;background:var(--bg);color:v
 <div style="margin-top:12px;padding:14px;background:var(--warm-light);border-radius:14px;border:1px dashed var(--warm);text-align:center">
 <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:6px">🤝 Want to be an ARMY Partner? / 파트너 입점 문의</div>
 <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:8px">
-<a href="mailto:kiki111111@naver.com" style="text-decoration:none;background:#fff;border:1.5px solid var(--warm);padding:8px 16px;border-radius:10px;font-size:11px;font-weight:700;color:var(--text)">📧 Email</a>
+<a href="/cdn-cgi/l/email-protection#6a010301035b5b5b5b5b5b2a040b1c0f1844090507" style="text-decoration:none;background:#fff;border:1.5px solid var(--warm);padding:8px 16px;border-radius:10px;font-size:11px;font-weight:700;color:var(--text)">📧 Email</a>
 <a href="http://pf.kakao.com/_HxlvUxj/chat" target="_blank" rel="noopener" style="text-decoration:none;background:#FEE500;border:1.5px solid #F5D800;padding:8px 16px;border-radius:10px;font-size:11px;font-weight:700;color:#3C1E1E">💬 KakaoTalk</a>
 </div>
 </div>
 
-<section style="padding:24px 16px;max-width:500px;margin:0 auto">
-<div style="background:var(--card);border-radius:var(--radius);padding:20px;border:1px solid var(--border)">
-<h2 style="font-size:16px;font-weight:800;color:var(--text);margin-bottom:6px">🐰 Jungkook's Favorite Restaurants in Seoul</h2>
-<p style="font-size:12px;color:var(--text2);line-height:1.7;margin-bottom:12px">BTS Jungkook is famous for his love of food — especially Korean BBQ. Here are the Seoul restaurants where Jungkook has been spotted, all available on our interactive map.</p>
-<div style="display:flex;flex-direction:column;gap:10px">
-<div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--warm-light);border-radius:10px">
-<span style="font-size:20px">🔥</span>
-<div><strong style="font-size:13px;color:var(--text)">Sutjang 숯장</strong><br><span style="font-size:11px;color:var(--text2)">Premium charcoal Korean BBQ · Jungkook's go-to spot for grilled meat</span></div>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--warm-light);border-radius:10px">
-<span style="font-size:20px">🏠</span>
-<div><strong style="font-size:13px;color:var(--text)">Jeongdeunjip 정든집</strong><br><span style="font-size:11px;color:var(--text2)">Traditional Korean restaurant · A cozy local favorite visited by Jungkook</span></div>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--warm-light);border-radius:10px">
-<span style="font-size:20px">🥩</span>
-<div><strong style="font-size:13px;color:var(--text)">Uhyangwoo 우향우</strong><br><span style="font-size:11px;color:var(--text2)">Premium Korean beef (hanwoo) restaurant · BTS members' favorite</span></div>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--warm-light);border-radius:10px">
-<span style="font-size:20px">🍖</span>
-<div><strong style="font-size:13px;color:var(--text)">Itaewon Hwaro 이태원 화로</strong><br><span style="font-size:11px;color:var(--text2)">Popular Korean BBQ in Itaewon · Featured in Jungkook's food adventures</span></div>
-</div>
-</div>
-<p style="font-size:11px;color:var(--text3);margin-top:12px;line-height:1.6">Explore all 74 BTS spots on our interactive Seoul map — including restaurants, cafes near HYBE, filming locations, and galleries. Take the BTS soulmate quiz available in 7 languages to find which member matches your travel style!</p>
-</div>
-</section>
+
 
 <div class="footer">
   Made with 💜 by <a href="https://x.com/bomnalcafe" target="_blank">@bomnalcafe</a><br>
@@ -488,7 +516,7 @@ body{font-family:'Nunito','Noto Sans KR',sans-serif;background:var(--bg);color:v
   </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
 <script>
 const ICONS = {
@@ -702,6 +730,7 @@ document.querySelectorAll('.tab').forEach(tab => {
     document.getElementById('place-list').style.display = 'none';
     document.getElementById('course-view').style.display = 'none';
     document.getElementById('fun-view').style.display = 'none';
+    document.getElementById('buddy-view').style.display = 'none';
     if (v === 'map') {
       document.getElementById('map-view').classList.add('show');
       initMap();
@@ -713,6 +742,9 @@ document.querySelectorAll('.tab').forEach(tab => {
     } else if (v === 'fun') {
       document.getElementById('fun-view').style.display = 'block';
       renderFunMenu();
+    } else if (v === 'buddy') {
+      document.getElementById('buddy-view').style.display = 'block';
+      showConcertBuddy();
     } else {
       document.getElementById('place-list').style.display = 'flex';
     }
@@ -842,6 +874,8 @@ function showCourseOnMap(courseIdx) {
   document.getElementById('map-view').classList.add('show');
   document.getElementById('place-list').style.display = 'none';
   document.getElementById('course-view').style.display = 'none';
+  document.getElementById('fun-view').style.display = 'none';
+  document.getElementById('buddy-view').style.display = 'none';
   initMap();
   setTimeout(()=>map.invalidateSize(),100);
   markers.forEach(m=>map.removeLayer(m));
@@ -1212,6 +1246,320 @@ function roundRect(ctx, x, y, w, h, r) {
   ctx.lineTo(x, y+r);
   ctx.quadraticCurveTo(x, y, x+r, y);
   ctx.closePath();
+}
+
+// ── Concert Buddy ──
+const CB_DAYS = [
+  {key:'day1', label:'Day 1: Apr 9', short:'Apr 9'},
+  {key:'day2', label:'Day 2: Apr 11', short:'Apr 11'},
+  {key:'day3', label:'Day 3: Apr 12', short:'Apr 12'}
+];
+const CB_MEMBERS = [
+  {key:'RM',label:'RM 🐨'},{key:'Jin',label:'Jin 🐹'},{key:'Suga',label:'Suga 🐱'},
+  {key:'J-Hope',label:'J-Hope 🐿️'},{key:'Jimin',label:'Jimin 🐥'},{key:'V',label:'V 🐻'},
+  {key:'Jungkook',label:'JK 🐰'},{key:'OT7',label:"Can't choose! 💜"}
+];
+const CB_MEMBER_EMOJI = {RM:'🐨',Jin:'🐹',Suga:'🐱','J-Hope':'🐿️',Jimin:'🐥',V:'🐻',Jungkook:'🐰',OT7:'💜'};
+const CB_COUNTRIES = [
+  '🇰🇷 Korea','🇯🇵 Japan','🇺🇸 USA','🇬🇧 UK','🇧🇷 Brazil','🇩🇪 Germany','🇫🇷 France',
+  '🇪🇸 Spain','🇮🇩 Indonesia','🇹🇭 Thailand','🇵🇭 Philippines','🇲🇽 Mexico','🇦🇺 Australia',
+  '🇨🇦 Canada','🇮🇳 India','🇹🇷 Turkey','🇸🇬 Singapore','🇲🇾 Malaysia','🇻🇳 Vietnam',
+  '🇹🇼 Taiwan','🇨🇳 China','🇳🇱 Netherlands','🇮🇹 Italy','🇵🇹 Portugal','🇦🇷 Argentina',
+  '🇨🇱 Chile','🇵🇪 Peru','🇨🇴 Colombia','🇸🇦 Saudi Arabia','🇦🇪 UAE','🇪🇬 Egypt',
+  '🇿🇦 South Africa','🇸🇪 Sweden','🇳🇴 Norway','🇵🇱 Poland','🇷🇴 Romania','🌍 Other'
+];
+let cbFilter = 'all';
+let cbBuddies = [];
+
+async function loadBuddies() {
+  try {
+    const r = await window.storage.get('concert-buddies', true);
+    cbBuddies = r ? JSON.parse(r.value) : [];
+  } catch(e) { cbBuddies = []; }
+}
+async function saveBuddies() {
+  try { await window.storage.set('concert-buddies', JSON.stringify(cbBuddies), true); } catch(e) { console.error('Storage error',e); }
+}
+function cbTimeAgo(ts) {
+  const diff = Date.now() - ts;
+  const mins = Math.floor(diff/60000);
+  if(mins<1) return 'just now';
+  if(mins<60) return mins+'m ago';
+  const hrs = Math.floor(mins/60);
+  if(hrs<24) return hrs+'h ago';
+  const days = Math.floor(hrs/24);
+  if(days<7) return days+'d ago';
+  return new Date(ts).toLocaleDateString('en',{month:'short',day:'numeric'});
+}
+
+function showConcertBuddy() {
+  const fv = document.getElementById('buddy-view');
+  fv.innerHTML = '<div class="cb-empty" style="padding:60px 20px"><div style="font-size:28px;margin-bottom:12px">🎵</div>Loading concert buddies...</div>';
+  loadBuddies().then(()=> renderConcertBuddyMain());
+}
+
+function renderConcertBuddyMain() {
+  const fv = document.getElementById('buddy-view');
+  const filtered = cbFilter==='all' ? cbBuddies : cbBuddies.filter(b=>b.days && b.days.includes(cbFilter));
+  const sorted = [...filtered].sort((a,b)=>(b.ts||0)-(a.ts||0));
+
+  let cardsHtml = '';
+  if(sorted.length===0) {
+    cardsHtml = '<div class="cb-empty">No buddies yet — be the first to post! 💜<br>아직 동행글이 없어요 — 첫 번째로 작성해보세요!</div>';
+  } else {
+    cardsHtml = sorted.map(b => {
+      const memberEmoji = CB_MEMBER_EMOJI[b.member] || '💜';
+      const dayBadges = (b.days||[]).map(d => {
+        const day = CB_DAYS.find(x=>x.key===d);
+        return day ? `<span class="cb-badge day">${day.short}</span>` : '';
+      }).join('');
+      const flagParts = (b.country||'').split(' ');
+      const flag = flagParts[0] || '🌍';
+      return `
+        <div class="cb-card">
+          <div class="cb-card-top">
+            <div class="cb-card-avatar">${memberEmoji}</div>
+            <div style="flex:1;min-width:0">
+              <div class="cb-card-name">${escHtml(b.nick)}</div>
+              <div class="cb-card-handle">${escHtml(b.handle)}</div>
+            </div>
+            <div style="font-size:10px;color:var(--text3);flex-shrink:0">${cbTimeAgo(b.ts)}</div>
+          </div>
+          <div class="cb-card-badges">
+            ${dayBadges}
+            <span class="cb-badge country">${escHtml(b.country)}</span>
+            <span class="cb-badge member">${memberEmoji} ${b.member==='OT7'?'OT7':escHtml(b.member)}</span>
+          </div>
+          ${b.msg ? `<div class="cb-card-msg">"${escHtml(b.msg)}"</div>` : ''}
+          <div class="cb-card-actions">
+            <button style="background:#0F0F0F;color:#fff" onclick="shareBuddyX(${b.ts})">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              Share
+            </button>
+            <button style="background:linear-gradient(135deg,#F58529,#DD2A7B,#8134AF);color:#fff" onclick="shareBuddyIG(${b.ts})">IG</button>
+            <button style="background:var(--purple);color:#fff" onclick="saveBuddyCardImage(${b.ts})">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Save
+            </button>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  fv.innerHTML = `
+    <div class="cb-header">
+      <h2>BTS WORLD TOUR 'ARIRANG' IN GOYANG 🎵</h2>
+      <div class="cb-sub">Find Your Concert Buddy · 콘서트 동행 찾기</div>
+    </div>
+    <div class="cb-safety">We provide a space to connect — please stay safe! 💜</div>
+    <button onclick="showBuddyForm()" style="width:100%;padding:14px;background:linear-gradient(135deg,#4C1D95,#7C3AED);color:#fff;border:none;border-radius:14px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:14px;display:flex;align-items:center;justify-content:center;gap:8px">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Write a Card · 카드 작성하기
+    </button>
+    <div class="cb-filters">
+      <button class="cb-fchip ${cbFilter==='all'?'active':''}" onclick="cbFilter='all';renderConcertBuddyMain()">All</button>
+      ${CB_DAYS.map(d=>`<button class="cb-fchip ${cbFilter===d.key?'active':''}" onclick="cbFilter='${d.key}';renderConcertBuddyMain()">${d.label}</button>`).join('')}
+    </div>
+    <div class="cb-count">${sorted.length} ${sorted.length===1?'buddy':'buddies'} found</div>
+    ${cardsHtml}
+    <div style="margin-top:16px;padding:14px;background:var(--warm-light);border-radius:14px;border:1px solid var(--warm);font-size:11px;color:var(--text2);line-height:1.7;text-align:center">
+      This is a fan community space. Please protect your personal information, and never share financial details or make monetary transactions with people you meet here. Stay safe and have an amazing concert experience! 💜<br>
+      <span style="color:var(--text3)">안전한 만남을 위해 개인정보와 금전거래에 주의해주세요 💜</span>
+    </div>`;
+}
+
+function escHtml(s) {
+  const d = document.createElement('div');
+  d.textContent = s||'';
+  return d.innerHTML;
+}
+
+function showBuddyForm() {
+  const fv = document.getElementById('buddy-view');
+  fv.innerHTML = `
+    <div class="cb-header">
+      <h2>BTS WORLD TOUR 'ARIRANG' IN GOYANG 🎵</h2>
+      <div class="cb-sub">Write Your Card · 카드 작성하기</div>
+    </div>
+    <div class="quiz-box" style="padding:20px">
+      <div class="cb-form-group">
+        <label>Nickname 닉네임 <span style="color:#EF4444">*</span></label>
+        <input class="cb-input" id="cb-nick" placeholder="Your nickname" maxlength="30">
+      </div>
+      <div class="cb-form-group">
+        <label>X or Instagram 연락수단 <span style="color:#EF4444">*</span></label>
+        <input class="cb-input" id="cb-handle" placeholder="@youraccount" maxlength="50">
+      </div>
+      <div class="cb-form-group">
+        <label>Concert Date 콘서트 날짜 <span class="cb-label-sub">(pick one or more)</span></label>
+        <div class="cb-checks" id="cb-days">
+          ${CB_DAYS.map(d=>`<button class="cb-check" data-day="${d.key}" onclick="this.classList.toggle('selected')" style="flex:1">${d.label}</button>`).join('')}
+        </div>
+      </div>
+      <div class="cb-form-group">
+        <label style="margin-bottom:2px">
+          <span style="font-size:13px">I'm an ARMY who loves all 7 💜</span>
+        </label>
+        <div style="font-size:12px;color:var(--text2);margin-bottom:10px;line-height:1.5">
+          But who makes your heart beat just a little more?<br>
+          <span style="color:var(--text3);font-size:11px">7명 모두 사랑하지만, 그중에서도 내 심장을 조금 더 뛰게 하는 멤버는?</span>
+        </div>
+        <div class="cb-member-grid" id="cb-member">
+          ${CB_MEMBERS.map(m=>`<button class="cb-member-btn" data-member="${m.key}" onclick="document.querySelectorAll('#cb-member .cb-member-btn').forEach(b=>b.classList.remove('selected'));this.classList.add('selected')">${m.label}</button>`).join('')}
+        </div>
+      </div>
+      <div class="cb-form-group">
+        <label>Country 국가</label>
+        <select class="cb-input" id="cb-country" style="appearance:auto">
+          <option value="">Select your country</option>
+          ${CB_COUNTRIES.map(c=>`<option value="${c}">${c}</option>`).join('')}
+        </select>
+      </div>
+      <div class="cb-form-group">
+        <label>Message 한줄 메시지 <span class="cb-label-sub">(max 100 chars)</span></label>
+        <input class="cb-input" id="cb-msg" placeholder="Looking for a buddy to enjoy the concert together! 💜" maxlength="100" oninput="document.getElementById('cb-char-count').textContent=this.value.length+'/100'">
+        <div id="cb-char-count" style="text-align:right;font-size:10px;color:var(--text3);margin-top:4px">0/100</div>
+      </div>
+      <div class="cb-form-group" style="background:var(--purple-pale);padding:14px;border-radius:12px">
+        <label style="color:var(--purple-dark);font-size:13px">🔒 ARMY Verification</label>
+        <div style="font-size:12px;color:var(--text2);margin-bottom:8px">What is BTS's fandom name? (BTS 팬덤 이름은?)</div>
+        <input class="cb-input" id="cb-verify" placeholder="Type the answer..." style="text-transform:uppercase">
+      </div>
+      <div id="cb-error" style="color:#EF4444;font-size:12px;font-weight:600;margin-bottom:8px;display:none"></div>
+      <button class="cb-submit" onclick="submitBuddyCard()">Post My Card 💜 카드 등록</button>
+    </div>
+    <div style="text-align:center;margin-top:14px">
+      <button onclick="renderConcertBuddyMain()" style="padding:10px 24px;background:none;border:none;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;color:var(--text3)">← Back to list</button>
+    </div>`;
+}
+
+function submitBuddyCard() {
+  const nick = document.getElementById('cb-nick').value.trim();
+  const handle = document.getElementById('cb-handle').value.trim();
+  const days = [...document.querySelectorAll('#cb-days .cb-check.selected')].map(b=>b.dataset.day);
+  const memberBtn = document.querySelector('#cb-member .cb-member-btn.selected');
+  const member = memberBtn ? memberBtn.dataset.member : '';
+  const country = document.getElementById('cb-country').value;
+  const msg = document.getElementById('cb-msg').value.trim();
+  const verify = document.getElementById('cb-verify').value.trim().toUpperCase();
+  const errEl = document.getElementById('cb-error');
+
+  // Validation
+  if(!nick) { errEl.textContent='Please enter a nickname 닉네임을 입력해주세요';errEl.style.display='block';return; }
+  if(!handle) { errEl.textContent='Please enter your X or Instagram account 연락수단을 입력해주세요';errEl.style.display='block';return; }
+  if(days.length===0) { errEl.textContent='Please select at least one date 날짜를 선택해주세요';errEl.style.display='block';return; }
+  if(!member) { errEl.textContent='Please select a member 멤버를 선택해주세요';errEl.style.display='block';return; }
+  if(!country) { errEl.textContent='Please select your country 국가를 선택해주세요';errEl.style.display='block';return; }
+  if(verify!=='ARMY') { errEl.textContent='Wrong answer! Hint: It starts with A 힌트: A로 시작해요';errEl.style.display='block';return; }
+
+  const buddy = { nick, handle, days, member, country, msg, ts: Date.now() };
+  // Disable button to prevent double submission
+  const btn = document.querySelector('.cb-submit');
+  if(btn) { btn.disabled=true; btn.textContent='Posting...'; }
+  cbBuddies.push(buddy);
+  saveBuddies().then(()=> {
+    cbFilter='all';
+    renderConcertBuddyMain();
+    // Success toast
+    const toast = document.createElement('div');
+    toast.style.cssText='position:fixed;top:20px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#7C3AED,#A855F7);color:#fff;padding:14px 24px;border-radius:14px;font-size:13px;font-weight:700;z-index:999;font-family:Nunito,sans-serif;box-shadow:0 4px 20px rgba(124,58,237,.3);animation:slideDown .3s ease';
+    toast.textContent='Your card is live! 💜 카드가 등록되었어요!';
+    document.body.appendChild(toast);
+    setTimeout(()=>toast.remove(),3000);
+  });
+}
+
+function getBuddyByTs(ts) {
+  return cbBuddies.find(b=>b.ts===ts);
+}
+
+function shareBuddyX(ts) {
+  const b = getBuddyByTs(ts);
+  if(!b) return;
+  const dayStr = (b.days||[]).map(d=>{const day=CB_DAYS.find(x=>x.key===d);return day?day.short:'';}).join(' & ');
+  const text = `Looking for a concert buddy! 🎵 BTS ARIRANG IN GOYANG | ${dayStr} | ${b.country||''} | ${CB_MEMBER_EMOJI[b.member]||'💜'}\n\nFind your buddy at kpopseoulmap.com 💜`;
+  window.open('https://x.com/intent/tweet?text='+encodeURIComponent(text),'_blank');
+}
+
+function shareBuddyIG(ts) {
+  const b = getBuddyByTs(ts);
+  if(!b) return;
+  const dayStr = (b.days||[]).map(d=>{const day=CB_DAYS.find(x=>x.key===d);return day?day.short:'';}).join(' & ');
+  const text = `Looking for a concert buddy! 🎵 BTS ARIRANG IN GOYANG | ${dayStr} | ${b.country||''} | ${CB_MEMBER_EMOJI[b.member]||'💜'} | kpopseoulmap.com 💜`;
+  navigator.clipboard.writeText(text).then(()=>alert('Copied! Paste it on Instagram! 인스타에 붙여넣기 하세요!'));
+}
+
+function saveBuddyCardImage(ts) {
+  const b = getBuddyByTs(ts);
+  if(!b) return;
+  const canvas = document.createElement('canvas');
+  canvas.width = 720;
+  const hasMsg = b.msg && b.msg.length > 0;
+  canvas.height = hasMsg ? 520 : 420;
+  const ctx = canvas.getContext('2d');
+  // Background gradient
+  const grd = ctx.createLinearGradient(0,0,canvas.width,canvas.height);
+  grd.addColorStop(0,'#1E1B4B'); grd.addColorStop(0.5,'#4C1D95'); grd.addColorStop(1,'#7C3AED');
+  ctx.fillStyle = grd; ctx.fillRect(0,0,canvas.width,canvas.height);
+  // Decorative circles
+  ctx.beginPath(); ctx.arc(canvas.width-50,50,90,0,Math.PI*2); ctx.fillStyle='rgba(255,255,255,.04)'; ctx.fill();
+  ctx.beginPath(); ctx.arc(50,canvas.height-50,70,0,Math.PI*2); ctx.fillStyle='rgba(255,255,255,.03)'; ctx.fill();
+  // Stars
+  ctx.fillStyle='rgba(255,255,255,.15)';
+  [[100,40,3],[250,30,2],[600,70,3],[500,35,2],[150,80,2],[650,120,2]].forEach(([x,y,r])=>{ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();});
+  // Title
+  ctx.textAlign='center'; ctx.fillStyle='rgba(255,255,255,.6)'; ctx.font='600 14px Nunito,sans-serif';
+  ctx.fillText("BTS WORLD TOUR 'ARIRANG' IN GOYANG",canvas.width/2,45);
+  // Looking for buddy text
+  ctx.fillStyle='#fff'; ctx.font='800 28px Nunito,sans-serif';
+  ctx.fillText('Looking for a concert buddy! 🎵',canvas.width/2,100);
+  // Member emoji big
+  const memberEmoji = CB_MEMBER_EMOJI[b.member]||'💜';
+  ctx.font='64px serif'; ctx.fillText(memberEmoji,canvas.width/2,190);
+  // Nickname
+  ctx.fillStyle='#fff'; ctx.font='700 24px Nunito,sans-serif';
+  ctx.fillText(b.nick||'',canvas.width/2,240);
+  // Handle
+  ctx.fillStyle='rgba(255,255,255,.6)'; ctx.font='400 16px Nunito,sans-serif';
+  ctx.fillText(b.handle||'',canvas.width/2,268);
+  // Info line (date | flag | member)
+  const dayStr = (b.days||[]).map(d=>{const day=CB_DAYS.find(x=>x.key===d);return day?day.short:'';}).join(' & ');
+  const flagParts = (b.country||'').split(' ');
+  const flag = flagParts[0]||'🌍';
+  ctx.fillStyle='rgba(255,255,255,.7)'; ctx.font='500 16px Nunito,sans-serif';
+  ctx.fillText(`${dayStr}  |  ${flag}  |  ${memberEmoji}`,canvas.width/2,310);
+  // Message box
+  if(b.msg) {
+    ctx.font='400 15px Nunito,sans-serif';
+    // Wrap text
+    const maxW = canvas.width-160;
+    const words = b.msg.split('');
+    let lines = []; let line = '';
+    for(const ch of words) {
+      const test = line + ch;
+      if(ctx.measureText(test).width > maxW && line) { lines.push(line); line = ch; }
+      else { line = test; }
+    }
+    if(line) lines.push(line);
+    if(lines.length>2) lines = [lines[0], lines[1].substring(0,lines[1].length-3)+'...'];
+    const boxH = 28 + lines.length*22;
+    const boxY = 335;
+    ctx.fillStyle='rgba(255,255,255,.08)';
+    roundRect(ctx,60,boxY,canvas.width-120,boxH,12); ctx.fill();
+    ctx.fillStyle='rgba(255,255,255,.8)'; ctx.font='400 15px Nunito,sans-serif';
+    lines.forEach((l,i)=> ctx.fillText((i===0?'\u201C':'')+l+(i===lines.length-1?'\u201D':''), canvas.width/2, boxY+24+i*22));
+  }
+  // Watermark
+  ctx.fillStyle='rgba(255,255,255,.35)'; ctx.font='400 14px Nunito,sans-serif';
+  ctx.fillText('kpopseoulmap.com 💜',canvas.width/2,canvas.height-30);
+  // Divider
+  ctx.strokeStyle='rgba(255,255,255,.1)'; ctx.lineWidth=1; ctx.beginPath();
+  ctx.moveTo(canvas.width/2-80,canvas.height-50); ctx.lineTo(canvas.width/2+80,canvas.height-50); ctx.stroke();
+  // Download
+  const link = document.createElement('a');
+  link.download = `concert-buddy-${(b.nick||'card').toLowerCase().replace(/[^a-z0-9]/g,'')}.png`;
+  link.href = canvas.toDataURL('image/png');
+  link.click();
 }
 
 // ── BTS Soulmate Quiz ──
@@ -1843,14 +2191,4 @@ function showQR() {
 }
 function closeQR() {
   document.getElementById('qr-overlay').classList.remove('show');
-  document.body.style.overflow = '';
-}
-
-loadData();
-
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js').catch(()=>{});
-}
-</script>
-</body>
-</html>
+  document.body.style.ove
