@@ -79,6 +79,7 @@ body{font-family:'Nunito','Noto Sans KR',sans-serif;background:var(--bg);color:v
 .map-info-bar .mib-member{font-size:10px;color:#7C3AED;font-weight:600;margin-top:2px}
 .map-info-bar .mib-desc{font-size:11px;color:#444;margin-top:4px;line-height:1.4}
 .map-info-bar .mib-close{position:absolute;top:8px;right:10px;background:none;border:none;font-size:18px;color:#999;cursor:pointer}
+.map-marker-icon{background:none!important;border:none!important}
 .map-popup{font-family:'Nunito',sans-serif;padding:2px 0}
 .map-popup .popup-name{font-size:13px;font-weight:700;color:#1a1a2e}
 .map-popup .popup-kr{font-size:11px;color:#666;margin-top:1px}
@@ -739,8 +740,8 @@ function updateMarkers(fp) {
     if (!p.lat||!p.lng) return;
     const c = COLORS[p.category]||COLORS.kpop;
     const icon = L.divIcon({
-      className:'',
-      html:`<div style="width:28px;height:28px;background:linear-gradient(135deg,${c.stroke},${c.stroke}dd);border-radius:50%;border:3px solid #fff;box-shadow:0 2px 8px ${c.stroke}55;cursor:pointer"></div>`,
+      className:'map-marker-icon',
+      html:`<div style="width:28px;height:28px;background:linear-gradient(135deg,${c.stroke},${c.stroke}dd);border-radius:50%;border:3px solid #fff;box-shadow:0 2px 8px ${c.stroke}55;cursor:pointer;pointer-events:auto"></div>`,
       iconSize:[28,28],iconAnchor:[14,14]
     });
     const m = L.marker([p.lat,p.lng],{icon}).addTo(map);
@@ -936,8 +937,8 @@ function showCourseOnMap(courseIdx) {
     if (!p || !p.lat || !p.lng) return;
     latlngs.push([p.lat, p.lng]);
     const icon = L.divIcon({
-      className:'',
-      html:`<div style="width:32px;height:32px;background:${course.color};border-radius:50%;border:3px solid #fff;box-shadow:0 2px 8px ${course.color}55;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:800;font-family:Nunito,sans-serif">${i+1}</div>`,
+      className:'map-marker-icon',
+      html:`<div style="width:32px;height:32px;background:${course.color};border-radius:50%;border:3px solid #fff;box-shadow:0 2px 8px ${course.color}55;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:800;font-family:Nunito,sans-serif;pointer-events:auto">${i+1}</div>`,
       iconSize:[32,32],iconAnchor:[16,16]
     });
     const m = L.marker([p.lat,p.lng],{icon}).addTo(map);
