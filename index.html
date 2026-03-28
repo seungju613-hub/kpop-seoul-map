@@ -69,9 +69,16 @@ body{font-family:'Nunito','Noto Sans KR',sans-serif;background:var(--bg);color:v
 .tab.active{color:var(--purple-dark);border-bottom-color:var(--purple)}
 .tab svg{display:block;margin:0 auto 4px;width:20px;height:20px}
 
-#map-view{height:55vh;min-height:320px;display:none}
+#map-view{height:calc(100vh - 240px);min-height:320px;display:none;position:relative}
 #map-view.show{display:block}
 .leaflet-tile-pane{filter:saturate(.7) brightness(1.05) sepia(.1)}
+.map-info-bar{position:fixed;bottom:70px;left:8px;right:8px;max-width:500px;margin:0 auto;background:#fff;border-radius:14px;padding:12px 14px;box-shadow:0 4px 20px rgba(0,0,0,.15);z-index:90;display:none;animation:slideUp .2s ease}
+.map-info-bar.show{display:block}
+.map-info-bar .mib-name{font-size:14px;font-weight:700;color:#1a1a2e}
+.map-info-bar .mib-kr{font-size:11px;color:#666;margin-top:1px}
+.map-info-bar .mib-member{font-size:10px;color:#7C3AED;font-weight:600;margin-top:2px}
+.map-info-bar .mib-desc{font-size:11px;color:#444;margin-top:4px;line-height:1.4}
+.map-info-bar .mib-close{position:absolute;top:8px;right:10px;background:none;border:none;font-size:18px;color:#999;cursor:pointer}
 .map-popup{font-family:'Nunito',sans-serif;padding:2px 0}
 .map-popup .popup-name{font-size:13px;font-weight:700;color:#1a1a2e}
 .map-popup .popup-kr{font-size:11px;color:#666;margin-top:1px}
@@ -304,6 +311,10 @@ body{font-family:'Nunito','Noto Sans KR',sans-serif;background:var(--bg);color:v
 </div>
 
 <div id="map-view"></div>
+<div class="map-info-bar" id="map-info-bar">
+  <button class="mib-close" onclick="closeMapInfo()">✕</button>
+  <div id="mib-content"></div>
+</div>
 <div class="list" id="place-list"></div>
 <div class="list" id="course-view" style="display:none"></div>
 <div class="list" id="fun-view" style="display:none;padding:16px 12px"></div>
@@ -642,8 +653,22 @@ function render() {
   updateMarkers(fp);
 }
 
-function closePopups() {
-  if (map) map.closePopup();
+function showMapInfo(p) {
+  const bar = document.getElementById('map-info-bar');
+  document.getElementById('mib-content').innerHTML = `
+    <div class="mib-name">${p.name_en}</div>
+    <div class="mib-kr">${p.name_kr}</div>
+    <div class="mib-member">${p.member||''}</div>
+    <div class="mib-desc">${p.desc_en}</div>
+    <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
+      <a href="https://www.google.com/maps/search/?api=1&query=${p.lat},${p.lng}" target="_blank" rel="noopener" style="flex:1;padding:8px;background:#4285F4;color:#fff;border-radius:10px;font-size:11px;font-weight:700;text-decoration:none;text-align:center">📍 Google Maps</a>
+      <a href="https://map.naver.com/v5/search/${encodeURIComponent(p.name_kr)}" target="_blank" rel="noopener" style="flex:1;padding:8px;background:#03C75A;color:#fff;border-radius:10px;font-size:11px;font-weight:700;text-decoration:none;text-align:center">📍 Naver Map</a>
+    </div>`;
+  bar.classList.add('show');
+  map.panTo([p.lat, p.lng]);
+}
+function closeMapInfo() {
+  document.getElementById('map-info-bar').classList.remove('show');
 }
 function openDetail(id) {
   const p = places.find(x=>x.id===id);
@@ -719,17 +744,7 @@ function updateMarkers(fp) {
       iconSize:[28,28],iconAnchor:[14,14]
     });
     const m = L.marker([p.lat,p.lng],{icon}).addTo(map);
-    const popupContent = `<div class="map-popup">
-      <div class="popup-name">${p.name_en}</div>
-      <div class="popup-kr">${p.name_kr}</div>
-      <div class="popup-member">${p.member||''}</div>
-      <div style="display:flex;gap:4px;margin-top:6px;flex-wrap:wrap">
-        <a href="https://www.google.com/maps/search/?api=1&query=${p.lat},${p.lng}" target="_blank" rel="noopener" style="padding:3px 8px;background:#4285F4;color:#fff;border-radius:6px;font-size:9px;font-weight:700;text-decoration:none">Google</a>
-        <a href="https://map.naver.com/v5/search/${encodeURIComponent(p.name_kr)}" target="_blank" rel="noopener" style="padding:3px 8px;background:#03C75A;color:#fff;border-radius:6px;font-size:9px;font-weight:700;text-decoration:none">Naver</a>
-        <button class="popup-btn" onclick="closePopups();openDetail(${p.id})">More info</button>
-      </div>
-    </div>`;
-    m.bindPopup(popupContent,{maxWidth:220,closeButton:true});
+    m.on('click',()=>showMapInfo(p));
     markers.push(m);
   });
   if (markers.length > 0) {
@@ -760,6 +775,7 @@ document.querySelectorAll('.tab').forEach(tab => {
     tab.classList.add('active');
     const v = tab.dataset.tab;
     document.getElementById('map-view').classList.remove('show');
+    closeMapInfo();
     document.getElementById('place-list').style.display = 'none';
     document.getElementById('course-view').style.display = 'none';
     document.getElementById('fun-view').style.display = 'none';
