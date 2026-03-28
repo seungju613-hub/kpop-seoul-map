@@ -1553,7 +1553,7 @@ function shareBuddyX(ts) {
   const b = getBuddyByTs(ts);
   if(!b) return;
   const dayStr = (b.days||[]).map(d=>{const day=CB_DAYS.find(x=>x.key===d);return day?day.short:'';}).join(' & ');
-  const text = `Looking for a concert buddy! 🎵 BTS ARIRANG IN GOYANG | ${dayStr} | ${b.country||''} | ${CB_MEMBER_EMOJI[b.member]||'💜'}\n\nFind your buddy at kpopseoulmap.com 💜`;
+  const text = `Looking for a concert buddy! 🎵 BTS ARIRANG IN GOYANG | ${dayStr} | ${b.country||''} | ${CB_MEMBER_EMOJI[b.member]||'💜'}\n\nFind your buddy at kpopseoulmap.com 💜\n\n#BTSConcertBuddy #BTS_ARIRANG_GOYANG #BTS`;
   window.open('https://x.com/intent/tweet?text='+encodeURIComponent(text),'_blank');
 }
 
@@ -1561,7 +1561,7 @@ function shareBuddyIG(ts) {
   const b = getBuddyByTs(ts);
   if(!b) return;
   const dayStr = (b.days||[]).map(d=>{const day=CB_DAYS.find(x=>x.key===d);return day?day.short:'';}).join(' & ');
-  const text = `Looking for a concert buddy! 🎵 BTS ARIRANG IN GOYANG | ${dayStr} | ${b.country||''} | ${CB_MEMBER_EMOJI[b.member]||'💜'} | kpopseoulmap.com 💜`;
+  const text = `Looking for a concert buddy! 🎵 BTS ARIRANG IN GOYANG | ${dayStr} | ${b.country||''} | ${CB_MEMBER_EMOJI[b.member]||'💜'} | kpopseoulmap.com 💜\n\n#BTSConcertBuddy #BTS_ARIRANG_GOYANG #BTS`;
   navigator.clipboard.writeText(text).then(()=>alert('Copied! Paste it on Instagram! 인스타에 붙여넣기 하세요!'));
 }
 
