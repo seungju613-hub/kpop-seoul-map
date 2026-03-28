@@ -207,8 +207,7 @@ body{font-family:'Nunito','Noto Sans KR',sans-serif;background:var(--bg);color:v
 .cb-card-top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
 .cb-card-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--pink));display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
 .cb-card-name{font-size:15px;font-weight:700;color:var(--text)}
-.cb-card-handle{font-size:11px;color:var(--purple);font-weight:600;word-break:break-all;transition:color .2s}
-.cb-card-handle:hover{color:var(--purple-dark);text-decoration:underline}
+.cb-card-handle{font-size:11px;color:var(--purple);font-weight:600;word-break:break-all}
 .cb-card-badges{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
 .cb-badge{font-size:10px;padding:4px 10px;border-radius:10px;font-weight:700}
 .cb-badge.day{background:var(--purple-pale);color:var(--purple-dark)}
@@ -966,6 +965,12 @@ function renderFunMenu() {
       <div class="fun-title">Which BTS member is your soulmate?</div>
       <div class="fun-desc">BTS 7명 중 나의 소울메이트는?</div>
     </div>
+    <div class="fun-card" onclick="startHogwarts()" style="border:2px solid #7C3AED;position:relative">
+      <div style="position:absolute;top:-8px;right:12px;background:linear-gradient(135deg,#7C3AED,#1E1B4B);color:#fff;font-size:10px;font-weight:800;padding:3px 10px;border-radius:10px;letter-spacing:1px">NEW ✨</div>
+      <div class="fun-emoji">🏰</div>
+      <div class="fun-title">BTS x Hogwarts Quiz</div>
+      <div class="fun-desc">BTS와 함께 호그와트 기숙사 배정 받기!</div>
+    </div>
     <div class="fun-card" onclick="startMatch()">
       <div class="fun-emoji">💜</div>
       <div class="fun-title">Who's Your Perfect BTS Travel Mate?</div>
@@ -1438,17 +1443,13 @@ function renderConcertBuddyMain() {
       }).join('');
       const flagParts = (b.country||'').split(' ');
       const flag = flagParts[0] || '🌍';
-      const pf = b.platform || 'x';
-      const cleanHandle = (b.handle||'').replace(/^@/,'');
-      const profileUrl = pf === 'instagram' ? `https://instagram.com/${cleanHandle}` : `https://x.com/${cleanHandle}`;
-      const pfIcon = pf === 'instagram' ? '📷' : '𝕏';
       return `
         <div class="cb-card">
           <div class="cb-card-top">
             <div class="cb-card-avatar">${memberEmoji}</div>
             <div style="flex:1;min-width:0">
               <div class="cb-card-name">${escHtml(b.nick)}</div>
-              <a href="${profileUrl}" target="_blank" rel="noopener" class="cb-card-handle" style="text-decoration:none;display:inline-flex;align-items:center;gap:4px">${pfIcon} @${escHtml(cleanHandle)}</a>
+              <div class="cb-card-handle">${escHtml(b.handle)}</div>
             </div>
             <div style="font-size:10px;color:var(--text3);flex-shrink:0">${cbTimeAgo(b.ts)}</div>
           </div>
@@ -1514,14 +1515,8 @@ function showBuddyForm() {
         <input class="cb-input" id="cb-nick" placeholder="Your nickname" maxlength="30">
       </div>
       <div class="cb-form-group">
-        <label>Contact 연락수단 <span style="color:#EF4444">*</span></label>
-        <div style="display:flex;gap:8px">
-          <select class="cb-input" id="cb-platform" style="appearance:auto;width:130px;flex-shrink:0">
-            <option value="x">𝕏 (X / Twitter)</option>
-            <option value="instagram">Instagram</option>
-          </select>
-          <input class="cb-input" id="cb-handle" placeholder="@username" maxlength="50" style="flex:1">
-        </div>
+        <label>X or Instagram 연락수단 <span style="color:#EF4444">*</span></label>
+        <input class="cb-input" id="cb-handle" placeholder="@youraccount" maxlength="50">
       </div>
       <div class="cb-form-group">
         <label>Concert Date 콘서트 날짜 <span class="cb-label-sub">(pick one or more)</span></label>
@@ -1573,8 +1568,7 @@ function showBuddyForm() {
 
 function submitBuddyCard() {
   const nick = document.getElementById('cb-nick').value.trim();
-  const platform = document.getElementById('cb-platform').value;
-  let handle = document.getElementById('cb-handle').value.trim().replace(/^@/,'');
+  const handle = document.getElementById('cb-handle').value.trim();
   const days = [...document.querySelectorAll('#cb-days .cb-check.selected')].map(b=>b.dataset.day);
   const memberBtn = document.querySelector('#cb-member .cb-member-btn.selected');
   const member = memberBtn ? memberBtn.dataset.member : '';
@@ -1585,13 +1579,13 @@ function submitBuddyCard() {
 
   // Validation
   if(!nick) { errEl.textContent='Please enter a nickname 닉네임을 입력해주세요';errEl.style.display='block';return; }
-  if(!handle) { errEl.textContent='Please enter your username 계정을 입력해주세요';errEl.style.display='block';return; }
+  if(!handle) { errEl.textContent='Please enter your X or Instagram account 연락수단을 입력해주세요';errEl.style.display='block';return; }
   if(days.length===0) { errEl.textContent='Please select at least one date 날짜를 선택해주세요';errEl.style.display='block';return; }
   if(!member) { errEl.textContent='Please select a member 멤버를 선택해주세요';errEl.style.display='block';return; }
   if(!country) { errEl.textContent='Please select your country 국가를 선택해주세요';errEl.style.display='block';return; }
   if(verify!=='ARMY') { errEl.textContent='Wrong answer! Hint: It starts with A 힌트: A로 시작해요';errEl.style.display='block';return; }
 
-  const buddy = { nick, platform, handle, days, member, country, msg, ts: Date.now() };
+  const buddy = { nick, handle, days, member, country, msg, ts: Date.now() };
   // Disable button to prevent double submission
   const btn = document.querySelector('.cb-submit');
   if(btn) { btn.disabled=true; btn.textContent='Posting...'; }
@@ -1659,10 +1653,8 @@ function saveBuddyCardImage(ts) {
   ctx.fillStyle='#fff'; ctx.font='700 24px Nunito,sans-serif';
   ctx.fillText(b.nick||'',canvas.width/2,240);
   // Handle
-  const canvasPf = b.platform === 'instagram' ? 'IG' : '𝕏';
-  const canvasHandle = (b.handle||'').replace(/^@/,'');
   ctx.fillStyle='rgba(255,255,255,.6)'; ctx.font='400 16px Nunito,sans-serif';
-  ctx.fillText(`${canvasPf} @${canvasHandle}`,canvas.width/2,268);
+  ctx.fillText(b.handle||'',canvas.width/2,268);
   // Info line (date | flag | member)
   const dayStr = (b.days||[]).map(d=>{const day=CB_DAYS.find(x=>x.key===d);return day?day.short:'';}).join(' & ');
   const flagParts = (b.country||'').split(' ');
@@ -2333,6 +2325,467 @@ function showQR() {
 function closeQR() {
   document.getElementById('qr-overlay').classList.remove('show');
   document.body.style.overflow = '';
+}
+
+// ── BTS x Hogwarts Quiz ──
+let hwLang = 'en';
+let hwIdx = 0, hwScores = {};
+
+const HW_QS_EN = [
+  {q:"Which BTS album is your favorite?",opts:[
+    {text:"DARK&WILD 🐺",scores:{S:3}},
+    {text:"WINGS 🦋",scores:{R:3}},
+    {text:"LOVE YOURSELF 轉 'Tear' 💧",scores:{H:3}},
+    {text:"MAP OF THE SOUL : 7 🗺️",scores:{R:2,H:1}},
+    {text:"ARIRANG 🇰🇷",scores:{G:3}}
+  ]},
+  {q:"Jungkook suddenly grabs the meat you were happily eating! Your reaction?",opts:[
+    {text:'"Hey!! That was MINE!!" 😤',scores:{G:3}},
+    {text:'"It\'s okay, enjoy it" 😊',scores:{H:3}},
+    {text:'"Even better — Jungkook ate it!" 🥰',scores:{H:2,R:1}},
+    {text:'"Then I\'m taking one of yours" 😏',scores:{S:3}}
+  ]},
+  {q:"You run into BTS on the street in Seoul! Your reaction?",opts:[
+    {text:"Too nervous — hide behind something 🫣",scores:{H:3}},
+    {text:'"Hello BTS!!" — greet them naturally 👋',scores:{G:3}},
+    {text:"Casually hum a BTS song as you walk by 🎵",scores:{S:2,R:1}},
+    {text:"Pull out your phone to document it 📱",scores:{R:3}}
+  ]},
+  {q:"If BTS performed at Hogwarts, you would...",opts:[
+    {text:"Sing along from the front row 🎤",scores:{G:3}},
+    {text:"Analyze the stage design and lighting 🧐",scores:{R:3}},
+    {text:"Already have a strategy for VIP seats 🎯",scores:{S:3}},
+    {text:"Cry happy tears with your friends 😭",scores:{H:3}}
+  ]},
+  {q:"You get to cook with BTS members! Your style?",opts:[
+    {text:"Take charge of the kitchen like Jin 🔪",scores:{G:3}},
+    {text:"Research the recipe perfectly first 📖",scores:{R:3}},
+    {text:"Compete to make the tastiest dish 🔥",scores:{S:3}},
+    {text:"Help everyone and keep the mood fun 🥄",scores:{H:3}}
+  ]},
+  {q:"BTS World Tour ticketing day! Your style?",opts:[
+    {text:"3 alarms set, click the SECOND it opens ⚡",scores:{G:3}},
+    {text:"Research network speed & seat layout days before 🔍",scores:{S:3}},
+    {text:"Read ticketing probability analysis posts 📊",scores:{R:3}},
+    {text:"Cheer each other on in the group chat 🤝",scores:{H:3}}
+  ]},
+  {q:"If you could cast one spell on BTS?",opts:[
+    {text:"Give all 7 endless stamina for the stage 💪",scores:{G:3}},
+    {text:"Make them #1 on every chart worldwide 👑",scores:{S:3}},
+    {text:"Keep all 7 always healthy and happy 🍀",scores:{H:3}},
+    {text:"Make them all fall in love with me 💜",scores:{R:2,S:1}}
+  ]}
+];
+const HW_QS_KR = [
+  {q:"다음 BTS 앨범 중 가장 좋아하는 것은?",opts:[
+    {text:"DARK&WILD 🐺",scores:{S:3}},
+    {text:"WINGS 🦋",scores:{R:3}},
+    {text:"LOVE YOURSELF 轉 'Tear' 💧",scores:{H:3}},
+    {text:"MAP OF THE SOUL : 7 🗺️",scores:{R:2,H:1}},
+    {text:"ARIRANG 🇰🇷",scores:{G:3}}
+  ]},
+  {q:"맛있게 먹고 있던 고기를 정국이 갑자기 집어 먹었다! 당신의 반응은?",opts:[
+    {text:'"야!! 그건 내 거였어!!" 😤',scores:{G:3}},
+    {text:'"...괜찮아, 맛있게 먹어" 😊',scores:{H:3}},
+    {text:'"오히려 좋아, 정국이 먹은 거니까" 🥰',scores:{H:2,R:1}},
+    {text:'"그럼 나도 네 거 하나 뺏는다" 😏',scores:{S:3}}
+  ]},
+  {q:"서울 여행 중 길에서 BTS와 마주쳤다! 당신의 반응은?",opts:[
+    {text:"너무 떨려서 뒤에 숨는다 🫣",scores:{H:3}},
+    {text:'"Hello BTS!!" 자연스럽게 인사한다 👋',scores:{G:3}},
+    {text:"일부러 BTS 노래를 흥얼거리며 지나친다 🎵",scores:{S:2,R:1}},
+    {text:"폰을 꺼내 기록으로 남긴다 📱",scores:{R:3}}
+  ]},
+  {q:"호그와트에서 BTS가 공연을 한다면, 당신은?",opts:[
+    {text:"맨 앞줄에서 떼창한다 🎤",scores:{G:3}},
+    {text:"무대 연출과 조명을 분석하며 감상한다 🧐",scores:{R:3}},
+    {text:"VIP석을 확보할 전략을 미리 세운다 🎯",scores:{S:3}},
+    {text:"옆자리 친구와 함께 감동의 눈물을 흘린다 😭",scores:{H:3}}
+  ]},
+  {q:"BTS 멤버들과 함께 요리를 하게 됐다! 당신의 스타일은?",opts:[
+    {text:"진처럼 주방을 장악하고 리드한다 🔪",scores:{G:3}},
+    {text:"레시피를 철저히 조사하고 완벽하게 따른다 📖",scores:{R:3}},
+    {text:"내가 제일 맛있게 만들겠다는 승부욕을 불태운다 🔥",scores:{S:3}},
+    {text:"멤버들이 하는 걸 도와주며 분위기를 띄운다 🥄",scores:{H:3}}
+  ]},
+  {q:"BTS 월드투어 티켓팅 날! 당신의 스타일은?",opts:[
+    {text:"알람 3개 맞추고 정각에 바로 클릭 ⚡",scores:{G:3}},
+    {text:"며칠 전부터 네트워크 속도, 좌석 배치를 조사한다 🔍",scores:{S:3}},
+    {text:"티켓팅 성공 확률 분석 글을 읽고 전략을 세운다 📊",scores:{R:3}},
+    {text:"친구들과 단톡방에서 서로 응원하며 함께 도전한다 🤝",scores:{H:3}}
+  ]},
+  {q:"마법 지팡이 하나로 BTS에게 마법을 걸 수 있다면?",opts:[
+    {text:"7명 모두에게 영원히 무대에 설 수 있는 체력을 준다 💪",scores:{G:3}},
+    {text:"모든 음악 차트에서 1위를 하게 해 많은 이들에게 음악을 알린다 👑",scores:{S:3}},
+    {text:"7명이 모두 항상 건강하고 행복하게 한다 🍀",scores:{H:3}},
+    {text:"모두 나를 사랑하게 만든다 💜",scores:{R:2,S:1}}
+  ]}
+];
+const HW_QS_JP = [
+  {q:"一番好きなBTSアルバムは？",opts:[
+    {text:"DARK&WILD 🐺",scores:{S:3}},{text:"WINGS 🦋",scores:{R:3}},{text:"LOVE YOURSELF 轉 'Tear' 💧",scores:{H:3}},{text:"MAP OF THE SOUL : 7 🗺️",scores:{R:2,H:1}},{text:"ARIRANG 🇰🇷",scores:{G:3}}
+  ]},
+  {q:"美味しく食べてたお肉をグクが突然食べちゃった！あなたの反応は？",opts:[
+    {text:'"ちょっと！！それ私のだったのに！！" 😤',scores:{G:3}},{text:'"大丈夫、美味しく食べてね" 😊',scores:{H:3}},{text:'"むしろ嬉しい、グクが食べたから" 🥰',scores:{H:2,R:1}},{text:'"じゃあ私もあなたの一つもらうね" 😏',scores:{S:3}}
+  ]},
+  {q:"ソウル旅行中にBTSとばったり！あなたの反応は？",opts:[
+    {text:"緊張しすぎて何かの後ろに隠れる 🫣",scores:{H:3}},{text:'"Hello BTS!!" 自然に挨拶する 👋',scores:{G:3}},{text:"わざとBTSの歌を口ずさみながら通り過ぎる 🎵",scores:{S:2,R:1}},{text:"スマホを出して記録する 📱",scores:{R:3}}
+  ]},
+  {q:"ホグワーツでBTSが公演したら、あなたは？",opts:[
+    {text:"最前列で一緒に歌う 🎤",scores:{G:3}},{text:"ステージ演出と照明を分析しながら鑑賞 🧐",scores:{R:3}},{text:"VIP席を確保する戦略を事前に立てる 🎯",scores:{S:3}},{text:"隣の友達と感動の涙を流す 😭",scores:{H:3}}
+  ]},
+  {q:"BTSメンバーと一緒に料理！あなたのスタイルは？",opts:[
+    {text:"ジンのようにキッチンを仕切る 🔪",scores:{G:3}},{text:"レシピを徹底的に調べて完璧に従う 📖",scores:{R:3}},{text:"一番美味しく作る！と闘志を燃やす 🔥",scores:{S:3}},{text:"メンバーを手伝って雰囲気を盛り上げる 🥄",scores:{H:3}}
+  ]},
+  {q:"BTSワールドツアーのチケット日！あなたのスタイルは？",opts:[
+    {text:"アラーム3つセットして開始と同時にクリック ⚡",scores:{G:3}},{text:"数日前からネット速度と座席配置を調査 🔍",scores:{S:3}},{text:"チケッティング成功率の分析記事を読む 📊",scores:{R:3}},{text:"友達とグループチャットで応援し合う 🤝",scores:{H:3}}
+  ]},
+  {q:"魔法の杖でBTSに一つだけ魔法をかけられるなら？",opts:[
+    {text:"7人全員に永遠のステージ体力を与える 💪",scores:{G:3}},{text:"全チャート1位にして世界中に音楽を届ける 👑",scores:{S:3}},{text:"7人全員がいつも健康で幸せでいられるように 🍀",scores:{H:3}},{text:"全員を私のことを好きにさせる 💜",scores:{R:2,S:1}}
+  ]}
+];
+const HW_QS_ES = [
+  {q:"¿Cuál es tu álbum favorito de BTS?",opts:[
+    {text:"DARK&WILD 🐺",scores:{S:3}},{text:"WINGS 🦋",scores:{R:3}},{text:"LOVE YOURSELF 轉 'Tear' 💧",scores:{H:3}},{text:"MAP OF THE SOUL : 7 🗺️",scores:{R:2,H:1}},{text:"ARIRANG 🇰🇷",scores:{G:3}}
+  ]},
+  {q:"¡Jungkook de repente se come tu carne! ¿Tu reacción?",opts:[
+    {text:'"¡¡Oye!! ¡¡Eso era MÍO!!" 😤',scores:{G:3}},{text:'"Está bien, disfrútalo" 😊',scores:{H:3}},{text:'"Mejor aún — ¡lo comió Jungkook!" 🥰',scores:{H:2,R:1}},{text:'"Entonces yo tomo uno tuyo" 😏',scores:{S:3}}
+  ]},
+  {q:"¡Te encuentras a BTS en Seúl! ¿Tu reacción?",opts:[
+    {text:"Demasiado nervioso/a — me escondo 🫣",scores:{H:3}},{text:'"¡Hello BTS!!" — saludo natural 👋',scores:{G:3}},{text:"Tarareo una canción de BTS al pasar 🎵",scores:{S:2,R:1}},{text:"Saco el celular para documentarlo 📱",scores:{R:3}}
+  ]},
+  {q:"Si BTS tocara en Hogwarts, tú...",opts:[
+    {text:"Canto en primera fila 🎤",scores:{G:3}},{text:"Analizo el diseño del escenario 🧐",scores:{R:3}},{text:"Ya tengo estrategia para VIP 🎯",scores:{S:3}},{text:"Lloro de emoción con mis amigos 😭",scores:{H:3}}
+  ]},
+  {q:"¡Cocinas con BTS! ¿Tu estilo?",opts:[
+    {text:"Tomo el control como Jin 🔪",scores:{G:3}},{text:"Investigo la receta a fondo 📖",scores:{R:3}},{text:"Compito por hacer lo más rico 🔥",scores:{S:3}},{text:"Ayudo a todos y mantengo el ánimo 🥄",scores:{H:3}}
+  ]},
+  {q:"¡Día de tickets del tour! ¿Tu estilo?",opts:[
+    {text:"3 alarmas, clic al segundo ⚡",scores:{G:3}},{text:"Investigo velocidad y mapa de asientos 🔍",scores:{S:3}},{text:"Leo análisis de probabilidad de éxito 📊",scores:{R:3}},{text:"Nos animamos juntos en el grupo 🤝",scores:{H:3}}
+  ]},
+  {q:"Un hechizo para BTS...",opts:[
+    {text:"Energía infinita para el escenario 💪",scores:{G:3}},{text:"#1 en todos los charts del mundo 👑",scores:{S:3}},{text:"Que los 7 estén siempre sanos y felices 🍀",scores:{H:3}},{text:"Que todos se enamoren de mí 💜",scores:{R:2,S:1}}
+  ]}
+];
+const HW_QS_ID = [
+  {q:"Album BTS favorit kamu?",opts:[
+    {text:"DARK&WILD 🐺",scores:{S:3}},{text:"WINGS 🦋",scores:{R:3}},{text:"LOVE YOURSELF 轉 'Tear' 💧",scores:{H:3}},{text:"MAP OF THE SOUL : 7 🗺️",scores:{R:2,H:1}},{text:"ARIRANG 🇰🇷",scores:{G:3}}
+  ]},
+  {q:"Jungkook tiba-tiba ambil daging kamu! Reaksi kamu?",opts:[
+    {text:'"Hei!! Itu punyaku!!" 😤',scores:{G:3}},{text:'"Gapapa, makan aja" 😊',scores:{H:3}},{text:'"Malah seneng, kan Jungkook yang makan" 🥰',scores:{H:2,R:1}},{text:'"Kalau gitu aku ambil punyamu ya" 😏',scores:{S:3}}
+  ]},
+  {q:"Ketemu BTS di jalan Seoul! Reaksi kamu?",opts:[
+    {text:"Terlalu nervous — sembunyi 🫣",scores:{H:3}},{text:'"Hello BTS!!" — sapa santai 👋',scores:{G:3}},{text:"Sengaja nyanyi lagu BTS sambil lewat 🎵",scores:{S:2,R:1}},{text:"Keluarin HP buat dokumentasi 📱",scores:{R:3}}
+  ]},
+  {q:"Kalau BTS manggung di Hogwarts, kamu...",opts:[
+    {text:"Nyanyi bareng dari baris depan 🎤",scores:{G:3}},{text:"Analisis desain panggung dan lighting 🧐",scores:{R:3}},{text:"Sudah punya strategi dapat VIP 🎯",scores:{S:3}},{text:"Nangis terharu bareng teman 😭",scores:{H:3}}
+  ]},
+  {q:"Masak bareng BTS! Gaya kamu?",opts:[
+    {text:"Ambil alih dapur kayak Jin 🔪",scores:{G:3}},{text:"Riset resep sampai sempurna 📖",scores:{R:3}},{text:"Kompetisi bikin yang paling enak 🔥",scores:{S:3}},{text:"Bantu semua orang dan bikin suasana seru 🥄",scores:{H:3}}
+  ]},
+  {q:"Hari ticketing world tour! Gaya kamu?",opts:[
+    {text:"3 alarm, klik detik pertama ⚡",scores:{G:3}},{text:"Riset kecepatan internet & layout kursi 🔍",scores:{S:3}},{text:"Baca analisis probabilitas sukses 📊",scores:{R:3}},{text:"Saling semangatin di grup chat 🤝",scores:{H:3}}
+  ]},
+  {q:"Satu mantra untuk BTS...",opts:[
+    {text:"Stamina abadi untuk panggung 💪",scores:{G:3}},{text:"#1 di semua chart dunia 👑",scores:{S:3}},{text:"7 orang selalu sehat dan bahagia 🍀",scores:{H:3}},{text:"Semua jatuh cinta padaku 💜",scores:{R:2,S:1}}
+  ]}
+];
+const HW_QS_PT = [
+  {q:"Qual seu álbum favorito do BTS?",opts:[
+    {text:"DARK&WILD 🐺",scores:{S:3}},{text:"WINGS 🦋",scores:{R:3}},{text:"LOVE YOURSELF 轉 'Tear' 💧",scores:{H:3}},{text:"MAP OF THE SOUL : 7 🗺️",scores:{R:2,H:1}},{text:"ARIRANG 🇰🇷",scores:{G:3}}
+  ]},
+  {q:"Jungkook pegou sua carne de repente! Sua reação?",opts:[
+    {text:'"Ei!! Isso era MEU!!" 😤',scores:{G:3}},{text:'"Tudo bem, aproveita" 😊',scores:{H:3}},{text:'"Melhor ainda — o Jungkook comeu!" 🥰',scores:{H:2,R:1}},{text:'"Então eu pego um seu" 😏',scores:{S:3}}
+  ]},
+  {q:"Encontrou BTS na rua em Seul! Sua reação?",opts:[
+    {text:"Nervoso demais — me escondo 🫣",scores:{H:3}},{text:'"Hello BTS!!" — cumprimento natural 👋',scores:{G:3}},{text:"Cantarolo uma música do BTS ao passar 🎵",scores:{S:2,R:1}},{text:"Pego o celular pra registrar 📱",scores:{R:3}}
+  ]},
+  {q:"Se BTS se apresentasse em Hogwarts, você...",opts:[
+    {text:"Canto na primeira fila 🎤",scores:{G:3}},{text:"Analiso o design do palco 🧐",scores:{R:3}},{text:"Já tenho estratégia pro VIP 🎯",scores:{S:3}},{text:"Choro de emoção com os amigos 😭",scores:{H:3}}
+  ]},
+  {q:"Cozinhando com BTS! Seu estilo?",opts:[
+    {text:"Assumo a cozinha como o Jin 🔪",scores:{G:3}},{text:"Pesquiso a receita perfeitamente 📖",scores:{R:3}},{text:"Compito pra fazer o mais gostoso 🔥",scores:{S:3}},{text:"Ajudo todo mundo e mantenho o clima 🥄",scores:{H:3}}
+  ]},
+  {q:"Dia de ingresso da tour! Seu estilo?",opts:[
+    {text:"3 alarmes, clico no segundo ⚡",scores:{G:3}},{text:"Pesquiso velocidade e mapa de assentos 🔍",scores:{S:3}},{text:"Leio análises de probabilidade 📊",scores:{R:3}},{text:"Nos animamos juntos no grupo 🤝",scores:{H:3}}
+  ]},
+  {q:"Um feitiço pro BTS...",opts:[
+    {text:"Energia infinita pro palco 💪",scores:{G:3}},{text:"#1 em todos os charts 👑",scores:{S:3}},{text:"Os 7 sempre saudáveis e felizes 🍀",scores:{H:3}},{text:"Todos se apaixonam por mim 💜",scores:{R:2,S:1}}
+  ]}
+];
+const HW_QS_TH = [
+  {q:"อัลบั้ม BTS ที่ชอบที่สุด?",opts:[
+    {text:"DARK&WILD 🐺",scores:{S:3}},{text:"WINGS 🦋",scores:{R:3}},{text:"LOVE YOURSELF 轉 'Tear' 💧",scores:{H:3}},{text:"MAP OF THE SOUL : 7 🗺️",scores:{R:2,H:1}},{text:"ARIRANG 🇰🇷",scores:{G:3}}
+  ]},
+  {q:"จองกุกแย่งเนื้อที่กำลังกินอยู่! ปฏิกิริยาของคุณ?",opts:[
+    {text:'"เฮ้!! นั่นของฉันนะ!!" 😤',scores:{G:3}},{text:'"ไม่เป็นไร กินเถอะ" 😊',scores:{H:3}},{text:'"ยิ่งดี จองกุกเป็นคนกิน!" 🥰',scores:{H:2,R:1}},{text:'"งั้นฉันก็ขอของเธอบ้างนะ" 😏',scores:{S:3}}
+  ]},
+  {q:"เจอ BTS บนถนนในโซล! ปฏิกิริยาของคุณ?",opts:[
+    {text:"ตื่นเต้นมาก ซ่อนตัว 🫣",scores:{H:3}},{text:'"Hello BTS!!" ทักทายตามปกติ 👋',scores:{G:3}},{text:"แกล้งฮัมเพลง BTS ตอนเดินผ่าน 🎵",scores:{S:2,R:1}},{text:"หยิบโทรศัพท์ออกมาบันทึก 📱",scores:{R:3}}
+  ]},
+  {q:"ถ้า BTS แสดงที่ฮอกวอตส์ คุณจะ...",opts:[
+    {text:"ร้องตามที่แถวหน้าสุด 🎤",scores:{G:3}},{text:"วิเคราะห์การออกแบบเวทีและแสง 🧐",scores:{R:3}},{text:"วางแผนล่วงหน้าเพื่อได้ที่นั่ง VIP 🎯",scores:{S:3}},{text:"ร้องไห้ด้วยความซาบซึ้งกับเพื่อน 😭",scores:{H:3}}
+  ]},
+  {q:"ได้ทำอาหารกับ BTS! สไตล์ของคุณ?",opts:[
+    {text:"ควบคุมครัวเหมือนจิน 🔪",scores:{G:3}},{text:"ค้นหาสูตรอย่างละเอียด 📖",scores:{R:3}},{text:"แข่งทำให้อร่อยที่สุด 🔥",scores:{S:3}},{text:"ช่วยทุกคนและสร้างบรรยากาศ 🥄",scores:{H:3}}
+  ]},
+  {q:"วันจองบัตรเวิลด์ทัวร์! สไตล์ของคุณ?",opts:[
+    {text:"ตั้งนาฬิกาปลุก 3 อัน กดทันที ⚡",scores:{G:3}},{text:"วิจัยความเร็วเน็ตและผังที่นั่ง 🔍",scores:{S:3}},{text:"อ่านบทวิเคราะห์ความน่าจะเป็น 📊",scores:{R:3}},{text:"เชียร์กันในกลุ่มแชท 🤝",scores:{H:3}}
+  ]},
+  {q:"ถ้าใช้เวทมนตร์กับ BTS ได้หนึ่งอย่าง?",opts:[
+    {text:"ให้พลังงานไม่สิ้นสุดบนเวที 💪",scores:{G:3}},{text:"ให้ได้อันดับ 1 ทุกชาร์ต 👑",scores:{S:3}},{text:"ให้ทั้ง 7 คนสุขภาพดีและมีความสุข 🍀",scores:{H:3}},{text:"ให้ทุกคนตกหลุมรักฉัน 💜",scores:{R:2,S:1}}
+  ]}
+];
+const HW_QS_MAP = {en:HW_QS_EN,kr:HW_QS_KR,jp:HW_QS_JP,es:HW_QS_ES,id:HW_QS_ID,pt:HW_QS_PT,th:HW_QS_TH};
+
+const HW_HOUSES = {
+  G:{name:"Gryffindor",emoji:"🦁",members:"Jungkook & J-Hope",
+    desc_en:"Brave, bold, and always shining on stage and in life",
+    desc_kr:"용감하고 대담하며, 무대 위에서도 인생에서도 항상 빛나는 사람",
+    desc_jp:"勇敢で大胆、ステージでも人生でもいつも輝いている",
+    desc_es:"Valiente, audaz, y siempre brillando en el escenario y en la vida",
+    desc_id:"Berani, tegas, dan selalu bersinar di panggung maupun kehidupan",
+    desc_pt:"Corajoso/a, ousado/a, e sempre brilhando no palco e na vida",
+    desc_th:"กล้าหาญ ห้าวหาญ และเปล่งประกายเสมอทั้งบนเวทีและในชีวิต",
+    colors:['#7C3AED','#9B1C31','#D4A017'],silhouette:'lion'},
+  S:{name:"Slytherin",emoji:"🐍",members:"Suga",
+    desc_en:"Strategic, independent, and ambitious — walking your own path with quiet fire",
+    desc_kr:"전략적이고, 독립적이며, 야망있는 — 조용한 불꽃과 함께 자신만의 길을 걷는 사람",
+    desc_jp:"戦略的で独立心が強く野心的 — 静かな炎を胸に自分だけの道を歩む",
+    desc_es:"Estratégico/a, independiente y ambicioso/a — caminando tu propio camino con fuego silencioso",
+    desc_id:"Strategis, mandiri, dan ambisius — berjalan di jalanmu sendiri dengan api yang tenang",
+    desc_pt:"Estratégico/a, independente e ambicioso/a — seguindo seu próprio caminho com fogo silencioso",
+    desc_th:"มียุทธศาสตร์ เป็นอิสระ และทะเยอทะยาน — เดินบนเส้นทางของตัวเองด้วยไฟที่เงียบงัน",
+    colors:['#1B4332','#2D6A4F','#C0C0C0'],silhouette:'snake'},
+  R:{name:"Ravenclaw",emoji:"🦅",members:"RM & V",
+    desc_en:"Creative, wise, and endlessly curious — seeing beauty where others don't",
+    desc_kr:"창의적이고, 지혜롭고, 끝없이 호기심 많은 — 남들이 보지 못하는 곳에서 아름다움을 찾는 사람",
+    desc_jp:"創造的で賢く、限りなく好奇心旺盛 — 他の人が見ないところに美を見出す",
+    desc_es:"Creativo/a, sabio/a, y eternamente curioso/a — viendo belleza donde otros no ven",
+    desc_id:"Kreatif, bijaksana, dan selalu penasaran — melihat keindahan yang orang lain lewatkan",
+    desc_pt:"Criativo/a, sábio/a, e eternamente curioso/a — vendo beleza onde outros não veem",
+    desc_th:"สร้างสรรค์ ฉลาด และอยากรู้อยากเห็นไม่สิ้นสุด — มองเห็นความงามในที่ที่คนอื่นมองข้าม",
+    colors:['#1B1464','#2E4482','#CD7F32'],silhouette:'eagle'},
+  H:{name:"Hufflepuff",emoji:"🦡",members:"Jin & Jimin",
+    desc_en:"Warm, loyal, and endlessly devoted — loving with everything you have",
+    desc_kr:"따뜻하고, 충직하고, 끝없이 헌신적인 — 가진 모든 것으로 사랑하는 사람",
+    desc_jp:"温かく忠実で、果てしなく献身的 — 持っているすべてで愛する人",
+    desc_es:"Cálido/a, leal, y eternamente devoto/a — amando con todo lo que tienes",
+    desc_id:"Hangat, setia, dan penuh pengabdian — mencintai dengan seluruh hati",
+    desc_pt:"Caloroso/a, leal, e eternamente devoto/a — amando com tudo que tem",
+    desc_th:"อบอุ่น ซื่อสัตย์ และทุ่มเทไม่สิ้นสุด — รักด้วยทุกสิ่งที่มี",
+    colors:['#78350F','#D97706','#FFD700'],silhouette:'badger'}
+};
+const HW_LABELS = {
+  en:{title:'BTS x Hogwarts Quiz',sub:'Which Hogwarts House do you belong to?',subKr:'나의 호그와트 기숙사는?',choose:'Choose your language / 언어를 선택하세요',label:'THE SORTING HAT SAYS',housemates:'YOUR BTS HOUSEMATES',q:'Question',again:'Try Again',save:'Save Image & Share!',copied:'Copied!',igAlert:'Copied! Paste it on Instagram!'},
+  kr:{title:'BTS x 호그와트 퀴즈',sub:'나의 호그와트 기숙사는?',subKr:'Which Hogwarts House?',choose:'언어를 선택하세요',label:'분류 모자의 선택',housemates:'나의 BTS 기숙사 메이트',q:'질문',again:'다시하기',save:'이미지 저장 & 공유하기!',copied:'복사됨!',igAlert:'복사 완료! 인스타그램에 붙여넣기 하세요!'},
+  jp:{title:'BTS x ホグワーツ クイズ',sub:'あなたのホグワーツ寮は？',subKr:'나의 호그와트 기숙사는?',choose:'言語を選択してください',label:'組分け帽子の選択',housemates:'BTSルームメイト',q:'質問',again:'もう一度',save:'画像を保存＆シェア！',copied:'コピー完了！',igAlert:'コピーしました！Instagramに貼り付けてください！'},
+  es:{title:'BTS x Hogwarts Quiz',sub:'¿A qué casa de Hogwarts perteneces?',subKr:'나의 호그와트 기숙사는?',choose:'Elige tu idioma',label:'EL SOMBRERO SELECCIONADOR DICE',housemates:'TUS COMPAÑEROS BTS',q:'Pregunta',again:'Intentar de nuevo',save:'¡Guardar imagen y compartir!',copied:'¡Copiado!',igAlert:'¡Copiado! ¡Pégalo en Instagram!'},
+  id:{title:'BTS x Hogwarts Quiz',sub:'Kamu masuk asrama Hogwarts yang mana?',subKr:'나의 호그와트 기숙사는?',choose:'Pilih bahasa kamu',label:'TOPI SELEKSI BERKATA',housemates:'TEMAN BTS DI ASRAMA',q:'Pertanyaan',again:'Coba lagi',save:'Simpan gambar & bagikan!',copied:'Disalin!',igAlert:'Disalin! Paste di Instagram!'},
+  pt:{title:'BTS x Hogwarts Quiz',sub:'A qual casa de Hogwarts você pertence?',subKr:'나의 호그와트 기숙사는?',choose:'Escolha seu idioma',label:'O CHAPÉU SELETOR DIZ',housemates:'SEUS COMPANHEIROS BTS',q:'Pergunta',again:'Tentar de novo',save:'Salvar imagem e compartilhar!',copied:'Copiado!',igAlert:'Copiado! Cole no Instagram!'},
+  th:{title:'BTS x Hogwarts Quiz',sub:'คุณอยู่บ้านไหนในฮอกวอตส์?',subKr:'나의 호그와트 기숙사는?',choose:'เลือกภาษาของคุณ',label:'หมวกคัดสรรกล่าวว่า',housemates:'เพื่อนร่วมบ้าน BTS',q:'คำถาม',again:'ลองอีกครั้ง',save:'บันทึกภาพแล้วแชร์!',copied:'คัดลอกแล้ว!',igAlert:'คัดลอกแล้ว! วางใน Instagram!'}
+};
+
+function startHogwarts(lang) {
+  if(!lang) {
+    const L = HW_LABELS.en;
+    document.getElementById('fun-view').innerHTML = `
+      <div class="quiz-box" style="text-align:center">
+        <div style="font-size:48px;margin-bottom:12px">🏰</div>
+        <div style="font-size:18px;font-weight:700;color:var(--text);margin-bottom:6px">BTS x Hogwarts Quiz</div>
+        <div style="font-size:14px;color:var(--text2);margin-bottom:4px">Which Hogwarts House do you belong to?</div>
+        <div style="font-size:12px;color:var(--text3);margin-bottom:24px">Choose your language / 언어를 선택하세요</div>
+        <button onclick="startHogwarts('en')" style="display:block;width:100%;padding:14px;margin-bottom:8px;background:linear-gradient(135deg,#7C3AED,#A855F7);color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit">🇬🇧 English</button>
+        <button onclick="startHogwarts('kr')" style="display:block;width:100%;padding:14px;margin-bottom:8px;background:linear-gradient(135deg,#EC4899,#F472B6);color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit">🇰🇷 한국어</button>
+        <button onclick="startHogwarts('jp')" style="display:block;width:100%;padding:14px;margin-bottom:8px;background:linear-gradient(135deg,#EF4444,#F97316);color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit">🇯🇵 日本語</button>
+        <button onclick="startHogwarts('es')" style="display:block;width:100%;padding:14px;margin-bottom:8px;background:linear-gradient(135deg,#F59E0B,#EF4444);color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit">🇪🇸 Español</button>
+        <button onclick="startHogwarts('id')" style="display:block;width:100%;padding:14px;margin-bottom:8px;background:linear-gradient(135deg,#EF4444,#DC2626);color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit">🇮🇩 Bahasa Indonesia</button>
+        <button onclick="startHogwarts('pt')" style="display:block;width:100%;padding:14px;margin-bottom:8px;background:linear-gradient(135deg,#10B981,#F59E0B);color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit">🇧🇷 Português</button>
+        <button onclick="startHogwarts('th')" style="display:block;width:100%;padding:14px;background:linear-gradient(135deg,#2563EB,#EF4444);color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit">🇹🇭 ภาษาไทย</button>
+        <button onclick="renderFunMenu()" style="margin-top:16px;padding:10px 24px;background:none;border:none;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;color:var(--text3)">← Back</button>
+      </div>`;
+    return;
+  }
+  hwLang = lang;
+  hwIdx = 0;
+  hwScores = {G:0,S:0,R:0,H:0};
+  renderHwQ();
+}
+
+function renderHwQ() {
+  const qs = HW_QS_MAP[hwLang] || HW_QS_EN;
+  const fv = document.getElementById('fun-view');
+  const L = HW_LABELS[hwLang] || HW_LABELS.en;
+  if (hwIdx >= qs.length) {
+    const sorted = Object.entries(hwScores).sort((a,b)=>b[1]-a[1]);
+    const winKey = sorted[0][0];
+    const h = HW_HOUSES[winKey];
+    const desc = h['desc_'+hwLang] || h.desc_en;
+    const shareText = {
+      en:`The Sorting Hat placed me in ${h.name}! ${h.emoji} My BTS housemates: ${h.members}! Take the quiz: https://kpopseoulmap.com 💜 #BTSxHogwarts #BTSHogwartsQuiz #kpopseoulmap`,
+      kr:`분류 모자가 나를 ${h.name}에 배정했어! ${h.emoji} BTS 기숙사 메이트: ${h.members}! https://kpopseoulmap.com 💜 #BTSxHogwarts #BTSHogwartsQuiz #kpopseoulmap`,
+      jp:`組分け帽子が私を${h.name}に！${h.emoji} BTSルームメイト: ${h.members}！ https://kpopseoulmap.com 💜 #BTSxHogwarts #BTSHogwartsQuiz #kpopseoulmap`,
+      es:`¡El Sombrero Seleccionador me puso en ${h.name}! ${h.emoji} Compañeros BTS: ${h.members}! https://kpopseoulmap.com 💜 #BTSxHogwarts #BTSHogwartsQuiz #kpopseoulmap`,
+      id:`Topi Seleksi menempatkanku di ${h.name}! ${h.emoji} Teman BTS: ${h.members}! https://kpopseoulmap.com 💜 #BTSxHogwarts #BTSHogwartsQuiz #kpopseoulmap`,
+      pt:`O Chapéu Seletor me colocou em ${h.name}! ${h.emoji} Companheiros BTS: ${h.members}! https://kpopseoulmap.com 💜 #BTSxHogwarts #BTSHogwartsQuiz #kpopseoulmap`,
+      th:`หมวกคัดสรรจัดฉันไป ${h.name}! ${h.emoji} เพื่อนร่วมบ้าน BTS: ${h.members}! https://kpopseoulmap.com 💜 #BTSxHogwarts #BTSHogwartsQuiz #kpopseoulmap`
+    }[hwLang] || `The Sorting Hat placed me in ${h.name}! ${h.emoji} My BTS housemates: ${h.members}! https://kpopseoulmap.com 💜 #BTSxHogwarts #BTSHogwartsQuiz #kpopseoulmap`;
+
+    const houseGrads = {G:'linear-gradient(135deg,#5B1A3D,#9B1C31,#4A0E2C)',S:'linear-gradient(135deg,#0B2618,#1B4332,#0D3321)',R:'linear-gradient(135deg,#0A0E3A,#1B1464,#141B5C)',H:'linear-gradient(135deg,#3D1C00,#78350F,#4A2200)'};
+    const houseLight = {G:'linear-gradient(135deg,#FDE8E8,#FCE7F3)',S:'linear-gradient(135deg,#D1FAE5,#ECFDF5)',R:'linear-gradient(135deg,#EDE9FE,#E0E7FF)',H:'linear-gradient(135deg,#FEF3C7,#FFFBEB)'};
+    const houseAccent = {G:'#D4A017',S:'#2D6A4F',R:'#2E4482',H:'#D97706'};
+
+    fv.innerHTML = `
+      <div style="max-width:400px;margin:0 auto">
+        <div style="border-radius:20px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.25)">
+          <div style="background:${houseGrads[winKey]};padding:32px 24px 28px;text-align:center;position:relative;overflow:hidden">
+            <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(circle at 30% 20%,rgba(255,255,255,.06) 0%,transparent 50%),radial-gradient(circle at 70% 80%,rgba(255,255,255,.04) 0%,transparent 50%)"></div>
+            <div style="position:absolute;top:10px;left:15px;width:2px;height:2px;background:rgba(255,255,255,.6);border-radius:50%;box-shadow:40px 8px 0 rgba(255,255,255,.4),120px 25px 0 rgba(255,255,255,.5),200px 5px 0 rgba(255,255,255,.3),280px 18px 0 rgba(255,255,255,.4),60px 45px 0 rgba(255,255,255,.3),180px 40px 0 rgba(255,255,255,.5),320px 35px 0 rgba(255,255,255,.3)"></div>
+            <div style="font-size:11px;color:rgba(255,255,255,.6);letter-spacing:3px;margin-bottom:12px;position:relative;z-index:1">${L.label}</div>
+            <div style="font-size:56px;margin:8px 0;position:relative;z-index:1">${h.emoji}</div>
+            <div style="font-size:28px;font-weight:800;color:${houseAccent[winKey]};letter-spacing:2px;position:relative;z-index:1;text-shadow:0 2px 8px rgba(0,0,0,.3)">${h.name.toUpperCase()}</div>
+            <div style="font-size:14px;color:rgba(255,255,255,.7);margin-top:8px;position:relative;z-index:1">${h.members}</div>
+          </div>
+          <div style="background:var(--card);padding:20px 24px 24px">
+            <div style="font-size:15px;color:var(--text);line-height:1.7;margin-bottom:16px;text-align:center;font-style:italic">"${desc}"</div>
+            <div style="background:${houseLight[winKey]};border-radius:12px;padding:14px 16px;text-align:center">
+              <div style="font-size:11px;font-weight:700;color:${houseAccent[winKey]};letter-spacing:1px;margin-bottom:6px">${h.emoji} ${L.housemates}</div>
+              <div style="font-size:16px;font-weight:700;color:var(--text)">${h.members}</div>
+            </div>
+            <div style="font-size:10px;color:var(--text3);text-align:center;margin-top:12px">kpopseoulmap.com 💜</div>
+          </div>
+        </div>
+        <div style="text-align:center;margin-top:18px">
+          <button class="quiz-share-btn" style="background:${houseAccent[winKey]};color:#fff;width:80%;padding:14px" onclick="saveHogwartsCard('${winKey}')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            ${L.save}
+          </button>
+        </div>
+        <div style="text-align:center;margin-top:8px">
+          <button class="quiz-share-btn" style="background:#0F0F0F;color:#fff" onclick="window.open('https://x.com/intent/tweet?text='+encodeURIComponent('${shareText}'),'_blank')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            X
+          </button>
+          <button class="quiz-share-btn" style="background:linear-gradient(135deg,#F58529,#DD2A7B,#8134AF);color:#fff" onclick="navigator.clipboard.writeText('${shareText}');alert('${L.igAlert}')">Instagram</button>
+          <button class="quiz-share-btn" style="background:var(--purple);color:#fff" onclick="navigator.clipboard.writeText('${shareText}');this.textContent='${L.copied}'">Copy</button>
+        </div>
+        <div style="text-align:center;margin-top:12px">
+          <button onclick="startHogwarts('${hwLang}')" style="padding:10px 24px;background:var(--warm-light);border:1.5px solid var(--warm);border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;color:var(--text2)">${L.again}</button>
+          <button onclick="renderFunMenu()" style="padding:10px 24px;background:none;border:none;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;color:var(--text3)">← Back</button>
+        </div>
+      </div>`;
+    return;
+  }
+  const q = qs[hwIdx];
+  fv.innerHTML = `
+    <div class="quiz-box">
+      <div class="quiz-progress">${L.q} ${hwIdx+1} / ${qs.length}</div>
+      <div style="height:4px;background:var(--warm);border-radius:2px;margin-bottom:16px"><div style="height:4px;background:linear-gradient(90deg,#7C3AED,#1E1B4B);border-radius:2px;width:${(hwIdx/qs.length)*100}%;transition:width .3s"></div></div>
+      <div class="quiz-q">${q.q}</div>
+      ${q.opts.map((o,i)=>`<button class="match-opt" onclick="answerHw(${i})">${o.text}</button>`).join('')}
+    </div>`;
+}
+
+function answerHw(i) {
+  const qs = HW_QS_MAP[hwLang] || HW_QS_EN;
+  const scores = qs[hwIdx].opts[i].scores;
+  for(const[k,v] of Object.entries(scores)) hwScores[k]=(hwScores[k]||0)+v;
+  hwIdx++;
+  renderHwQ();
+}
+
+function saveHogwartsCard(houseKey) {
+  const h = HW_HOUSES[houseKey];
+  const L = HW_LABELS[hwLang] || HW_LABELS.en;
+  const desc = h['desc_'+hwLang] || h.desc_en;
+  const canvas = document.createElement('canvas');
+  canvas.width = 720;
+  canvas.height = 1080;
+  const ctx = canvas.getContext('2d');
+
+  // House color schemes for canvas
+  const bgColors = {
+    G:['#3D0A1E','#5B1A3D','#9B1C31'],
+    S:['#051F12','#0B2618','#1B4332'],
+    R:['#070B2E','#0A0E3A','#1B1464'],
+    H:['#2A1500','#3D1C00','#78350F']
+  };
+  const accentColors = {G:'#D4A017',S:'#2D6A4F',R:'#2E4482',H:'#D97706'};
+  const glowColors = {G:'#D4A01744',S:'#2D6A4F44',R:'#2E448244',H:'#D9770644'};
+
+  const bg = bgColors[houseKey];
+  // Dark dreamy background
+  const topH = 620;
+  const grd = ctx.createLinearGradient(0,0,0,canvas.height);
+  grd.addColorStop(0,bg[0]); grd.addColorStop(0.4,bg[1]); grd.addColorStop(0.7,bg[2]); grd.addColorStop(1,bg[0]);
+  ctx.fillStyle = grd;
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  // Stars
+  ctx.fillStyle = 'rgba(255,255,255,.5)';
+  const starPositions = [[80,40,2],[200,25,1.5],[350,50,2.5],[480,30,1.5],[600,60,2],[150,90,1],[420,80,1.5],[560,45,1],[100,120,1.5],[300,100,2],[650,100,1],[50,160,1],[250,140,1.5],[500,130,1],[620,150,1.5]];
+  starPositions.forEach(([x,y,r])=>{ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();});
+
+  // Soft glow behind main area
+  ctx.beginPath();ctx.arc(canvas.width/2,300,180,0,Math.PI*2);
+  ctx.fillStyle=glowColors[houseKey]; ctx.fill();
+
+  // "THE SORTING HAT SAYS"
+  ctx.textAlign='center';
+  ctx.fillStyle='rgba(255,255,255,.5)'; ctx.font='600 16px Nunito,sans-serif';
+  ctx.fillText(L.label,canvas.width/2,60);
+
+  // House emoji
+  ctx.font='120px serif'; ctx.fillText(h.emoji,canvas.width/2,230);
+
+  // House name
+  ctx.fillStyle=accentColors[houseKey]; ctx.font='800 48px Nunito,sans-serif';
+  ctx.fillText(h.name.toUpperCase(),canvas.width/2,310);
+
+  // Members
+  ctx.fillStyle='rgba(255,255,255,.7)'; ctx.font='600 22px Nunito,sans-serif';
+  ctx.fillText(h.members,canvas.width/2,350);
+
+  // Description - wrap (character-level for CJK/Thai support)
+  ctx.fillStyle='rgba(255,255,255,.8)'; ctx.font='italic 400 18px Nunito,sans-serif';
+  let descLines=[], dLine='', y=400;
+  for(const ch of desc){const t=dLine+ch;if(ctx.measureText(t).width>560&&dLine){descLines.push(dLine);dLine=ch;}else{dLine=t;}}
+  if(dLine)descLines.push(dLine);
+  descLines.forEach(l=>{ctx.fillText(l,canvas.width/2,y);y+=26;});
+
+  // Bottom section - warm card
+  const bottomY = Math.max(500, y + 30);
+  ctx.fillStyle='rgba(250,247,242,0.95)';
+  roundRect(ctx,40,bottomY,canvas.width-80,180,20); ctx.fill();
+
+  // Housemates section
+  ctx.fillStyle=accentColors[houseKey]; ctx.font='700 14px Nunito,sans-serif';
+  ctx.fillText(h.emoji+' '+L.housemates,canvas.width/2,bottomY+40);
+  ctx.fillStyle='#2C2036'; ctx.font='700 26px Nunito,sans-serif';
+  ctx.fillText(h.members,canvas.width/2,bottomY+80);
+
+  // House description in card
+  ctx.fillStyle='#6B5E80'; ctx.font='400 14px Nunito,sans-serif';
+  const shortDesc = desc.length > 60 ? desc.substring(0,57)+'...' : desc;
+  ctx.fillText('"'+shortDesc+'"',canvas.width/2,bottomY+115);
+
+  // Hashtags
+  ctx.fillStyle='rgba(255,255,255,.4)'; ctx.font='400 13px Nunito,sans-serif';
+  ctx.fillText('#BTSxHogwarts  #BTSHogwartsQuiz  #kpopseoulmap',canvas.width/2,bottomY+155);
+
+  // Watermark
+  ctx.fillStyle='rgba(255,255,255,.4)'; ctx.font='400 16px Nunito,sans-serif';
+  ctx.fillText('kpopseoulmap.com 💜',canvas.width/2,canvas.height-50);
+
+  // Divider
+  ctx.strokeStyle='rgba(255,255,255,.15)'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(canvas.width/2-80,canvas.height-70); ctx.lineTo(canvas.width/2+80,canvas.height-70); ctx.stroke();
+
+  // Download
+  const link=document.createElement('a');
+  link.download=`bts-hogwarts-${h.name.toLowerCase()}.png`;
+  link.href=canvas.toDataURL('image/png');
+  link.click();
 }
 
 loadData();
