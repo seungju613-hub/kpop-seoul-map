@@ -69,9 +69,14 @@ body{font-family:'Nunito','Noto Sans KR',sans-serif;background:var(--bg);color:v
 .tab.active{color:var(--purple-dark);border-bottom-color:var(--purple)}
 .tab svg{display:block;margin:0 auto 4px;width:20px;height:20px}
 
-#map-view{height:45vh;min-height:280px;display:none}
+#map-view{height:55vh;min-height:320px;display:none}
 #map-view.show{display:block}
 .leaflet-tile-pane{filter:saturate(.7) brightness(1.05) sepia(.1)}
+.map-popup{font-family:'Nunito',sans-serif;padding:2px 0}
+.map-popup .popup-name{font-size:13px;font-weight:700;color:#1a1a2e}
+.map-popup .popup-kr{font-size:11px;color:#666;margin-top:1px}
+.map-popup .popup-member{font-size:10px;color:#7C3AED;font-weight:600;margin-top:3px}
+.map-popup .popup-btn{display:inline-block;margin-top:6px;padding:4px 10px;background:#7C3AED;color:#fff;border-radius:8px;font-size:10px;font-weight:700;cursor:pointer;border:none;font-family:inherit}
 
 .list{padding:12px;display:flex;flex-direction:column;gap:8px}
 .area-label{font-size:11px;font-weight:700;color:var(--text2);letter-spacing:1.5px;text-transform:uppercase;padding:18px 4px 8px;border-left:3px solid var(--purple);margin-left:4px;padding-left:10px}
@@ -637,6 +642,9 @@ function render() {
   updateMarkers(fp);
 }
 
+function closePopups() {
+  if (map) map.closePopup();
+}
 function openDetail(id) {
   const p = places.find(x=>x.id===id);
   if (!p) return;
@@ -711,7 +719,17 @@ function updateMarkers(fp) {
       iconSize:[28,28],iconAnchor:[14,14]
     });
     const m = L.marker([p.lat,p.lng],{icon}).addTo(map);
-    m.on('click',()=>openDetail(p.id));
+    const popupContent = `<div class="map-popup">
+      <div class="popup-name">${p.name_en}</div>
+      <div class="popup-kr">${p.name_kr}</div>
+      <div class="popup-member">${p.member||''}</div>
+      <div style="display:flex;gap:4px;margin-top:6px;flex-wrap:wrap">
+        <a href="https://www.google.com/maps/search/?api=1&query=${p.lat},${p.lng}" target="_blank" rel="noopener" style="padding:3px 8px;background:#4285F4;color:#fff;border-radius:6px;font-size:9px;font-weight:700;text-decoration:none">Google</a>
+        <a href="https://map.naver.com/v5/search/${encodeURIComponent(p.name_kr)}" target="_blank" rel="noopener" style="padding:3px 8px;background:#03C75A;color:#fff;border-radius:6px;font-size:9px;font-weight:700;text-decoration:none">Naver</a>
+        <button class="popup-btn" onclick="closePopups();openDetail(${p.id})">More info</button>
+      </div>
+    </div>`;
+    m.bindPopup(popupContent,{maxWidth:220,closeButton:true});
     markers.push(m);
   });
   if (markers.length > 0) {
