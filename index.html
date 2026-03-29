@@ -1079,7 +1079,9 @@ function renderColumnView() {
 }
 
 function renderKAECards() {
-  return [...KAE_ARTICLES].reverse().map(a => `
+  return [...KAE_ARTICLES].reverse().map(a => {
+    const articleUrl = 'https://kpopseoulmap.com#' + (a.hash||'');
+    return `
     <div class="kae-card" id="kae-${a.id}" data-hash="${a.hash||''}">
       <a id="${a.hash}"></a>
       <img src="${a.image}" alt="${a.title}" class="kae-thumb" onclick="toggleKAE('${a.id}')" loading="lazy">
@@ -1095,10 +1097,20 @@ function renderKAECards() {
       </div>
       <div class="kae-body" id="kae-body-${a.id}">
         <div class="kae-content">${a.body}</div>
+        <div style="padding:0 16px 16px;display:flex;gap:8px">
+          <button onclick="shareArticleX('${a.id}')" style="flex:1;padding:10px;border-radius:10px;border:none;background:#0F0F0F;color:#fff;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:4px">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            Share
+          </button>
+          <button onclick="copyArticleLink('${a.id}')" style="flex:1;padding:10px;border-radius:10px;border:1.5px solid var(--warm);background:var(--card);color:var(--text2);font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:4px">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+            Copy Link
+          </button>
+        </div>
       </div>
       <div class="kae-by">✍️ Bomnal Cafe — Korean ARMY · ${a.date||''}</div>
-    </div>
-  `).join('');
+    </div>`;
+  }).join('');
 }
 
 let kaeTimers = {};
@@ -1123,6 +1135,40 @@ function toggleKAE(id) {
     }
   }
 }
+
+function getArticleUrl(id) {
+  const a = KAE_ARTICLES.find(x=>x.id===id);
+  return a ? 'https://kpopseoulmap.com#'+a.hash : 'https://kpopseoulmap.com';
+}
+function shareArticleX(id) {
+  const a = KAE_ARTICLES.find(x=>x.id===id);
+  if(!a) return;
+  const url = getArticleUrl(id);
+  const text = `${a.title}\n\nKorean ARMY Explains 🇰🇷\n${url}`;
+  window.open('https://x.com/intent/tweet?text='+encodeURIComponent(text),'_blank');
+}
+function copyArticleLink(id) {
+  const url = getArticleUrl(id);
+  navigator.clipboard.writeText(url).then(()=>{
+    const btn = event.target.closest('button');
+    if(btn){const orig=btn.innerHTML;btn.textContent='Copied!';setTimeout(()=>btn.innerHTML=orig,2000);}
+  });
+}
+
+// Copy attribution — append URL when text is copied from articles
+document.addEventListener('copy', function(e) {
+  const sel = window.getSelection();
+  if(!sel.rangeCount) return;
+  const container = sel.getRangeAt(0).commonAncestorContainer;
+  const card = (container.nodeType===1?container:container.parentElement).closest('.kae-card');
+  if(!card) return;
+  const hash = card.dataset.hash;
+  const url = hash ? 'https://kpopseoulmap.com#'+hash : 'https://kpopseoulmap.com';
+  const text = sel.toString();
+  if(text.length < 20) return;
+  e.preventDefault();
+  e.clipboardData.setData('text/plain', text + '\n\n— Korean ARMY Explains 🇰🇷\n' + url);
+});
 
 // ── BTS Quiz ──
 const QUIZ = [
