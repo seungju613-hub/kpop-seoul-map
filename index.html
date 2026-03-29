@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>K-pop Seoul Map – BTS Spots, Soulmate Quiz, Concert Buddy & Curated Routes</title>
 <meta name="description" content="Explore 74+ BTS spots in Seoul on an interactive map. BTS soulmate quiz in 7 languages, 6 curated routes, concert buddy finder, and ARMY partner shops. By Bomnal Cafe owner next to HYBE.">
-<meta name="keywords" content="BTS Seoul map, K-pop Seoul guide, BTS soulmate quiz, BTS concert buddy, BTS ARIRANG Goyang, BTS restaurant Seoul, HYBE cafe Seoul, BTS member spots Seoul, Jungkook restaurant Seoul, Jungkook Sutjang, Jungkook Jeongdeunjip, Bomnal Cafe HYBE, BTS curated routes Seoul">
+<meta name="keywords" content="BTS Seoul map, K-pop Seoul guide, BTS soulmate quiz, BTS concert buddy, BTS ARIRANG Goyang, BTS restaurant Seoul, HYBE cafe Seoul, BTS member spots Seoul, Jungkook restaurant Seoul, Bomnal Cafe HYBE, BTS curated routes Seoul, BTS age hierarchy explained, why is RM leader not Jin, BTS hyung culture, Jin Jungkook age gap, Jin Jungkook brotherhood, BTS Korean culture explained">
 <meta property="og:title" content="K-pop Seoul Map – BTS Spots, Soulmate Quiz & Concert Buddy">
 <meta property="og:description" content="74+ BTS spots on an interactive Seoul map. Soulmate quiz in 7 languages, concert buddy finder, 6 curated routes & ARMY partner shops.">
 <meta property="og:image" content="https://kpopseoulmap.com/og-image-kpopseoulmap.png">
@@ -238,18 +238,20 @@ body{font-family:'Nunito','Noto Sans KR',sans-serif;background:var(--bg);color:v
 
 /* Korean ARMY Explains */
 .kae-section{margin-top:24px}
-.kae-card{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);margin-bottom:12px;overflow:hidden;transition:all .2s}
-.kae-card:hover{border-color:var(--purple-light)}
-.kae-header{padding:16px;cursor:pointer;display:flex;align-items:center;gap:12px}
-.kae-icon{width:42px;height:42px;border-radius:12px;background:var(--warm-light);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
-.kae-header-info{flex:1;min-width:0}
-.kae-title{font-size:14px;font-weight:700;color:var(--text);line-height:1.4}
-.kae-teaser{font-size:12px;color:var(--text2);margin-top:2px;line-height:1.5}
+.kae-card{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);margin-bottom:16px;overflow:hidden;transition:all .2s}
+.kae-card:hover{border-color:var(--purple-light);transform:translateY(-1px)}
+.kae-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;cursor:pointer}
+.kae-header{padding:14px 16px;cursor:pointer}
+.kae-header-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.kae-title{font-size:16px;font-weight:800;color:var(--text);line-height:1.4;flex:1}
+.kae-teaser{font-size:12px;color:var(--text3);margin-top:4px;line-height:1.4}
+.kae-readmore{font-size:11px;color:var(--purple);font-weight:700;margin-top:6px;display:inline-flex;align-items:center;gap:4px}
 .kae-arrow{flex-shrink:0;width:24px;height:24px;display:flex;align-items:center;justify-content:center;color:var(--text3);transition:transform .3s}
 .kae-arrow.open{transform:rotate(180deg)}
-.kae-body{max-height:0;overflow:hidden;transition:max-height .4s ease}
-.kae-body.open{max-height:3000px}
+.kae-body{max-height:0;overflow:hidden;transition:max-height .5s ease}
+.kae-body.open{max-height:5000px}
 .kae-content{padding:0 16px 20px}
+.kae-content img{width:100%;border-radius:10px;margin:12px 0}
 .kae-content h3{font-size:13px;font-weight:700;color:var(--purple-dark);margin:16px 0 8px;display:flex;align-items:center;gap:6px}
 .kae-content h3:first-child{margin-top:0}
 .kae-content p{font-size:13px;color:var(--text2);line-height:1.8;margin-bottom:8px}
@@ -261,6 +263,7 @@ body{font-family:'Nunito','Noto Sans KR',sans-serif;background:var(--bg);color:v
 .kae-age-item .yr{font-size:11px;color:var(--text3);font-weight:400}
 .kae-age-item .eq{font-size:10px;color:var(--purple);font-weight:700;margin-left:auto}
 .kae-closing{background:linear-gradient(135deg,var(--purple-pale),#FCE7F3);border-radius:12px;padding:14px 16px;margin-top:14px;font-size:13px;color:var(--text);line-height:1.8;font-style:italic}
+.kae-by{font-size:10px;color:var(--text3);padding:0 16px 12px;display:flex;align-items:center;gap:4px}
 
 @media(min-width:600px){
   .list{max-width:500px;margin:0 auto}
@@ -274,13 +277,13 @@ body{font-family:'Nunito','Noto Sans KR',sans-serif;background:var(--bg);color:v
 {"@context":"https://schema.org","@type":"ItemList","name":"Jungkook's Favorite Restaurants in Seoul","description":"BTS Jungkook's favorite Korean BBQ and restaurant spots in Seoul","itemListElement":[{"@type":"ListItem","position":1,"item":{"@type":"Restaurant","name":"Sutjang","description":"Korean charcoal BBQ restaurant visited by BTS Jungkook","servesCuisine":"Korean BBQ","address":{"@type":"PostalAddress","addressLocality":"Seoul","addressCountry":"KR"}}},{"@type":"ListItem","position":2,"item":{"@type":"Restaurant","name":"Jeongdeunjip","description":"Traditional Korean restaurant frequented by BTS Jungkook","servesCuisine":"Korean","address":{"@type":"PostalAddress","addressLocality":"Seoul","addressCountry":"KR"}}},{"@type":"ListItem","position":3,"item":{"@type":"Restaurant","name":"Uhyangwoo","description":"Premium Korean beef restaurant visited by BTS members","servesCuisine":"Korean BBQ","address":{"@type":"PostalAddress","addressLocality":"Seoul","addressCountry":"KR"}}},{"@type":"ListItem","position":4,"item":{"@type":"Restaurant","name":"Itaewon Hwaro","description":"Popular Korean BBQ in Itaewon visited by BTS Jungkook","servesCuisine":"Korean BBQ","address":{"@type":"PostalAddress","addressLocality":"Seoul","addressCountry":"KR"}}}]}
 </script>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Article","headline":"Why isn't Jin the leader if he's the oldest? — BTS Age Culture Explained","description":"Understanding Korean age hierarchy (나이 서열) and how BTS uses hyung, chingu, and respect in their daily interactions. Explained by a Korean ARMY.","author":{"@type":"Organization","name":"K-pop Seoul Map","url":"https://kpopseoulmap.com"},"publisher":{"@type":"Organization","name":"K-pop Seoul Map","url":"https://kpopseoulmap.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://kpopseoulmap.com"},"datePublished":"2026-03-29","dateModified":"2026-03-29","keywords":["BTS age order","BTS hyung","BTS leader RM","Korean age culture","BTS age hierarchy","BTS chingu","why is RM the leader","Jin oldest BTS","BTS Korean culture","BTS age system explained"],"inLanguage":"en","about":[{"@type":"Thing","name":"BTS"},{"@type":"Thing","name":"Korean age culture"},{"@type":"Thing","name":"K-pop"}]}
+{"@context":"https://schema.org","@type":"Article","headline":"Why isn't Jin the leader if he's the oldest? — BTS Age Culture Explained","description":"Understanding Korean age hierarchy (나이 서열) and how BTS uses hyung, chingu, and respect in their daily interactions. Explained by a Korean ARMY.","image":"https://kpopseoulmap.com/images/bts-age-culture.png","author":{"@type":"Person","name":"Bomnal Cafe — Korean ARMY","url":"https://x.com/bomnalcafe"},"publisher":{"@type":"Organization","name":"K-pop Seoul Map","url":"https://kpopseoulmap.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://kpopseoulmap.com"},"datePublished":"2026-03-29","dateModified":"2026-03-29","keywords":["BTS age order","BTS hyung","BTS leader RM","Korean age culture","BTS age hierarchy","BTS chingu","why is RM the leader","Jin oldest BTS","BTS Korean culture","BTS age system explained"],"inLanguage":"en","about":[{"@type":"Thing","name":"BTS"},{"@type":"Thing","name":"Korean age culture"},{"@type":"Thing","name":"K-pop"}]}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Why isn't Jin the leader of BTS if he's the oldest?","acceptedAnswer":{"@type":"Answer","text":"In Korea, leadership isn't determined by age. RM became BTS's leader because he was the first member recruited, and his lyrics and philosophy became the spiritual foundation of the group. He shaped what BTS stands for — that's why he leads."}},{"@type":"Question","name":"What is the BTS age order?","acceptedAnswer":{"@type":"Answer","text":"BTS has 5 age levels: Jin (1992), Suga (1993), J-Hope and RM (both 1994, same-age friends), Jimin and V (both 1995, same-age friends), and Jungkook (1997, youngest)."}},{"@type":"Question","name":"What does hyung mean in BTS?","acceptedAnswer":{"@type":"Answer","text":"Hyung (형) means 'older brother' in Korean. Younger BTS members call older ones hyung as a sign of respect, care, and trust. It's not just a word — it carries real emotional weight in Korean culture."}}]}
 </script>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Article","headline":"The 5-Year Gap — How Jin and Jungkook Became Brothers","description":"Jin and Jungkook age gap explained: How a 20-year-old university student and a 15-year-old from Busan became brothers through Korean age culture.","author":{"@type":"Organization","name":"K-pop Seoul Map","url":"https://kpopseoulmap.com"},"publisher":{"@type":"Organization","name":"K-pop Seoul Map","url":"https://kpopseoulmap.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://kpopseoulmap.com"},"datePublished":"2026-03-29","dateModified":"2026-03-29","keywords":["Jin Jungkook age gap","BTS Jin Jungkook relationship","BTS hyung maknae","Jin oldest BTS","Jungkook youngest BTS","Korean age culture BTS","BTS trainee days","Jin Jungkook brotherhood","BTS age gap explained","BTS Korean culture"],"inLanguage":"en","about":[{"@type":"Thing","name":"BTS"},{"@type":"Thing","name":"Jin"},{"@type":"Thing","name":"Jungkook"},{"@type":"Thing","name":"Korean age culture"}]}
+{"@context":"https://schema.org","@type":"Article","headline":"The 5-Year Gap — How Jin and Jungkook Became Brothers","description":"Jin and Jungkook age gap explained: How a 20-year-old university student and a 15-year-old from Busan became brothers through Korean age culture.","image":"https://kpopseoulmap.com/images/jin-jk-pizza.png","author":{"@type":"Person","name":"Bomnal Cafe — Korean ARMY","url":"https://x.com/bomnalcafe"},"publisher":{"@type":"Organization","name":"K-pop Seoul Map","url":"https://kpopseoulmap.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://kpopseoulmap.com"},"datePublished":"2026-03-29","dateModified":"2026-03-29","keywords":["Jin Jungkook age gap","BTS Jin Jungkook relationship","BTS hyung maknae","Jin oldest BTS","Jungkook youngest BTS","Korean age culture BTS","BTS trainee days","Jin Jungkook brotherhood","BTS age gap explained","BTS Korean culture"],"inLanguage":"en","about":[{"@type":"Thing","name":"BTS"},{"@type":"Thing","name":"Jin"},{"@type":"Thing","name":"Jungkook"},{"@type":"Thing","name":"Korean age culture"}]}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is the age gap between Jin and Jungkook?","acceptedAnswer":{"@type":"Answer","text":"Jin (born 1992) and Jungkook (born 1997) have a 5-year age gap. In Korean culture, this is a significant difference — it's the distance between a university student and a middle schooler."}},{"@type":"Question","name":"How did Jin and Jungkook become close?","acceptedAnswer":{"@type":"Answer","text":"Jin took care of 15-year-old Jungkook when he arrived alone in Seoul from Busan. Jin bought him meals, protected him as the eldest, and over years of shared experiences, their formal relationship transformed into a warm brotherhood."}}]}
@@ -910,9 +913,10 @@ function renderFunMenu() {
 const KAE_ARTICLES = [
   {
     id: 'age-culture',
-    icon: '👴👶',
+    image: 'images/bts-age-culture.png',
     title: "Why isn't Jin the leader if he's the oldest?",
-    teaser: "To understand BTS, you need to understand Korean age culture — and how BTS lives it every day.",
+    teaser: "Korean age culture — and how BTS lives it every day.",
+    date: '2026-03-29',
     body: `
       <h3>The Age Order 나이 서열</h3>
       <p>In Korea, age isn't just a number — it shapes how you speak, how you act, and how you relate to others. BTS follows this strictly. Even their official photocards are arranged by age, not alphabetically:</p>
@@ -957,9 +961,10 @@ const KAE_ARTICLES = [
   },
   {
     id: 'jin-jungkook',
-    icon: '🐹🐰',
+    image: 'images/jin-jk-pizza.png',
     title: "The 5-Year Gap — How Jin and Jungkook Became Brothers",
-    teaser: "A 20-year-old university student and a 15-year-old middle schooler walked into the same practice room.",
+    teaser: "A 20-year-old and a 15-year-old walked into the same practice room.",
+    date: '2026-03-29',
     body: `
       <p>In most countries, a 5-year age gap might not seem like much. But in Korea, the distance between a middle school student and a university freshman is enormous — it's not just 5 years, it feels more like a generation. Different worlds, different life stages, different everything.</p>
       <p>This is the story of how Jin and Jungkook bridged that gap.</p>
@@ -1002,28 +1007,46 @@ function renderColumnView() {
 function renderKAECards() {
   return KAE_ARTICLES.map(a => `
     <div class="kae-card" id="kae-${a.id}">
+      <img src="${a.image}" alt="${a.title}" class="kae-thumb" onclick="toggleKAE('${a.id}')" loading="lazy">
       <div class="kae-header" onclick="toggleKAE('${a.id}')">
-        <div class="kae-icon">${a.icon}</div>
-        <div class="kae-header-info">
+        <div class="kae-header-top">
           <div class="kae-title">${a.title}</div>
-          <div class="kae-teaser">${a.teaser}</div>
+          <div class="kae-arrow" id="kae-arrow-${a.id}">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
         </div>
-        <div class="kae-arrow" id="kae-arrow-${a.id}">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-        </div>
+        <div class="kae-teaser">${a.teaser}</div>
+        <div class="kae-readmore">Read more <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
       </div>
       <div class="kae-body" id="kae-body-${a.id}">
         <div class="kae-content">${a.body}</div>
       </div>
+      <div class="kae-by">✍️ Bomnal Cafe — Korean ARMY · ${a.date||''}</div>
     </div>
   `).join('');
 }
 
+let kaeTimers = {};
 function toggleKAE(id) {
   const body = document.getElementById('kae-body-' + id);
   const arrow = document.getElementById('kae-arrow-' + id);
+  const isOpening = !body.classList.contains('open');
   body.classList.toggle('open');
   arrow.classList.toggle('open');
+  const article = KAE_ARTICLES.find(a=>a.id===id);
+  const title = article ? article.title : id;
+  if(isOpening) {
+    if(typeof gtag==='function') gtag('event','article_open',{article_title:title});
+    kaeTimers[id] = {start: Date.now(), t30: null, t60: null};
+    kaeTimers[id].t30 = setTimeout(()=>{if(typeof gtag==='function') gtag('event','article_read_30s',{article_title:title});},30000);
+    kaeTimers[id].t60 = setTimeout(()=>{if(typeof gtag==='function') gtag('event','article_read_60s',{article_title:title});},60000);
+  } else {
+    if(kaeTimers[id]) {
+      clearTimeout(kaeTimers[id].t30);
+      clearTimeout(kaeTimers[id].t60);
+      delete kaeTimers[id];
+    }
+  }
 }
 
 // ── BTS Quiz ──
