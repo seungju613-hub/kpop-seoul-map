@@ -69,7 +69,7 @@ body{font-family:'Nunito','Noto Sans KR',sans-serif;background:var(--bg);color:v
 .tab.active{color:var(--purple-dark);border-bottom-color:var(--purple)}
 .tab svg{display:block;margin:0 auto 4px;width:20px;height:20px}
 
-#map-view{height:calc(100vh - 240px);min-height:320px;display:none;position:relative}
+#map-view{height:40vh;min-height:250px;display:none;position:relative}
 #map-view.show{display:block}
 .leaflet-tile-pane{filter:saturate(.7) brightness(1.05) sepia(.1)}
 .map-info-bar{position:fixed;bottom:70px;left:8px;right:8px;max-width:500px;margin:0 auto;background:#fff;border-radius:14px;padding:12px 14px;box-shadow:0 4px 20px rgba(0,0,0,.15);z-index:1000;display:none;animation:slideUp .2s ease}
@@ -279,6 +279,12 @@ body{font-family:'Nunito','Noto Sans KR',sans-serif;background:var(--bg);color:v
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Why isn't Jin the leader of BTS if he's the oldest?","acceptedAnswer":{"@type":"Answer","text":"In Korea, leadership isn't determined by age. RM became BTS's leader because he was the first member recruited, and his lyrics and philosophy became the spiritual foundation of the group. He shaped what BTS stands for — that's why he leads."}},{"@type":"Question","name":"What is the BTS age order?","acceptedAnswer":{"@type":"Answer","text":"BTS has 5 age levels: Jin (1992), Suga (1993), J-Hope and RM (both 1994, same-age friends), Jimin and V (both 1995, same-age friends), and Jungkook (1997, youngest)."}},{"@type":"Question","name":"What does hyung mean in BTS?","acceptedAnswer":{"@type":"Answer","text":"Hyung (형) means 'older brother' in Korean. Younger BTS members call older ones hyung as a sign of respect, care, and trust. It's not just a word — it carries real emotional weight in Korean culture."}}]}
 </script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"The 5-Year Gap — How Jin and Jungkook Became Brothers","description":"Jin and Jungkook age gap explained: How a 20-year-old university student and a 15-year-old from Busan became brothers through Korean age culture.","author":{"@type":"Organization","name":"K-pop Seoul Map","url":"https://kpopseoulmap.com"},"publisher":{"@type":"Organization","name":"K-pop Seoul Map","url":"https://kpopseoulmap.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://kpopseoulmap.com"},"datePublished":"2026-03-29","dateModified":"2026-03-29","keywords":["Jin Jungkook age gap","BTS Jin Jungkook relationship","BTS hyung maknae","Jin oldest BTS","Jungkook youngest BTS","Korean age culture BTS","BTS trainee days","Jin Jungkook brotherhood","BTS age gap explained","BTS Korean culture"],"inLanguage":"en","about":[{"@type":"Thing","name":"BTS"},{"@type":"Thing","name":"Jin"},{"@type":"Thing","name":"Jungkook"},{"@type":"Thing","name":"Korean age culture"}]}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is the age gap between Jin and Jungkook?","acceptedAnswer":{"@type":"Answer","text":"Jin (born 1992) and Jungkook (born 1997) have a 5-year age gap. In Korean culture, this is a significant difference — it's the distance between a university student and a middle schooler."}},{"@type":"Question","name":"How did Jin and Jungkook become close?","acceptedAnswer":{"@type":"Answer","text":"Jin took care of 15-year-old Jungkook when he arrived alone in Seoul from Busan. Jin bought him meals, protected him as the eldest, and over years of shared experiences, their formal relationship transformed into a warm brotherhood."}}]}
+</script>
 </head>
 <body>
 
@@ -320,11 +326,7 @@ body{font-family:'Nunito','Noto Sans KR',sans-serif;background:var(--bg);color:v
 </div>
 
 <div class="tabs">
-  <div class="tab active" data-tab="list">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-    List
-  </div>
-  <div class="tab" data-tab="map">
+  <div class="tab active" data-tab="map">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
     Map
   </div>
@@ -336,6 +338,10 @@ body{font-family:'Nunito','Noto Sans KR',sans-serif;background:var(--bg);color:v
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
     Fun
   </div>
+  <div class="tab" data-tab="column">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+    🇰🇷
+  </div>
   <div class="tab" data-tab="buddy" style="position:relative">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
     Buddy
@@ -343,7 +349,7 @@ body{font-family:'Nunito','Noto Sans KR',sans-serif;background:var(--bg);color:v
   </div>
 </div>
 
-<div id="map-view"></div>
+<div id="map-view" class="show"></div>
 <div class="map-info-bar" id="map-info-bar">
   <button class="mib-close" onclick="closeMapInfo()">✕</button>
   <div id="mib-content"></div>
@@ -351,129 +357,11 @@ body{font-family:'Nunito','Noto Sans KR',sans-serif;background:var(--bg);color:v
 <div class="list" id="place-list"></div>
 <div class="list" id="course-view" style="display:none"></div>
 <div class="list" id="fun-view" style="display:none;padding:16px 12px"></div>
+<div class="list" id="column-view" style="display:none;padding:16px 12px"></div>
 <div class="list" id="buddy-view" style="display:none;padding:16px 12px"></div>
 
-<div class="list" id="trip-section" style="padding:16px 12px">
-<div class="area-label">PLAN YOUR TRIP</div>
-<div style="font-size:13px;color:var(--text2);margin-bottom:14px;line-height:1.6;padding:0 4px">Essential items for your Seoul K-pop trip. Book in advance and save!</div>
 
-<a href="https://www.klook.com/activity/3819-discover-seoul-pass-seoul/?aid=116895" target="_blank" rel="noopener" class="place-card" style="text-decoration:none;border:1.5px solid var(--purple-light)">
-<div class="icon-box" style="background:var(--purple-pale)">
-<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A855F7" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 12l2 2 4-4"/></svg>
-</div>
-<div class="place-info">
-<div class="place-name" style="color:var(--text)">Discover Seoul Pass</div>
-<div class="place-sub">70+ attractions FREE. Includes T-Money & AREX airport train!</div>
-</div>
-<span class="place-tag" style="background:var(--purple-pale);color:#9333EA">Best Deal</span>
-</a>
-
-<a href="https://www.klook.com/activity/18054-klook-t-money-card-seoul/?aid=116895" target="_blank" rel="noopener" class="place-card" style="text-decoration:none">
-<div class="icon-box" style="background:var(--green-light)">
-<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#047857" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
-</div>
-<div class="place-info">
-<div class="place-name" style="color:var(--text)">T-Money Transport Card</div>
-<div class="place-sub">Subway, bus, taxi & convenience stores. Must-have for Seoul!</div>
-</div>
-</a>
-
-<a href="https://www.klook.com/en-US/search/?query=seoul%20esim&aid=116895" target="_blank" rel="noopener" class="place-card" style="text-decoration:none">
-<div class="icon-box" style="background:#E0F2FE">
-<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0284C7" stroke-width="1.8"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18.01"/></svg>
-</div>
-<div class="place-info">
-<div class="place-name" style="color:var(--text)">Korea eSIM / WiFi</div>
-<div class="place-sub">Stay connected from the moment you land. Data plans from $5.</div>
-</div>
-</a>
-
-<a href="https://www.klook.com/en-US/search/?query=seoul%20hanbok&aid=116895" target="_blank" rel="noopener" class="place-card" style="text-decoration:none">
-<div class="icon-box" style="background:#FCE7F3">
-<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EC4899" stroke-width="1.8"><path d="M12 2C8 2 4 6 4 10c0 6 8 12 8 12s8-6 8-12c0-4-4-8-8-8z"/><circle cx="12" cy="10" r="3"/></svg>
-</div>
-<div class="place-info">
-<div class="place-name" style="color:var(--text)">Hanbok Rental & Palace Tour</div>
-<div class="place-sub">Wear hanbok at Gyeongbokgung. Free palace admission in hanbok!</div>
-</div>
-</a>
-
-<a href="https://www.klook.com/en-US/search/?query=incheon%20airport%20seoul%20transfer&aid=116895" target="_blank" rel="noopener" class="place-card" style="text-decoration:none">
-<div class="icon-box" style="background:var(--amber-light)">
-<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="1.8"><path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"/><polygon points="12 15 17 21 7 21 12 15"/></svg>
-</div>
-<div class="place-info">
-<div class="place-name" style="color:var(--text)">Airport Transfer</div>
-<div class="place-sub">AREX express train, limousine bus or private car from Incheon.</div>
-</div>
-</a>
-
-<a href="https://www.klook.com/en-US/search/?query=seoul%20tour&aid=116895" target="_blank" rel="noopener" class="place-card" style="text-decoration:none">
-<div class="icon-box" style="background:var(--purple-pale)">
-<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-</div>
-<div class="place-info">
-<div class="place-name" style="color:var(--text)">Seoul Day Tours</div>
-<div class="place-sub">Guided tours, K-pop experiences & day trips from Seoul.</div>
-</div>
-</a>
-
-<div class="area-label" style="margin-top:20px">BTS SHOP</div>
-<div style="font-size:13px;color:var(--text2);margin-bottom:14px;line-height:1.6;padding:0 4px">Get your BTS albums & merch! 💜 앨범 & 굿즈 모아보기</div>
-
-<a href="https://www.amazon.com/Album-ARIRANG-Living-Legend-Ver/dp/B0GGSMCJQ4?tag=kpopseoulmap-20" target="_blank" rel="noopener" class="place-card" style="text-decoration:none;border:1.5px solid var(--purple-light)">
-<div class="icon-box" style="background:var(--purple-pale)">
-<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A855F7" stroke-width="1.8"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-</div>
-<div class="place-info">
-<div class="place-name" style="color:var(--text)">BTS ARIRANG Album 💿</div>
-<div class="place-sub">The 5th album — newest release! CD, photobook & cards included.</div>
-</div>
-<span class="place-tag" style="background:var(--purple-pale);color:#9333EA">NEW</span>
-</a>
-
-<a href="https://www.amazon.com/Beyond-Story-10-Year-Record-BTS/dp/1250319447?tag=kpopseoulmap-20" target="_blank" rel="noopener" class="place-card" style="text-decoration:none">
-<div class="icon-box" style="background:var(--amber-light)">
-<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-</div>
-<div class="place-info">
-<div class="place-name" style="color:var(--text)">Beyond the Story 📖</div>
-<div class="place-sub">BTS 10-year official book — NYT bestseller. A must-read for ARMY.</div>
-</div>
-</a>
-
-<a href="https://www.amazon.com/s?k=BTS+album&tag=kpopseoulmap-20" target="_blank" rel="noopener" class="place-card" style="text-decoration:none">
-<div class="icon-box" style="background:var(--green-light)">
-<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#047857" stroke-width="1.8"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-</div>
-<div class="place-info">
-<div class="place-name" style="color:var(--text)">BTS Albums Collection</div>
-<div class="place-sub">All BTS albums — ARIRANG, Proof, BE, MOTS:7 & more.</div>
-</div>
-</a>
-
-<a href="https://www.amazon.com/s?k=BTS+photocard+binder+holder+merch&tag=kpopseoulmap-20" target="_blank" rel="noopener" class="place-card" style="text-decoration:none">
-<div class="icon-box" style="background:#FCE7F3">
-<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EC4899" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-</div>
-<div class="place-info">
-<div class="place-name" style="color:var(--text)">Photocards & Merch 🗂️</div>
-<div class="place-sub">Official photocards, binders, posters & collectibles.</div>
-</div>
-</a>
-
-<div style="margin-top:16px;padding:14px;background:var(--warm-light);border-radius:14px;border:1px solid var(--warm)">
-<div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:8px">🇰🇷 한국에서 구매하기 (쿠팡)</div>
-<div style="display:flex;gap:8px;flex-wrap:wrap">
-<a href="https://link.coupang.com/a/ebO7c6" target="_blank" rel="noopener" style="flex:1;min-width:90px;text-decoration:none;background:#fff;border:1.5px solid var(--warm);padding:10px 6px;border-radius:10px;font-size:11px;font-weight:700;color:var(--text);text-align:center;display:block">💿 ARIRANG</a>
-<a href="https://link.coupang.com/a/cmxbIm" target="_blank" rel="noopener" style="flex:1;min-width:90px;text-decoration:none;background:#fff;border:1.5px solid var(--warm);padding:10px 6px;border-radius:10px;font-size:11px;font-weight:700;color:var(--text);text-align:center;display:block">📖 Beyond the Story</a>
-</div>
-<div style="font-size:9px;color:var(--text3);margin-top:8px;text-align:center">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</div>
-</div>
-
-</div>
-
-<div class="area-label" style="margin-top:20px">ARMY PARTNERS 💜</div>
+<div class="area-label" style="margin-top:20px;padding:18px 16px 8px">ARMY PARTNERS 💜</div>
 <div style="font-size:13px;color:var(--text2);margin-bottom:14px;line-height:1.6;padding:0 4px">Local businesses & services recommended for ARMY<br>아미를 위한 추천 서비스 & 매장</div>
 
 <a href="https://wooing-official.com" target="_blank" rel="noopener" class="place-card" style="text-decoration:none;border:1.5px solid var(--purple-light)">
@@ -517,15 +405,11 @@ body{font-family:'Nunito','Noto Sans KR',sans-serif;background:var(--bg);color:v
   <div class="detail-sheet" id="detail-sheet"></div>
 </div>
 
-<!-- Bottom Bar: Share + Plan Your Trip -->
+<!-- Bottom Bar: Share -->
 <div class="share-bar">
-  <button class="bar-btn share" onclick="openShareModal()">
+  <button class="bar-btn share" onclick="openShareModal()" style="max-width:300px">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
     Share
-  </button>
-  <button class="bar-btn trip" onclick="document.getElementById('trip-section').scrollIntoView({behavior:'smooth'})">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-    Plan Your Trip
   </button>
 </div>
 
@@ -619,6 +503,9 @@ async function loadData() {
     places = d.places;
     document.getElementById('count-all').textContent = places.length;
     render();
+    initMap();
+    setTimeout(()=>map.invalidateSize(),100);
+    updateMarkers(filtered());
   } catch(e) {
     document.getElementById('place-list').innerHTML = '<div style="text-align:center;padding:40px;color:var(--text3)">Loading place data...</div>';
   }
@@ -812,9 +699,11 @@ document.querySelectorAll('.tab').forEach(tab => {
     document.getElementById('place-list').style.display = 'none';
     document.getElementById('course-view').style.display = 'none';
     document.getElementById('fun-view').style.display = 'none';
+    document.getElementById('column-view').style.display = 'none';
     document.getElementById('buddy-view').style.display = 'none';
     if (v === 'map') {
       document.getElementById('map-view').classList.add('show');
+      document.getElementById('place-list').style.display = 'flex';
       initMap();
       setTimeout(()=>map.invalidateSize(),100);
       updateMarkers(filtered());
@@ -824,11 +713,12 @@ document.querySelectorAll('.tab').forEach(tab => {
     } else if (v === 'fun') {
       document.getElementById('fun-view').style.display = 'block';
       renderFunMenu();
+    } else if (v === 'column') {
+      document.getElementById('column-view').style.display = 'block';
+      renderColumnView();
     } else if (v === 'buddy') {
       document.getElementById('buddy-view').style.display = 'block';
       showConcertBuddy();
-    } else {
-      document.getElementById('place-list').style.display = 'flex';
     }
   });
 });
@@ -957,6 +847,7 @@ function showCourseOnMap(courseIdx) {
   document.getElementById('place-list').style.display = 'none';
   document.getElementById('course-view').style.display = 'none';
   document.getElementById('fun-view').style.display = 'none';
+  document.getElementById('column-view').style.display = 'none';
   document.getElementById('buddy-view').style.display = 'none';
   initMap();
   setTimeout(()=>map.invalidateSize(),100);
@@ -1012,11 +903,6 @@ function renderFunMenu() {
       <div class="fun-emoji">🧠</div>
       <div class="fun-title">BTS ARMY Quiz</div>
       <div class="fun-desc">How well do you know BTS? Test yourself & share your score!</div>
-    </div>
-    <div class="kae-section">
-      <div class="area-label">KOREAN ARMY EXPLAINS 🇰🇷</div>
-      <div style="font-size:12px;color:var(--text2);margin-bottom:14px;line-height:1.5;padding:0 4px">Real Korean cultural context behind BTS — explained by a Korean ARMY.<br><span style="color:var(--text3);font-size:11px">한국 아미가 설명하는 BTS 문화 이야기</span></div>
-      ${renderKAECards()}
     </div>`;
 }
 
@@ -1068,8 +954,50 @@ const KAE_ARTICLES = [
         But now you know what you're seeing. 💜
       </div>
     `
+  },
+  {
+    id: 'jin-jungkook',
+    icon: '🐹🐰',
+    title: "The 5-Year Gap — How Jin and Jungkook Became Brothers",
+    teaser: "A 20-year-old university student and a 15-year-old middle schooler walked into the same practice room.",
+    body: `
+      <p>In most countries, a 5-year age gap might not seem like much. But in Korea, the distance between a middle school student and a university freshman is enormous — it's not just 5 years, it feels more like a generation. Different worlds, different life stages, different everything.</p>
+      <p>This is the story of how Jin and Jungkook bridged that gap.</p>
+
+      <h3>Seoul, 2011. Two strangers.</h3>
+      <p>Jungkook arrived in Seoul from Busan — in Korea, that's like a teenager moving across the country alone for a dream. He was 15, shy, quiet, and struggling to open up. Jin was 20, one of the older trainees, and by all accounts much stricter than the Jin we know today. He was serious, disciplined, and carried the weight of being one of the eldest in the group.</p>
+      <p>Jin once said something beautifully literary: <em>"I can never forget 15-year-old Jungkook's eyes."</em> Reading between the lines, Jin saw it — a boy who had left his family, traveled far from home, and landed in a room full of strangers with fear in his eyes. And Jin understood.</p>
+
+      <h3>The big brother instinct.</h3>
+      <p>Here's where Korean age culture shows its depth. Jin was strict with members closer to his age — Suga, J-Hope, RM — pushing them as equals and rivals in training. But Jungkook? He was just too young. You don't discipline a child the way you challenge a peer. Instead, Jin protected him.</p>
+      <p>He bought Jungkook pizza and pasta. There's a famous story: Jungkook tried gorgonzola pizza for the first time because of Jin — and was amazed by the taste. These small moments — an older trainee buying dinner for the youngest — might seem trivial. But for a 15-year-old alone in Seoul, they meant the world.</p>
+
+      <h3>The awkward early days.</h3>
+      <p>If you watch BTS's early YouTube logs from their debut era, you'll notice something: Jungkook speaks to Jin in extremely formal, careful Korean. Not the comfortable politeness you'd use with a friendly older brother, but the stiff, cautious speech you'd use with a distant adult. Jungkook was still figuring out how to be around someone 5 years older.</p>
+
+      <h3>The transformation.</h3>
+      <p>Years passed. Schedules, tours, late nights, shared meals, shared struggles. Slowly, the wall came down. The Jungkook who once couldn't look Jin in the eye began wrestling with him on camera, teasing him, even playfully ignoring his "hyung" authority — all with a grin.</p>
+      <p>And Jin changed too. When RM took the leader role, Jin shifted from the strict eldest to the team's warm, humorous heart. He didn't need to be the disciplinarian anymore. He could just be "hyung" in the best sense of the word.</p>
+
+      <h3>What they are now.</h3>
+      <p>Today, Jin and Jungkook are what Koreans would call the perfect oldest-youngest relationship. Jin sees Jungkook as a little brother, yes — but more importantly, as an equal team member deserving of respect. Jungkook sees Jin as a hyung he deeply respects, but also as a teammate he can joke with, fight with, and lean on.</p>
+      <p>They wrestle. They tease. They compete. But when it matters, the 5-year gap reappears — in the gentleness of Jin's voice, in the respect behind Jungkook's laugh.</p>
+
+      <h3>Why this matters to understand BTS.</h3>
+      <div class="kae-closing">
+        The Jin-Jungkook dynamic is Korean age culture at its most beautiful. It's not about hierarchy for the sake of control. It's about a 20-year-old seeing fear in a 15-year-old's eyes and deciding to buy him pizza. It's about that 15-year-old growing up and returning that care tenfold.<br><br>
+        The gap doesn't disappear — it becomes the foundation of something deeper. 💜
+      </div>
+    `
   }
 ];
+
+function renderColumnView() {
+  document.getElementById('column-view').innerHTML = `
+    <div class="area-label">KOREAN ARMY EXPLAINS 🇰🇷</div>
+    <div style="font-size:12px;color:var(--text2);margin-bottom:14px;line-height:1.5;padding:0 4px">Real Korean cultural context behind BTS — explained by a Korean ARMY.<br><span style="color:var(--text3);font-size:11px">한국 아미가 설명하는 BTS 문화 이야기</span></div>
+    ${renderKAECards()}`;
+}
 
 function renderKAECards() {
   return KAE_ARTICLES.map(a => `
@@ -2292,24 +2220,6 @@ function renderSmQ() {
         <div style="text-align:center;margin-top:12px">
           <button onclick="startSoulmate('${smLang}')" style="padding:10px 24px;background:var(--warm-light);border:1.5px solid var(--warm);border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;color:var(--text2)">${L.again}</button>
           <button onclick="renderFunMenu()" style="padding:10px 24px;background:none;border:none;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;color:var(--text3)">← Back</button>
-        </div>
-        <!-- Product Recommendations -->
-        <div style="margin-top:24px;background:var(--card);border-radius:16px;border:1.5px solid var(--warm);padding:16px;text-align:center">
-          <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px">${L.must}</div>
-          <div style="font-size:11px;color:var(--text3);margin-bottom:12px">${L.mustSub}</div>
-          <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
-            ${smLang==='kr' ? `
-              <a href="https://link.coupang.com/a/ebO7c6" target="_blank" rel="noopener" style="flex:1;min-width:100px;text-decoration:none;background:linear-gradient(135deg,#7C3AED,#A855F7);color:#fff;padding:12px 8px;border-radius:12px;font-size:12px;font-weight:700;display:block">💿 ARIRANG 앨범</a>
-            ` : smLang==='jp' ? `
-              <a href="https://www.amazon.co.jp/s?k=BTS+ARIRANG+album&tag=kpopseoulmap-22" target="_blank" rel="noopener" style="flex:1;min-width:100px;text-decoration:none;background:linear-gradient(135deg,#7C3AED,#A855F7);color:#fff;padding:12px 8px;border-radius:12px;font-size:12px;font-weight:700;display:block">💿 ARIRANG アルバム</a>
-              <a href="https://www.amazon.co.jp/s?k=BTS+Beyond+the+Story&tag=kpopseoulmap-22" target="_blank" rel="noopener" style="flex:1;min-width:100px;text-decoration:none;background:var(--warm-light);color:var(--text);border:1.5px solid var(--warm);padding:12px 8px;border-radius:12px;font-size:12px;font-weight:700;display:block">📖 Beyond the Story</a>
-            ` : `
-              <a href="https://www.amazon.com/Album-ARIRANG-Living-Legend-Ver/dp/B0GGSMCJQ4?tag=kpopseoulmap-20" target="_blank" rel="noopener" style="flex:1;min-width:100px;text-decoration:none;background:linear-gradient(135deg,#7C3AED,#A855F7);color:#fff;padding:12px 8px;border-radius:12px;font-size:12px;font-weight:700;display:block">💿 ARIRANG Album</a>
-              <a href="https://www.amazon.com/Beyond-Story-10-Year-Record-BTS/dp/1250319447?tag=kpopseoulmap-20" target="_blank" rel="noopener" style="flex:1;min-width:100px;text-decoration:none;background:var(--warm-light);color:var(--text);border:1.5px solid var(--warm);padding:12px 8px;border-radius:12px;font-size:12px;font-weight:700;display:block">📖 Beyond the Story</a>
-              <a href="https://www.amazon.com/s?k=kpop+photocard+binder+holder&tag=kpopseoulmap-20" target="_blank" rel="noopener" style="flex:1;min-width:100px;text-decoration:none;background:var(--warm-light);color:var(--text);border:1.5px solid var(--warm);padding:12px 8px;border-radius:12px;font-size:12px;font-weight:700;display:block">🗂️ Photocard Binder</a>
-            `}
-          </div>
-          <div style="font-size:9px;color:var(--text3);margin-top:8px">${L.aff}</div>
         </div>
       </div>`;
     return;
