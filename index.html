@@ -1412,103 +1412,51 @@ const KAE_ARTICLES = [
 ];
 
 function renderColumnView() {
+  const slugMap = {
+    'age-culture':'bts-age-culture-explained','jin-jungkook':'jin-jungkook-age-gap',
+    'jimin-jungkook-rainy':'jimin-jungkook-rainy-day-story','bts-military':'bts-military-service-explained',
+    'almost-disbanded':'bts-almost-disbanded','billboard':'bts-billboard-number-1-list',
+    'afraid-arirang':'bts-arirang-album-meaning'
+  };
+  const searchId = 'kae-search';
   document.getElementById('column-view').innerHTML = `
     <div class="area-label">KOREAN ARMY EXPLAINS 🇰🇷</div>
-    <div style="font-size:12px;color:var(--text2);margin-bottom:14px;line-height:1.5;padding:0 4px">Real Korean cultural context behind BTS — explained by a Korean ARMY.<br><span style="color:var(--text3);font-size:11px">한국 아미가 설명하는 BTS 문화 이야기</span></div>
-    ${renderKAECards()}`;
+    <div style="font-size:12px;color:var(--text2);margin-bottom:10px;line-height:1.5;padding:0 4px">Real Korean cultural context behind BTS — explained by a Korean ARMY.<br><span style="color:var(--text3);font-size:11px">한국 아미가 설명하는 BTS 문화 이야기</span></div>
+    <input id="${searchId}" type="text" placeholder="Search articles... (e.g. Arirang, Han, Military)" style="width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid var(--border);font-family:inherit;font-size:13px;margin-bottom:14px;background:var(--card);color:var(--text);outline:none" oninput="filterKAE()">
+    <div id="kae-list">${renderKAECards(slugMap)}</div>`;
 }
-
-function renderKAECards() {
+function renderKAECards(slugMap) {
+  if(!slugMap) slugMap = {
+    'age-culture':'bts-age-culture-explained','jin-jungkook':'jin-jungkook-age-gap',
+    'jimin-jungkook-rainy':'jimin-jungkook-rainy-day-story','bts-military':'bts-military-service-explained',
+    'almost-disbanded':'bts-almost-disbanded','billboard':'bts-billboard-number-1-list',
+    'afraid-arirang':'bts-arirang-album-meaning'
+  };
   return [...KAE_ARTICLES].reverse().map(a => {
-    const articleUrl = 'https://kpopseoulmap.com#' + (a.hash||'');
+    const slug = slugMap[a.id] || a.id;
     return `
-    <div class="kae-card" id="kae-${a.id}" data-hash="${a.hash||''}">
-      <a id="${a.hash}"></a>
-      <img src="${a.image}" alt="${a.title}" class="kae-thumb" onclick="toggleKAE('${a.id}')" loading="lazy">
-      <div class="kae-header" onclick="toggleKAE('${a.id}')">
-        <div class="kae-header-top">
-          <div class="kae-title">${a.title}</div>
-          <div class="kae-arrow" id="kae-arrow-${a.id}">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-          </div>
+    <a href="/column/${slug}.html" class="kae-card-link" data-title="${a.title.toLowerCase()}" data-teaser="${a.teaser.toLowerCase()}" style="text-decoration:none;display:block">
+      <div class="kae-card" style="display:flex;gap:12px;align-items:center;padding:12px">
+        <img src="${a.image}" alt="${a.title}" style="width:110px;height:70px;object-fit:cover;border-radius:10px;flex-shrink:0" loading="lazy">
+        <div style="flex:1;min-width:0">
+          <div style="font-size:14px;font-weight:800;color:var(--text);line-height:1.3;margin-bottom:3px">${a.title}</div>
+          <div style="font-size:11px;color:var(--text3);line-height:1.3">${a.teaser}</div>
+          <div style="font-size:10px;color:var(--text3);margin-top:4px">${a.date||''}</div>
         </div>
-        <div class="kae-teaser">${a.teaser}</div>
-        <div class="kae-readmore">Read more <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2" style="flex-shrink:0"><polyline points="9 18 15 12 9 6"/></svg>
       </div>
-      <div class="kae-body" id="kae-body-${a.id}">
-        <div class="kae-content">${a.body}</div>
-        <div style="padding:0 16px 16px;display:flex;gap:8px">
-          <button onclick="shareArticleX('${a.id}')" style="flex:1;padding:10px;border-radius:10px;border:none;background:#0F0F0F;color:#fff;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:4px">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-            Share
-          </button>
-          <button onclick="copyArticleLink('${a.id}')" style="flex:1;padding:10px;border-radius:10px;border:1.5px solid var(--warm);background:var(--card);color:var(--text2);font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:4px">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-            Copy Link
-          </button>
-        </div>
-      </div>
-      <div class="kae-by">✍️ Bomnal Cafe — Korean ARMY · ${a.date||''}</div>
-    </div>`;
+    </a>`;
   }).join('');
 }
-
-let kaeTimers = {};
-function toggleKAE(id) {
-  const body = document.getElementById('kae-body-' + id);
-  const arrow = document.getElementById('kae-arrow-' + id);
-  const isOpening = !body.classList.contains('open');
-  body.classList.toggle('open');
-  arrow.classList.toggle('open');
-  const article = KAE_ARTICLES.find(a=>a.id===id);
-  const title = article ? article.title : id;
-  if(isOpening) {
-    if(typeof gtag==='function') gtag('event','article_open',{article_title:title});
-    kaeTimers[id] = {start: Date.now(), t30: null, t60: null};
-    kaeTimers[id].t30 = setTimeout(()=>{if(typeof gtag==='function') gtag('event','article_read_30s',{article_title:title});},30000);
-    kaeTimers[id].t60 = setTimeout(()=>{if(typeof gtag==='function') gtag('event','article_read_60s',{article_title:title});},60000);
-  } else {
-    if(kaeTimers[id]) {
-      clearTimeout(kaeTimers[id].t30);
-      clearTimeout(kaeTimers[id].t60);
-      delete kaeTimers[id];
-    }
-  }
-}
-
-function getArticleUrl(id) {
-  const a = KAE_ARTICLES.find(x=>x.id===id);
-  return a ? 'https://kpopseoulmap.com#'+a.hash : 'https://kpopseoulmap.com';
-}
-function shareArticleX(id) {
-  const a = KAE_ARTICLES.find(x=>x.id===id);
-  if(!a) return;
-  const url = getArticleUrl(id);
-  const text = `${a.title}\n\nKorean ARMY Explains 🇰🇷\n${url}`;
-  window.open('https://x.com/intent/tweet?text='+encodeURIComponent(text),'_blank');
-}
-function copyArticleLink(id) {
-  const url = getArticleUrl(id);
-  navigator.clipboard.writeText(url).then(()=>{
-    const btn = event.target.closest('button');
-    if(btn){const orig=btn.innerHTML;btn.textContent='Copied!';setTimeout(()=>btn.innerHTML=orig,2000);}
+function filterKAE() {
+  const q = document.getElementById('kae-search').value.toLowerCase();
+  document.querySelectorAll('.kae-card-link').forEach(card => {
+    const title = card.dataset.title || '';
+    const teaser = card.dataset.teaser || '';
+    card.style.display = (title.includes(q) || teaser.includes(q)) ? 'block' : 'none';
   });
 }
 
-// Copy attribution — append URL when text is copied from articles
-document.addEventListener('copy', function(e) {
-  const sel = window.getSelection();
-  if(!sel.rangeCount) return;
-  const container = sel.getRangeAt(0).commonAncestorContainer;
-  const card = (container.nodeType===1?container:container.parentElement).closest('.kae-card');
-  if(!card) return;
-  const hash = card.dataset.hash;
-  const url = hash ? 'https://kpopseoulmap.com#'+hash : 'https://kpopseoulmap.com';
-  const text = sel.toString();
-  if(text.length < 20) return;
-  e.preventDefault();
-  e.clipboardData.setData('text/plain', text + '\n\n— Korean ARMY Explains 🇰🇷\n' + url);
-});
 
 // ── BTS Quiz ──
 const QUIZ = [
@@ -3299,33 +3247,20 @@ function saveHogwartsCard(houseKey) {
 
 loadData();
 
-// Hash URL → auto-open article
-function handleArticleHash() {
+// Legacy hash URL redirect → individual column pages
+(function(){
+  const hashMap = {
+    'article-age-culture':'/column/bts-age-culture-explained.html',
+    'article-jin-jk':'/column/jin-jungkook-age-gap.html',
+    'article-rainy-day':'/column/jimin-jungkook-rainy-day-story.html',
+    'article-military':'/column/bts-military-service-explained.html',
+    'article-almost-disbanded':'/column/bts-almost-disbanded.html',
+    'article-billboard':'/column/bts-billboard-number-1-list.html',
+    'article-afraid-arirang':'/column/bts-arirang-album-meaning.html'
+  };
   const hash = location.hash.replace('#','');
-  if(!hash.startsWith('article-')) return;
-  const article = KAE_ARTICLES.find(a=>a.hash===hash);
-  if(!article) return;
-  // Switch to column tab
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.querySelector('[data-tab="column"]').classList.add('active');
-  document.getElementById('map-view').classList.remove('show');
-  document.getElementById('place-list').style.display = 'none';
-  document.getElementById('course-view').style.display = 'none';
-  document.getElementById('fun-view').style.display = 'none';
-  document.getElementById('column-view').style.display = 'block';
-  document.getElementById('buddy-view').style.display = 'none';
-  renderColumnView();
-  // Open the article
-  setTimeout(()=>{
-    const body = document.getElementById('kae-body-'+article.id);
-    const arrow = document.getElementById('kae-arrow-'+article.id);
-    if(body && !body.classList.contains('open')) { body.classList.add('open'); if(arrow) arrow.classList.add('open'); }
-    const el = document.getElementById(hash);
-    if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
-  },300);
-}
-window.addEventListener('hashchange', handleArticleHash);
-setTimeout(handleArticleHash, 500);
+  if(hash && hashMap[hash]) location.replace(hashMap[hash]);
+})();
 </script>
 </body>
 </html>
