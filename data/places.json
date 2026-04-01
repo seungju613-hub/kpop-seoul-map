@@ -2,8 +2,8 @@
     "meta": {
         "title": "K-pop Seoul Map",
         "subtitle": "Discover BTS & K-pop spots in Seoul!",
-        "totalPlaces": 57,
-        "lastUpdated": "2026-03-25",
+        "totalPlaces": 75,
+        "lastUpdated": "2026-03-31",
         "credit": "@bomnalcafe"
     },
     "places": [
@@ -838,7 +838,7 @@
             "address_kr": "서울 용산구 대사관로34길 16",
             "address_en": "16 Daesagwan-ro 34-gil, Yongsan-gu",
             "lat": 37.535,
-            "lng": 127.0,
+            "lng": 127,
             "naver": ""
         },
         {
@@ -1266,6 +1266,24 @@
             "lat": 37.5735,
             "lng": 126.9855,
             "naver": ""
+        },
+        {
+            "id": 80,
+            "name_kr": "스위스 그랜드 호텔 서울",
+            "name_en": "Swiss Grand Hotel Seoul",
+            "desc_en": "Filming location for BTS \"SWIM\" Official Live Clip (2026). Features the hotel pool area. Ondol (Korean heated floor) rooms available.",
+            "desc_kr": "BTS SWIM 공식 라이브 클립 촬영지 (2026). 호텔 수영장 촬영. 온돌방 옵션 있음",
+            "member": "BTS",
+            "area": "other",
+            "category": "filming",
+            "icon": "star",
+            "signed": false,
+            "address_kr": "서울특별시 서대문구 연희로 353",
+            "address_en": "353 Yeonhui-ro, Seodaemun-gu",
+            "lat": 37.5685,
+            "lng": 126.9345,
+            "naver": "https://naver.me/FvZ1LQMZ",
+            "youtube": "https://www.youtube.com/watch?v=om6HdemgTKQ"
         }
     ]
-        }
+}
