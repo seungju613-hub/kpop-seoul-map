@@ -601,17 +601,20 @@ function showMapInfo(p) {
     <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
       <a href="https://www.google.com/maps/search/?api=1&query=${p.lat},${p.lng}" target="_blank" rel="noopener" style="flex:1;padding:8px;background:#4285F4;color:#fff;border-radius:10px;font-size:11px;font-weight:700;text-decoration:none;text-align:center">📍 Google Maps</a>
       <a href="https://map.naver.com/v5/search/${encodeURIComponent(p.name_kr)}" target="_blank" rel="noopener" style="flex:1;padding:8px;background:#03C75A;color:#fff;border-radius:10px;font-size:11px;font-weight:700;text-decoration:none;text-align:center">📍 Naver Map</a>
-    </div>`;
+    </div>
+    ${PLACE_PAGES[p.id]?`<a href="/place/${PLACE_PAGES[p.id]}" style="display:block;margin-top:8px;padding:8px;background:linear-gradient(135deg,#EDE5FF,#F8E8F0);border:1px solid #D8B4FE;border-radius:10px;font-size:11px;font-weight:700;color:#7C3AED;text-decoration:none;text-align:center">📖 Read more about this place →</a>`:''}`;
   bar.classList.add('show');
   map.panTo([p.lat, p.lng]);
 }
 function closeMapInfo() {
   document.getElementById('map-info-bar').classList.remove('show');
 }
+const PLACE_PAGES = {1:'hybe-building',3:'bomnal-cafe',4:'itaewon-hwaro',10:'namsan-seoul-tower',36:'sutjang',11:'chompi',35:'cafe-far-ben',6:'national-museum-of-korea',12:'yoojung-sikdang',13:'old-bighit-building',22:'samcheongdong-hotteok',24:'gyeongbokgung',23:'gwanghwamun-square',80:'swiss-grand-hotel'};
 function openDetail(id) {
   const p = places.find(x=>x.id===id);
   if (!p) return;
   const c = COLORS[p.category]||COLORS.kpop;
+  const placeLink = PLACE_PAGES[p.id] ? `<a href="/place/${PLACE_PAGES[p.id]}" style="display:block;margin-top:10px;padding:12px;border-radius:10px;background:linear-gradient(135deg,#EDE5FF,#F8E8F0);text-align:center;font-size:13px;font-weight:700;color:#7C3AED;text-decoration:none;border:1px solid #D8B4FE">📖 Read more about this place →</a>` : '';
   document.getElementById('detail-sheet').innerHTML = `
     <div class="detail-handle"></div>
     <div class="detail-header">
@@ -649,6 +652,7 @@ function openDetail(id) {
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
         Share
       </button>
+      ${placeLink}
     </div>`;
   document.getElementById('detail-overlay').classList.add('show');
   document.body.style.overflow = 'hidden';
