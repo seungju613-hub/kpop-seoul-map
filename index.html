@@ -1871,6 +1871,51 @@ const KAE_ARTICLES = [
         Maybe none of it matters. Maybe all of it does. 💜
       </div>
     `
+  },
+  {
+    id: 'makchang',
+    hash: 'article-makchang',
+    image: 'https://img.youtube.com/vi/Hz7bGoJivfQ/maxresdefault.jpg',
+    title: "Makchang — The Korean BBQ That BTS SUGA Loves",
+    teaser: "Grilled pork intestines from SUGA's hometown Daegu — and the story of 'Makchang King Min Suga.'",
+    date: '2026-04-05',
+    body: `
+      <p>Makchang is grilled pork intestine — crispy on the outside, chewy on the inside. It's SUGA's favorite food from his hometown Daegu, and he once tweeted about opening a restaurant called "Makchang King Min Suga."</p>
+      <p>📖 <a href="https://kpopseoulmap.com/column/makchang-korean-bbq" style="color:var(--purple);font-weight:700;text-decoration:none">Read the full article →</a></p>
+      <div class="kae-closing">
+        A new world might be waiting for you on the other side of that grill. 💜
+      </div>
+    `
+  },
+  {
+    id: 'mulhoe',
+    hash: 'article-mulhoe',
+    image: 'https://img.youtube.com/vi/SsZEkPw0zjk/maxresdefault.jpg',
+    title: "Mulhoe — The Ice-Cold Korean Raw Fish Dish That BTS Jin Craves",
+    teaser: "Jin's ultimate comfort food — spicy, ice-cold raw fish soup. With recipe and Seoul's top 3 restaurants.",
+    date: '2026-04-05',
+    body: `
+      <p>Mulhoe is Korea's spicy cold raw fish soup — and Jin requests it after every concert. A Korean ARMY explains how to eat it, how to make it, and where to find the best mulhoe in Seoul.</p>
+      <p>📖 <a href="https://kpopseoulmap.com/column/mulhoe-korean-raw-fish" style="color:var(--purple);font-weight:700;text-decoration:none">Read the full article →</a></p>
+      <div class="kae-closing">
+        If Jin trusts it enough to request it after a concert, that's recommendation enough. 💜
+      </div>
+    `
+  },
+  {
+    id: 'hongeo',
+    hash: 'article-hongeo',
+    image: 'https://img.youtube.com/vi/t0et5LO7SSQ/maxresdefault.jpg',
+    title: "Hongeo — Korea's Most Extreme Food (And BTS J-Hope Loves It)",
+    teaser: "Fermented skate that smells like ammonia. Most Koreans can't handle it — but j-hope grew up eating it.",
+    date: '2026-04-05',
+    body: `
+      <p>Hongeo is fermented skate fish — a Korean delicacy that even most Koreans argue about. j-hope grew up eating it in Gwangju, Korea's food capital. A Korean ARMY explains this legendary dish.</p>
+      <p>📖 <a href="https://kpopseoulmap.com/column/hongeo-fermented-skate" style="color:var(--purple);font-weight:700;text-decoration:none">Read the full article →</a></p>
+      <div class="kae-closing">
+        You've been warned. You've been prepared. 💜
+      </div>
+    `
   }
 ];
 
@@ -1879,7 +1924,7 @@ function renderColumnView() {
     'age-culture':'bts-age-culture-explained','jin-jungkook':'jin-jungkook-age-gap',
     'jimin-jungkook-rainy':'jimin-jungkook-rainy-day-story','bts-military':'bts-military-service-explained',
     'almost-disbanded':'bts-almost-disbanded','billboard':'bts-billboard-number-1-list',
-    'afraid-arirang':'bts-arirang-album-meaning','jungkook-buldak':'jungkook-buldak-noodle-recipe','swim-filming-location':'bts-swim-live-clip-filming-location','bts-real-names':'bts-real-names-korean','where-bts-live':'where-does-bts-live','jimin-food':'jimin-favorite-food','bts-religion':'bts-religion-korea','bts-mbti':'bts-mbti-personality','bts-hyyh':'bts-hyyh-era','bts-net-worth':'bts-net-worth-korean-perspective','arih-bts':'arih-bts-meaning','bts-common':'bts-things-in-common'
+    'afraid-arirang':'bts-arirang-album-meaning','jungkook-buldak':'jungkook-buldak-noodle-recipe','swim-filming-location':'bts-swim-live-clip-filming-location','bts-real-names':'bts-real-names-korean','where-bts-live':'where-does-bts-live','jimin-food':'jimin-favorite-food','bts-religion':'bts-religion-korea','bts-mbti':'bts-mbti-personality','bts-hyyh':'bts-hyyh-era','bts-net-worth':'bts-net-worth-korean-perspective','arih-bts':'arih-bts-meaning','bts-common':'bts-things-in-common','makchang':'makchang-korean-bbq','mulhoe':'mulhoe-korean-raw-fish','hongeo':'hongeo-fermented-skate'
   };
   const searchId = 'kae-search';
   document.getElementById('column-view').innerHTML = `
@@ -1893,7 +1938,7 @@ function renderKAECards(slugMap) {
     'age-culture':'bts-age-culture-explained','jin-jungkook':'jin-jungkook-age-gap',
     'jimin-jungkook-rainy':'jimin-jungkook-rainy-day-story','bts-military':'bts-military-service-explained',
     'almost-disbanded':'bts-almost-disbanded','billboard':'bts-billboard-number-1-list',
-    'afraid-arirang':'bts-arirang-album-meaning','jungkook-buldak':'jungkook-buldak-noodle-recipe','swim-filming-location':'bts-swim-live-clip-filming-location','bts-real-names':'bts-real-names-korean','where-bts-live':'where-does-bts-live','jimin-food':'jimin-favorite-food','bts-religion':'bts-religion-korea','bts-mbti':'bts-mbti-personality','bts-hyyh':'bts-hyyh-era','bts-net-worth':'bts-net-worth-korean-perspective','arih-bts':'arih-bts-meaning','bts-common':'bts-things-in-common'
+    'afraid-arirang':'bts-arirang-album-meaning','jungkook-buldak':'jungkook-buldak-noodle-recipe','swim-filming-location':'bts-swim-live-clip-filming-location','bts-real-names':'bts-real-names-korean','where-bts-live':'where-does-bts-live','jimin-food':'jimin-favorite-food','bts-religion':'bts-religion-korea','bts-mbti':'bts-mbti-personality','bts-hyyh':'bts-hyyh-era','bts-net-worth':'bts-net-worth-korean-perspective','arih-bts':'arih-bts-meaning','bts-common':'bts-things-in-common','makchang':'makchang-korean-bbq','mulhoe':'mulhoe-korean-raw-fish','hongeo':'hongeo-fermented-skate'
   };
   return [...KAE_ARTICLES].reverse().map(a => {
     const slug = slugMap[a.id] || a.id;

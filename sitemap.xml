@@ -13,6 +13,24 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://kpopseoulmap.com/column/makchang-korean-bbq</loc>
+    <lastmod>2026-04-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kpopseoulmap.com/column/mulhoe-korean-raw-fish</loc>
+    <lastmod>2026-04-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kpopseoulmap.com/column/hongeo-fermented-skate</loc>
+    <lastmod>2026-04-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://kpopseoulmap.com/column/bts-things-in-common</loc>
     <lastmod>2026-04-05</lastmod>
     <changefreq>monthly</changefreq>
