@@ -1916,6 +1916,21 @@ const KAE_ARTICLES = [
         You've been warned. You've been prepared. 💜
       </div>
     `
+  },
+  {
+    id: 'blood-type',
+    hash: 'article-blood-type',
+    image: 'https://img.youtube.com/vi/pGX-Qgppy9k/maxresdefault.jpg',
+    title: "BTS Blood Type — What Each Member's Blood Type Says in Korea",
+    teaser: "Before MBTI, Koreans judged personality by blood type. Here's what each BTS member's blood type reveals.",
+    date: '2026-04-06',
+    body: `
+      <p>Before MBTI took over Korea, blood type personality theory ruled. RM, J-Hope, Jimin, and Jungkook are all Type A. Jin and SUGA are Type O. V is the rare Type AB. And no one in BTS is Type B.</p>
+      <p>📖 <a href="https://kpopseoulmap.com/column/bts-blood-type" style="color:var(--purple);font-weight:700;text-decoration:none">Read the full article →</a></p>
+      <div class="kae-closing">
+        Whatever your blood type is, you already share something with millions of ARMY. 💜
+      </div>
+    `
   }
 ];
 
@@ -1924,7 +1939,7 @@ function renderColumnView() {
     'age-culture':'bts-age-culture-explained','jin-jungkook':'jin-jungkook-age-gap',
     'jimin-jungkook-rainy':'jimin-jungkook-rainy-day-story','bts-military':'bts-military-service-explained',
     'almost-disbanded':'bts-almost-disbanded','billboard':'bts-billboard-number-1-list',
-    'afraid-arirang':'bts-arirang-album-meaning','jungkook-buldak':'jungkook-buldak-noodle-recipe','swim-filming-location':'bts-swim-live-clip-filming-location','bts-real-names':'bts-real-names-korean','where-bts-live':'where-does-bts-live','jimin-food':'jimin-favorite-food','bts-religion':'bts-religion-korea','bts-mbti':'bts-mbti-personality','bts-hyyh':'bts-hyyh-era','bts-net-worth':'bts-net-worth-korean-perspective','arih-bts':'arih-bts-meaning','bts-common':'bts-things-in-common','makchang':'makchang-korean-bbq','mulhoe':'mulhoe-korean-raw-fish','hongeo':'hongeo-fermented-skate'
+    'afraid-arirang':'bts-arirang-album-meaning','jungkook-buldak':'jungkook-buldak-noodle-recipe','swim-filming-location':'bts-swim-live-clip-filming-location','bts-real-names':'bts-real-names-korean','where-bts-live':'where-does-bts-live','jimin-food':'jimin-favorite-food','bts-religion':'bts-religion-korea','bts-mbti':'bts-mbti-personality','bts-hyyh':'bts-hyyh-era','bts-net-worth':'bts-net-worth-korean-perspective','arih-bts':'arih-bts-meaning','bts-common':'bts-things-in-common','makchang':'makchang-korean-bbq','mulhoe':'mulhoe-korean-raw-fish','hongeo':'hongeo-fermented-skate','blood-type':'bts-blood-type'
   };
   const searchId = 'kae-search';
   document.getElementById('column-view').innerHTML = `
@@ -1938,7 +1953,7 @@ function renderKAECards(slugMap) {
     'age-culture':'bts-age-culture-explained','jin-jungkook':'jin-jungkook-age-gap',
     'jimin-jungkook-rainy':'jimin-jungkook-rainy-day-story','bts-military':'bts-military-service-explained',
     'almost-disbanded':'bts-almost-disbanded','billboard':'bts-billboard-number-1-list',
-    'afraid-arirang':'bts-arirang-album-meaning','jungkook-buldak':'jungkook-buldak-noodle-recipe','swim-filming-location':'bts-swim-live-clip-filming-location','bts-real-names':'bts-real-names-korean','where-bts-live':'where-does-bts-live','jimin-food':'jimin-favorite-food','bts-religion':'bts-religion-korea','bts-mbti':'bts-mbti-personality','bts-hyyh':'bts-hyyh-era','bts-net-worth':'bts-net-worth-korean-perspective','arih-bts':'arih-bts-meaning','bts-common':'bts-things-in-common','makchang':'makchang-korean-bbq','mulhoe':'mulhoe-korean-raw-fish','hongeo':'hongeo-fermented-skate'
+    'afraid-arirang':'bts-arirang-album-meaning','jungkook-buldak':'jungkook-buldak-noodle-recipe','swim-filming-location':'bts-swim-live-clip-filming-location','bts-real-names':'bts-real-names-korean','where-bts-live':'where-does-bts-live','jimin-food':'jimin-favorite-food','bts-religion':'bts-religion-korea','bts-mbti':'bts-mbti-personality','bts-hyyh':'bts-hyyh-era','bts-net-worth':'bts-net-worth-korean-perspective','arih-bts':'arih-bts-meaning','bts-common':'bts-things-in-common','makchang':'makchang-korean-bbq','mulhoe':'mulhoe-korean-raw-fish','hongeo':'hongeo-fermented-skate','blood-type':'bts-blood-type'
   };
   return [...KAE_ARTICLES].reverse().map(a => {
     const slug = slugMap[a.id] || a.id;
