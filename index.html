@@ -592,6 +592,7 @@ function render() {
 }
 
 function showMapInfo(p) {
+  if(PLACE_PAGES[p.id]){window.location.href='/place/'+PLACE_PAGES[p.id];return;}
   const bar = document.getElementById('map-info-bar');
   document.getElementById('mib-content').innerHTML = `
     <div class="mib-name">${p.name_en}</div>
@@ -609,8 +610,9 @@ function showMapInfo(p) {
 function closeMapInfo() {
   document.getElementById('map-info-bar').classList.remove('show');
 }
-const PLACE_PAGES = {1:'hybe-building',3:'bomnal-cafe',4:'itaewon-hwaro',10:'namsan-seoul-tower',36:'sutjang',11:'chompi',35:'cafe-far-ben',6:'national-museum-of-korea',12:'yoojung-sikdang',13:'old-bighit-building',22:'samcheongdong-hotteok',24:'gyeongbokgung',23:'gwanghwamun-square',80:'swiss-grand-hotel'};
+const PLACE_PAGES = {1:'hybe-building',2:'hybe-back-gate-cafe-street',3:'bomnal-cafe',4:'itaewon-hwaro',5:'superstar-tteokbokki',6:'national-museum-of-korea',8:'daepo-makchang',9:'nodeul-island',10:'namsan-seoul-tower',11:'chompi',12:'yoojung-sikdang',13:'old-bighit-building',14:'hakdong-park',15:'gallery-cafe-hyuga',16:'gilmok-cheongdam',17:'yeongcheon-yeonghwa',18:'choshim-hanwoo',19:'homsuki-hakdong',20:'mmca-seoul',21:'kukje-gallery',22:'samcheongdong-hotteok',23:'gwanghwamun-square',24:'gyeongbokgung',25:'ddp',26:'geumdwaeji-sikdang',28:'seoul-forest',29:'yongma-land',32:'yeouido-hangang-park',33:'ttukseom-hangang-park',34:'lotte-world-tower',35:'cafe-far-ben',36:'sutjang',38:'jeongdeunjip',39:'uhyangwoo',40:'dallae-haejang',42:'dosan-butcher-shop',44:'gyeongseong-lamb-skewers',45:'hwangso-gopchang',48:'mapo-salt-bbq',51:'yasunoya',56:'ganggane-bindaetteok',57:'matjjang-tteokbokki',60:'what-a-bread',68:'donga-naengmyeon',69:'andong-jjimdak',70:'hannam-bugeotguk',76:'hwayeon-sanjang',80:'swiss-grand-hotel'};
 function openDetail(id) {
+  if(PLACE_PAGES[id]){window.location.href='/place/'+PLACE_PAGES[id];return;}
   const p = places.find(x=>x.id===id);
   if (!p) return;
   const c = COLORS[p.category]||COLORS.kpop;
