@@ -40,6 +40,12 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);max-
 .col-back{display:block;text-align:center;padding:16px;font-size:13px;font-weight:700;color:var(--purple);text-decoration:none}
 .col-footer{text-align:center;padding:20px 16px;font-size:11px;color:var(--text3);line-height:1.6}
 .col-footer a{color:var(--purple);text-decoration:none}
+.addr-actions{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.addr-btn{flex:1;min-width:120px;padding:10px 12px;border-radius:10px;border:none;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:5px;transition:all .15s}
+.addr-btn:hover{opacity:.85}
+.btn-copy-addr{background:var(--card);color:var(--text2);border:1.5px solid var(--warm) !important}
+.btn-gmap{background:#4285F4;color:#fff}
+.btn-nmap{background:#1EC800;color:#fff}
 </style>
 </head>
 <body>
@@ -82,7 +88,24 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);max-
 </div>
 
 <script>
-if(typeof gtag==='function') gtag('event','place_view',{place_name:'Bomnal Cafe'});
+if(typeof gtag==='function') gtag('event','place_view',{place_name:document.querySelector('h1').textContent});
+(function(){
+  try{
+    var ld=JSON.parse(document.querySelector('script[type="application/ld+json"]').textContent);
+    var lat=ld.geo&&ld.geo.latitude, lng=ld.geo&&ld.geo.longitude, name=ld.name||'';
+    var ib=document.querySelector('.info-box');
+    if(!ib)return;
+    // Get address text
+    var addrText=ib.textContent.replace(/📍 Address:/,'').replace(/🇰🇷/,'').trim();
+    // Create buttons
+    var div=document.createElement('div');
+    div.className='addr-actions';
+    div.innerHTML='<button class="addr-btn btn-copy-addr" onclick="navigator.clipboard.writeText(\''+addrText.replace(/'/g,"\\'")+'\').then(function(){this.textContent=\'Copied!\'}.bind(this))"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy Address</button>'
+      +(lat?'<a class="addr-btn btn-gmap" href="https://www.google.com/maps?q='+lat+','+lng+'" target="_blank" rel="noopener" style="text-decoration:none;color:#fff"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Google Maps</a>':'')
+      +(lat?'<a class="addr-btn btn-nmap" href="https://map.naver.com/v5/search/'+encodeURIComponent(name)+'" target="_blank" rel="noopener" style="text-decoration:none;color:#fff"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Naver Map</a>':'');
+    ib.appendChild(div);
+  }catch(e){}
+})();
 </script>
 </body>
 </html>
